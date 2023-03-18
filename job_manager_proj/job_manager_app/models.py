@@ -68,9 +68,10 @@ class MonthJob(models.Model):
 
 
 class ServiceAgreement(models.Model):
+    DEFAULT_CURRENCY = "BYN"
     id_agreement = models.IntegerField(primary_key=True)
     number = models.CharField(max_length=30)
-    amount = MoneyField(max_digits=14, decimal_places=2, default_currency="BYN")
+    amount = MoneyField(max_digits=14, decimal_places=2, default_currency=DEFAULT_CURRENCY)
     id_type_of_jobs = models.ForeignKey("TypeOfJobs", on_delete=models.CASCADE)
     id_company = models.ForeignKey("Company", on_delete=models.CASCADE)
 
