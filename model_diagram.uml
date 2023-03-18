@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.month_job</OriginalElement>
+  <nodes>
+    <node x="-407.82897638739064" y="325.6135922330097">2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.month</node>
+    <node x="-341.32897638739064" y="-6.638834951456303">2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.type_of_jobs</node>
+    <node x="597.0563106796119" y="364.2310679611651">2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.employee</node>
+    <node x="69.0" y="29.0">2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.service_agreement</node>
+    <node x="521.9087378640775" y="-34.040776699029124">2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.company</node>
+    <node x="59.580246913580254" y="291.0">2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.act_of_completed_work</node>
+    <node x="124.2734507970755" y="658.0601941747573">2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.month_job</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.act_of_completed_work" target="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.employee" relationship="REFERENCES">
+      <point x="-99.66666666666669" y="-147.0" />
+      <point x="109.41358024691357" y="265.0" />
+      <point x="714.5563106796119" y="265.0" />
+      <point x="0.0" y="91.0" />
+    </edge>
+    <edge source="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.month_job" target="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.employee" relationship="REFERENCES">
+      <point x="-91.0" y="-91.0" />
+      <point x="169.7734507970755" y="611.0" />
+      <point x="714.5563106796119" y="611.0" />
+      <point x="0.0" y="91.0" />
+    </edge>
+    <edge source="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.act_of_completed_work" target="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.service_agreement" relationship="REFERENCES">
+      <point x="0.0" y="-147.0" />
+      <point x="209.08024691358025" y="265.0" />
+      <point x="206.0" y="265.0" />
+      <point x="0.0" y="105.0" />
+    </edge>
+    <edge source="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.act_of_completed_work" target="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.month" relationship="REFERENCES">
+      <point x="99.66666666666667" y="-147.0" />
+      <point x="308.74691358024694" y="265.0" />
+      <point x="-222.32897638739064" y="265.0" />
+      <point x="0.0" y="91.0" />
+    </edge>
+    <edge source="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.service_agreement" target="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.type_of_jobs" relationship="REFERENCES">
+      <point x="-68.5" y="-105.0" />
+      <point x="137.5" y="4.0" />
+      <point x="-222.32897638739064" y="4.0" />
+      <point x="0.0" y="49.0" />
+    </edge>
+    <edge source="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.service_agreement" target="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.company" relationship="REFERENCES">
+      <point x="68.5" y="-105.0" />
+      <point x="274.5" y="4.0" />
+      <point x="625.4087378640775" y="4.0" />
+      <point x="0.0" y="63.0" />
+    </edge>
+    <edge source="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.month_job" target="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.month" relationship="REFERENCES">
+      <point x="91.0" y="-91.0" />
+      <point x="351.7734507970755" y="611.0" />
+      <point x="53.10160613688123" y="611.0" />
+      <point x="53.10160613688123" y="572.3067961165049" />
+      <point x="-148.7515492029246" y="572.3067961165049" />
+      <point x="-148.7515492029246" y="507.6135922330097" />
+      <point x="0.0" y="91.0" />
+    </edge>
+    <edge source="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.month_job" target="2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.act_of_completed_work" relationship="REFERENCES">
+      <point x="0.0" y="-91.0" />
+      <point x="260.7734507970755" y="611.0" />
+      <point x="209.08024691358025" y="611.0" />
+      <point x="0.0" y="147.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.5223123732251521" showDependencies="false" x="274.0" y="373.0" />
+  <SelectedNodes>
+    <node>2a1ddefb-95f8-43d0-b48e-06b2fb9c6b7c.TABLE:job_manager_db.public.month_job</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
