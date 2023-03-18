@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "job-manager"
+version = "0.1.0"
+description = ""
+authors = ["Alexandr <maximchik.alexandr@yandex.ru>"]
+readme = "README.md"
+packages = [{include = "job_manager"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.1.7"
+psycopg2-binary = "^2.9.5"
+django-environ = "^0.10.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.11.0"
+django-extensions = "^3.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
