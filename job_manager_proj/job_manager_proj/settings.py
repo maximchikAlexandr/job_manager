@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "djmoney",
 
     "job_manager_app.apps.JobManagerAppConfig",
 ]
