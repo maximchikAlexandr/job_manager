@@ -1,9 +1,9 @@
+from django.conf import settings
 from django.db import models
 from djmoney.models.fields import MoneyField
 
 
 class ActOfCompletedWork(models.Model):
-    DEFAULT_CURRENCY = "BYN"
     COMPLETED = "completed"
     NOT_COMPLETED = "not completed"
     STATUSES = (
@@ -12,9 +12,9 @@ class ActOfCompletedWork(models.Model):
     )
     id_act = models.IntegerField(primary_key=True)
     stage_number = models.IntegerField(null=False)
-    amount = MoneyField(
-        max_digits=14, decimal_places=2, default_currency=DEFAULT_CURRENCY
-    )
+    amount = MoneyField(max_digits=14,
+                        decimal_places=2,
+                        default_currency=settings.DEFAULT_CURRENCY)
     man_hours = models.FloatField(null=False)
     status = models.CharField(max_length=20, choices=STATUSES, default=NOT_COMPLETED)
     id_employee = models.ForeignKey("Employee", on_delete=models.CASCADE)
@@ -68,10 +68,11 @@ class MonthJob(models.Model):
 
 
 class ServiceAgreement(models.Model):
-    DEFAULT_CURRENCY = "BYN"
     id_agreement = models.IntegerField(primary_key=True)
     number = models.CharField(max_length=30)
-    amount = MoneyField(max_digits=14, decimal_places=2, default_currency=DEFAULT_CURRENCY)
+    amount = MoneyField(max_digits=14,
+                        decimal_places=2,
+                        default_currency=settings.DEFAULT_CURRENCY)
     id_type_of_jobs = models.ForeignKey("TypeOfJobs", on_delete=models.CASCADE)
     id_company = models.ForeignKey("Company", on_delete=models.CASCADE)
 
