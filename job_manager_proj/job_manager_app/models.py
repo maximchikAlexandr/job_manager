@@ -27,7 +27,7 @@ class ActOfCompletedWork(models.Model):
                                   related_name="acts")
 
     def __str__(self):
-        return f"Этап №{self.stage_number} договора {self.agreement.number}"
+        return f"Эт. №{self.stage_number} дог.№{self.agreement.number}"
 
     class Meta:
         db_table = "act_of_completed_work"
@@ -51,7 +51,7 @@ class Employee(models.Model):
     rate = models.FloatField(null=False)
 
     def __str__(self):
-        return f"{self.surname} {self.name} {self.patronymic}"
+        return f"{self.name[0]}.{self.patronymic[0]}. {self.surname}"
 
     class Meta:
         db_table = "employee"
