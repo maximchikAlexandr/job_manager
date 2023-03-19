@@ -21,12 +21,16 @@ class ActOfCompletedWorkAdmin(admin.ModelAdmin):
         "status",
         "responsible_employee",
         "month_of_completed",
+        "month_signing_the_act",
+        "month_of_accounting_act_in_salary",
     ]
     list_editable = [
         "man_hours",
         "status",
         "responsible_employee",
         "month_of_completed",
+        "month_signing_the_act",
+        "month_of_accounting_act_in_salary",
     ]
 
     def company(self, obj):
