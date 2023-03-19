@@ -15,6 +15,7 @@ class ActOfCompletedWorkAdmin(admin.ModelAdmin):
     list_display = [
         "agreement",
         "stage_number",
+        "company",
         "amount",
         "man_hours",
         "status",
@@ -22,12 +23,14 @@ class ActOfCompletedWorkAdmin(admin.ModelAdmin):
         "month_of_completed",
     ]
     list_editable = [
-        "amount",
         "man_hours",
         "status",
         "responsible_employee",
         "month_of_completed",
     ]
+
+    def company(self, obj):
+        return obj.agreement.company
 
 
 @admin.register(Company)
@@ -57,14 +60,16 @@ class MonthAdmin(admin.ModelAdmin):
 
 @admin.register(MonthJob)
 class MonthJobAdmin(admin.ModelAdmin):
-    list_display = ["act", "man_hours", "employee", "month"]
+    list_display = ["act", "company", "man_hours", "employee", "month"]
     list_editable = ["man_hours", "employee", "month"]
 
+    def company(self, obj):
+        return obj.act.agreement.company
 
 @admin.register(ServiceAgreement)
 class ServiceAgreementJobAdmin(admin.ModelAdmin):
     list_display = ["number", "amount", "type_of_jobs", "company"]
-    list_editable = ["amount", "type_of_jobs", "company"]
+    list_editable = ["type_of_jobs", "company"]
 
 
 @admin.register(TypeOfJobs)
