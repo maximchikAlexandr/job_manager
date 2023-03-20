@@ -1,13 +1,9 @@
 from django.contrib import admin
-from job_manager_app.models import (
-    ActOfCompletedWork,
-    Company,
-    Employee,
-    Month,
-    MonthJob,
-    ServiceAgreement,
-    TypeOfJobs,
-)
+from django.core.handlers.wsgi import WSGIRequest
+from job_manager_app.models import (ActOfCompletedWork, Company, Employee,
+                                    Month, MonthJob, ServiceAgreement,
+                                    TypeOfJobs)
+from job_manager_app.services import ServiceAgreementValidator
 
 
 @admin.register(ActOfCompletedWork)
@@ -35,6 +31,18 @@ class ActOfCompletedWorkAdmin(admin.ModelAdmin):
 
     def company(self, obj):
         return obj.agreement.company
+
+    def save_model(
+        self,
+        request: WSGIRequest,
+        obj: ActOfCompletedWork,
+        form: "ActOfCompletedWorkForm",
+        change: bool,
+    ):
+        obj.save()
+        validator = ServiceAgreementValidator(obj.agreement)
+        if not validator.validate_money():
+            validator.send_error_message(request)
 
 
 @admin.register(Company)
@@ -70,10 +78,23 @@ class MonthJobAdmin(admin.ModelAdmin):
     def company(self, obj):
         return obj.act.agreement.company
 
+
 @admin.register(ServiceAgreement)
 class ServiceAgreementJobAdmin(admin.ModelAdmin):
     list_display = ["number", "amount", "type_of_jobs", "company"]
     list_editable = ["type_of_jobs", "company"]
+
+    def save_model(
+        self,
+        request: WSGIRequest,
+        obj: ServiceAgreement,
+        form: "ServiceAgreementForm",
+        change: bool,
+    ):
+        obj.save()
+        validator = ServiceAgreementValidator(obj)
+        if not validator.validate_money():
+            validator.send_error_message(request)
 
 
 @admin.register(TypeOfJobs)
