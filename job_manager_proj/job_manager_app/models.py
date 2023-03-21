@@ -94,6 +94,7 @@ class MonthJob(models.Model):
 class ServiceAgreement(models.Model):
     number = models.CharField(max_length=30)
     amount = models.DecimalField(max_digits=14, decimal_places=2)
+    date_of_signing = models.DateField()
     type_of_jobs = models.ForeignKey(
         "TypeOfJobs", on_delete=models.CASCADE, related_name="agreements", null=True
     )
