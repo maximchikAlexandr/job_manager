@@ -4,7 +4,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from job_manager_app.models import (ActOfCompletedWork, Company, Employee,
                                     Month, MonthJob, ServiceAgreement,
                                     TypeOfJobs)
-from job_manager_app.services import ServiceAgreementValidator
+from job_manager_app.services import ServiceAgreementValidator, ActOfCompletedWorkValidator
 
 
 @admin.register(ActOfCompletedWork)
@@ -34,16 +34,21 @@ class ActOfCompletedWorkAdmin(admin.ModelAdmin):
         return obj.agreement.company
 
     def save_model(
-        self,
-        request: WSGIRequest,
-        obj: ActOfCompletedWork,
-        form: "ActOfCompletedWorkForm",
-        change: bool,
+            self,
+            request: WSGIRequest,
+            obj: ActOfCompletedWork,
+            form: "ActOfCompletedWorkForm",
+            change: bool,
     ):
         obj.save()
-        validator = ServiceAgreementValidator(obj.agreement)
-        if not validator.validate_money():
-            validator.send_error_message(request)
+
+        money_validator = ServiceAgreementValidator(obj.agreement)
+        if not money_validator.has_valid_sum():
+            money_validator.send_error_message(request)
+
+        hour_validator = ActOfCompletedWorkValidator(obj)
+        if not hour_validator.has_valid_sum():
+            hour_validator.send_error_message(request)
 
 
 @admin.register(Company)
@@ -69,6 +74,7 @@ class MonthAdmin(admin.ModelAdmin):
         "count_of_working_days",
         "number_of_employees",
     ]
+    list_per_page = 12
 
 
 @admin.register(MonthJob)
@@ -79,6 +85,19 @@ class MonthJobAdmin(admin.ModelAdmin):
     def company(self, obj):
         return obj.act.agreement.company
 
+    def save_model(
+            self,
+            request: WSGIRequest,
+            obj: MonthJob,
+            form: "MonthJobAdminWorkForm",
+            change: bool,
+    ):
+        obj.save()
+
+        hour_validator = ActOfCompletedWorkValidator(obj.act)
+        if not hour_validator.has_valid_sum():
+            hour_validator.send_error_message(request)
+
 
 @admin.register(ServiceAgreement)
 class ServiceAgreementJobAdmin(admin.ModelAdmin):
@@ -86,15 +105,15 @@ class ServiceAgreementJobAdmin(admin.ModelAdmin):
     list_editable = ["type_of_jobs", "company"]
 
     def save_model(
-        self,
-        request: WSGIRequest,
-        obj: ServiceAgreement,
-        form: "ServiceAgreementForm",
-        change: bool,
+            self,
+            request: WSGIRequest,
+            obj: ServiceAgreement,
+            form: "ServiceAgreementForm",
+            change: bool,
     ):
         obj.save()
         validator = ServiceAgreementValidator(obj)
-        if not validator.validate_money():
+        if not validator.has_valid_sum():
             validator.send_error_message(request)
 
 

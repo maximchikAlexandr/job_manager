@@ -102,7 +102,7 @@ class ServiceAgreement(models.Model):
     )
 
     def __str__(self):
-        return f"Договор №{self.number}"
+        return f"№{self.number}"
 
     class Meta:
         db_table = "service_agreement"
