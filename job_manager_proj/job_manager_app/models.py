@@ -11,13 +11,11 @@ class ActOfCompletedWork(models.Model):
         (NOT_COMPLETED, "not completed"),
     )
     stage_number = models.IntegerField(null=False)
-    amount = MoneyField(
-        max_digits=14, decimal_places=2, default_currency=settings.DEFAULT_CURRENCY
-    )
+    amount = models.DecimalField(max_digits=14, decimal_places=2)
     man_hours = models.FloatField(null=False)
     status = models.CharField(max_length=20, choices=STATUSES, default=NOT_COMPLETED)
     responsible_employee = models.ForeignKey(
-        "Employee", on_delete=models.CASCADE, related_name="acts", null=True
+        "Employee", on_delete=models.CASCADE, related_name="acts_of_employee", null=True
     )
     month_of_completed = models.ForeignKey(
         "Month", on_delete=models.CASCADE, related_name="acts", null=True
@@ -96,9 +94,7 @@ class MonthJob(models.Model):
 
 class ServiceAgreement(models.Model):
     number = models.CharField(max_length=30)
-    amount = MoneyField(
-        max_digits=14, decimal_places=2, default_currency=settings.DEFAULT_CURRENCY
-    )
+    amount = models.DecimalField(max_digits=14, decimal_places=2)
     type_of_jobs = models.ForeignKey(
         "TypeOfJobs", on_delete=models.CASCADE, related_name="agreements", null=True
     )
