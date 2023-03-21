@@ -7,8 +7,14 @@ from job_manager_app.models import (ActOfCompletedWork, Company, Employee,
 from job_manager_app.services import ServiceAgreementValidator, ActOfCompletedWorkValidator
 
 
+class JobItemInline(admin.StackedInline):
+    model = MonthJob
+    extra = 10
+
+
 @admin.register(ActOfCompletedWork)
 class ActOfCompletedWorkAdmin(admin.ModelAdmin):
+    inlines = [JobItemInline]
     list_display = [
         "agreement",
         "stage_number",
@@ -99,8 +105,14 @@ class MonthJobAdmin(admin.ModelAdmin):
             hour_validator.send_error_message(request)
 
 
+class ActItemInline(admin.StackedInline):
+    model = ActOfCompletedWork
+    extra = 5
+
+
 @admin.register(ServiceAgreement)
 class ServiceAgreementJobAdmin(admin.ModelAdmin):
+    inlines = [ActItemInline]
     list_display = ["number", "amount", "type_of_jobs", "company"]
     list_editable = ["type_of_jobs", "company"]
 
