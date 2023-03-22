@@ -141,3 +141,5 @@ LOGGING = {
         }
     }
 }
+
+PATH_OF_GITHUB = env("PATH_OF_GITHUB")
