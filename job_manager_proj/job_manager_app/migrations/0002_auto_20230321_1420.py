@@ -5,7 +5,7 @@ from django.core.management import call_command
 
 from job_manager_app.apps import JobManagerAppConfig
 
-fixture = f"../job_manager_extra_files/fixtures/dump.json"
+fixture = f"/job_manager_proj/job_manager_app/migrations/fixtures/dump.json"
 
 
 def load_fixture(apps, schema_editor):
