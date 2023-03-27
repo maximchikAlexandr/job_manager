@@ -143,3 +143,4 @@ LOGGING = {
 }
 
 PATH_OF_GITHUB = env("PATH_OF_GITHUB")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
