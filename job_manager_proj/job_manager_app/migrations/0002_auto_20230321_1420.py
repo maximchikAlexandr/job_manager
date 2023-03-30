@@ -11,6 +11,7 @@ fixture = settings.BASE_DIR / "job_manager_app/migrations/fixtures/dump.json"
 def load_fixture(apps, schema_editor):
     call_command('loaddata', fixture, app_label=JobManagerAppConfig.name)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [
