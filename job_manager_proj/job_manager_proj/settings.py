@@ -28,9 +28,9 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(env("DEBUG"))
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = [env("PRODUCTION_HOST"), "127.0.0.1"]
+ALLOWED_HOSTS = [env("PRODUCTION_HOST"), "127.0.0.1", "localhost"]
 
 # Application definition
 
@@ -83,11 +83,11 @@ WSGI_APPLICATION = "job_manager_proj.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": env("DATABASE_ENGINE"),
-        "NAME": env("DATABASE_NAME"),
-        "USER": env("DATABASE_USER"),
-        "PASSWORD": env("DATABASE_PASSWORD"),
-        "HOST": env("DATABASE_HOST"),
-        "PORT": env("DATABASE_PORT"),
+        "NAME": env("MYSQL_DATABASE"),
+        "USER": env("MYSQL_ROOT_USER"),
+        "PASSWORD": env("MYSQL_ROOT_PASSWORD"),
+        "HOST": env("MYSQL_HOST"),
+        "PORT": env("MYSQL_TCP_PORT"),
     }
 }
 

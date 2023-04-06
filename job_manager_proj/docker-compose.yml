@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  mysql_db:
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    container_name: job_manager_db
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./mysql-logs:/var/log/mysql
+    env_file:
+      - .env
+    restart: always
+
+
+  web:
+    build: .
+    container_name: job_manager_app
+    command: >
+      bash -c "./manage.py migrate && ./manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - '8000:8000'
+    depends_on:
+      - mysql_db
