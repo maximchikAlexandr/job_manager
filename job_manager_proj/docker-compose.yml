@@ -3,15 +3,22 @@ version: '3.9'
 services:
   mysql_db:
     image: mysql:5.7
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     container_name: job_manager_db
     volumes:
       - ../mysql-data:/var/lib/mysql
       - ../mysql-logs:/var/log/mysql
+    ports:
+      - '3306:3306'
     env_file:
       - .env
-    restart: always
-
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 512M
+        reservations:
+          cpus: '0.01'
+          memory: 256M
 
   web:
     build: .
@@ -22,5 +29,13 @@ services:
       - .:/app
     ports:
       - '8000:8000'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 512M
+        reservations:
+          cpus: '0.01'
+          memory: 256M
     depends_on:
       - mysql_db
