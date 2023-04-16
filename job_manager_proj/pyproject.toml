@@ -8,7 +8,7 @@ packages = [{include = "job_manager"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-django = "^4.1.7"
+django = "^4.2"
 django-environ = "^0.10.0"
 gitpython = "^3.1.31"
 mysqlclient = "^2.1.1"
