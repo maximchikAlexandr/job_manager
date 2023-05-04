@@ -1,4 +1,3 @@
-
 # JobManager
 ## About project
 
