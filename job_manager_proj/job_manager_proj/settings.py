@@ -28,9 +28,9 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(env("DEBUG"))
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = [env("PRODUCTION_HOST"), "127.0.0.1"]
+ALLOWED_HOSTS = [env("PRODUCTION_HOST"), "127.0.0.1", "localhost"]
 
 # Application definition
 
@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     "django_extensions",
 
     "job_manager_app.apps.JobManagerAppConfig",
-    "continuos_delivery.apps.ContinuosDeliveryConfig",
 ]
 
 MIDDLEWARE = [
@@ -82,12 +81,12 @@ WSGI_APPLICATION = "job_manager_proj.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": env("DATABASE_ENGINE"),
-        "NAME": env("DATABASE_NAME"),
-        "USER": env("DATABASE_USER"),
-        "PASSWORD": env("DATABASE_PASSWORD"),
-        "HOST": env("DATABASE_HOST"),
-        "PORT": env("DATABASE_PORT"),
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env("POSTGRES_DB"),
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
     }
 }
 
@@ -143,5 +142,4 @@ LOGGING = {
     }
 }
 
-PATH_OF_GITHUB = env("PATH_OF_GITHUB")
 STATIC_ROOT = os.path.join(BASE_DIR, "static")

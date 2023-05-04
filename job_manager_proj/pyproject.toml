@@ -8,15 +8,15 @@ packages = [{include = "job_manager"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-django = "^4.1.7"
+django = "^4.2"
 django-environ = "^0.10.0"
 gitpython = "^3.1.31"
-mysqlclient = "^2.1.1"
+psycopg2-binary = "^2.9.6"
 
 
 [tool.poetry.group.dev.dependencies]
-ipython = "^8.11.0"
 django-extensions = "^3.2.1"
+ipython = "^8.12.0"
 
 [build-system]
 requires = ["poetry-core"]
