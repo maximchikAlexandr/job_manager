@@ -4,8 +4,6 @@ MAINTAINER Alex Maximchik 'alex@mail.ru'
 SHELL ["/bin/bash", "-c"]
 
 # set the environment variables
-ARG YOUR_ENV
-
 ENV PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1 \
   PYTHONHASHSEED=random \

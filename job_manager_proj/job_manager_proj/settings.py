@@ -81,12 +81,12 @@ WSGI_APPLICATION = "job_manager_proj.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": env("DATABASE_ENGINE"),
-        "NAME": env("MYSQL_DATABASE"),
-        "USER": env("MYSQL_ROOT_USER"),
-        "PASSWORD": env("MYSQL_ROOT_PASSWORD"),
-        "HOST": env("MYSQL_HOST"),
-        "PORT": env("MYSQL_TCP_PORT"),
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env("POSTGRES_DB"),
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
     }
 }
 
@@ -142,5 +142,4 @@ LOGGING = {
     }
 }
 
-PATH_OF_GITHUB = env("PATH_OF_GITHUB")
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
