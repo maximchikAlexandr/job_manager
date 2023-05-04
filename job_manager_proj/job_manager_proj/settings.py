@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     "django_extensions",
 
     "job_manager_app.apps.JobManagerAppConfig",
-    "continuos_delivery.apps.ContinuosDeliveryConfig",
 ]
 
 MIDDLEWARE = [
