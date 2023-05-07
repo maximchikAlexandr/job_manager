@@ -5,11 +5,11 @@ from django.db import migrations
 
 from job_manager_app.apps import JobManagerAppConfig
 
-fixture = settings.BASE_DIR / "job_manager_app/migrations/fixtures/dump.json"
-
+fixtures = (settings.BASE_DIR / "job_manager_app/migrations/fixtures/catalog_fixture.json",
+            settings.BASE_DIR / "job_manager_app/migrations/fixtures/test_fixture.json")
 
 def load_fixture(apps, schema_editor):
-    call_command('loaddata', fixture, app_label=JobManagerAppConfig.name)
+    call_command('loaddata', *fixtures, app_label=JobManagerAppConfig.name)
 
 
 class Migration(migrations.Migration):

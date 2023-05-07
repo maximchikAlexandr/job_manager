@@ -1,0 +1,426 @@
+[
+{
+    "model": "job_manager_app.actofcompletedwork",
+    "pk": 1,
+    "fields": {
+        "stage_number": 1,
+        "amount": "1023.12",
+        "man_hours": 24.0,
+        "status": "not completed",
+        "responsible_employee": 3,
+        "month_of_completed": 3,
+        "month_signing_the_act": 4,
+        "month_of_accounting_act_in_salary": 3,
+        "agreement": 2
+    }
+},
+{
+    "model": "job_manager_app.actofcompletedwork",
+    "pk": 2,
+    "fields": {
+        "stage_number": 2,
+        "amount": "1023.12",
+        "man_hours": 24.0,
+        "status": "not completed",
+        "responsible_employee": 3,
+        "month_of_completed": 6,
+        "month_signing_the_act": 6,
+        "month_of_accounting_act_in_salary": 6,
+        "agreement": 2
+    }
+},
+{
+    "model": "job_manager_app.actofcompletedwork",
+    "pk": 3,
+    "fields": {
+        "stage_number": 3,
+        "amount": "1023.12",
+        "man_hours": 24.0,
+        "status": "not completed",
+        "responsible_employee": 3,
+        "month_of_completed": 9,
+        "month_signing_the_act": 9,
+        "month_of_accounting_act_in_salary": 9,
+        "agreement": 2
+    }
+},
+{
+    "model": "job_manager_app.actofcompletedwork",
+    "pk": 4,
+    "fields": {
+        "stage_number": 4,
+        "amount": "1023.12",
+        "man_hours": 24.0,
+        "status": "not completed",
+        "responsible_employee": 3,
+        "month_of_completed": 12,
+        "month_signing_the_act": 12,
+        "month_of_accounting_act_in_salary": 12,
+        "agreement": 2
+    }
+},
+{
+    "model": "job_manager_app.actofcompletedwork",
+    "pk": 5,
+    "fields": {
+        "stage_number": 1,
+        "amount": "5679.12",
+        "man_hours": 168.0,
+        "status": "not completed",
+        "responsible_employee": 1,
+        "month_of_completed": 3,
+        "month_signing_the_act": 3,
+        "month_of_accounting_act_in_salary": 3,
+        "agreement": 1
+    }
+},
+{
+    "model": "job_manager_app.actofcompletedwork",
+    "pk": 6,
+    "fields": {
+        "stage_number": 1,
+        "amount": "569.85",
+        "man_hours": 31.0,
+        "status": "not completed",
+        "responsible_employee": 3,
+        "month_of_completed": 1,
+        "month_signing_the_act": 1,
+        "month_of_accounting_act_in_salary": 1,
+        "agreement": 3
+    }
+},
+{
+    "model": "job_manager_app.actofcompletedwork",
+    "pk": 7,
+    "fields": {
+        "stage_number": 1,
+        "amount": "2000.00",
+        "man_hours": 119.0,
+        "status": "not completed",
+        "responsible_employee": 2,
+        "month_of_completed": 3,
+        "month_signing_the_act": 3,
+        "month_of_accounting_act_in_salary": 3,
+        "agreement": 4
+    }
+},
+{
+    "model": "job_manager_app.actofcompletedwork",
+    "pk": 8,
+    "fields": {
+        "stage_number": 2,
+        "amount": "2892.85",
+        "man_hours": 125.0,
+        "status": "not completed",
+        "responsible_employee": 2,
+        "month_of_completed": 4,
+        "month_signing_the_act": 4,
+        "month_of_accounting_act_in_salary": 4,
+        "agreement": 4
+    }
+},
+{
+    "model": "job_manager_app.company",
+    "pk": 1,
+    "fields": {
+        "name": "ОАО \"Предприятие коммунальное\"",
+        "unp": 290111111
+    }
+},
+{
+    "model": "job_manager_app.company",
+    "pk": 2,
+    "fields": {
+        "name": "ОАО \"Предприятие м/о\"",
+        "unp": 500011111
+    }
+},
+{
+    "model": "job_manager_app.company",
+    "pk": 3,
+    "fields": {
+        "name": "ОАО \"Предприятие д/о\"",
+        "unp": 600111111
+    }
+},
+{
+    "model": "job_manager_app.company",
+    "pk": 4,
+    "fields": {
+        "name": "ОАО \"Предприятие энергетическое\"",
+        "unp": 200077777
+    }
+},
+{
+    "model": "job_manager_app.company",
+    "pk": 5,
+    "fields": {
+        "name": "ОАО \"Предприятие строительное\"",
+        "unp": 200077888
+    }
+},
+{
+    "model": "job_manager_app.employee",
+    "pk": 1,
+    "fields": {
+        "name": "Петр",
+        "surname": "Петров",
+        "patronymic": "Петрович",
+        "rate": 1.0
+    }
+},
+{
+    "model": "job_manager_app.employee",
+    "pk": 2,
+    "fields": {
+        "name": "Иван",
+        "surname": "Иванов",
+        "patronymic": "Иванович",
+        "rate": 0.5
+    }
+},
+{
+    "model": "job_manager_app.employee",
+    "pk": 3,
+    "fields": {
+        "name": "Никита",
+        "surname": "Никитов",
+        "patronymic": "Никитович",
+        "rate": 1.0
+    }
+},
+{
+    "model": "job_manager_app.employee",
+    "pk": 4,
+    "fields": {
+        "name": "Алла",
+        "surname": "Али",
+        "patronymic": "Александровна",
+        "rate": 1.0
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 1,
+    "fields": {
+        "man_hours": 23.0,
+        "employee": 3,
+        "month": 1,
+        "act": 6
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 2,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 1,
+        "month": 1,
+        "act": 6
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 3,
+    "fields": {
+        "man_hours": 55.0,
+        "employee": 2,
+        "month": 2,
+        "act": 7
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 4,
+    "fields": {
+        "man_hours": 55.0,
+        "employee": 2,
+        "month": 3,
+        "act": 7
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 5,
+    "fields": {
+        "man_hours": 9.0,
+        "employee": 4,
+        "month": 2,
+        "act": 7
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 6,
+    "fields": {
+        "man_hours": 125.0,
+        "employee": 2,
+        "month": 4,
+        "act": 8
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 7,
+    "fields": {
+        "man_hours": 80.0,
+        "employee": 1,
+        "month": 2,
+        "act": 5
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 8,
+    "fields": {
+        "man_hours": 80.0,
+        "employee": 1,
+        "month": 3,
+        "act": 5
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 9,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 4,
+        "month": 2,
+        "act": 5
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 10,
+    "fields": {
+        "man_hours": 16.0,
+        "employee": 3,
+        "month": 3,
+        "act": 1
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 11,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 4,
+        "month": 3,
+        "act": 1
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 12,
+    "fields": {
+        "man_hours": 16.0,
+        "employee": 3,
+        "month": 6,
+        "act": 2
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 13,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 4,
+        "month": 6,
+        "act": 2
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 14,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 3,
+        "month": 7,
+        "act": 3
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 15,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 3,
+        "month": 8,
+        "act": 3
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 16,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 4,
+        "month": 7,
+        "act": 3
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 17,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 1,
+        "month": 11,
+        "act": 4
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 18,
+    "fields": {
+        "man_hours": 16.0,
+        "employee": 3,
+        "month": 11,
+        "act": 4
+    }
+},
+{
+    "model": "job_manager_app.serviceagreement",
+    "pk": 1,
+    "fields": {
+        "number": "2-1-23-ЛЭ",
+        "amount": "5679.12",
+        "date_of_signing": "2023-12-01",
+        "type_of_jobs": 5,
+        "company": 3
+    }
+},
+{
+    "model": "job_manager_app.serviceagreement",
+    "pk": 2,
+    "fields": {
+        "number": "1-1-23-ЛЭ",
+        "amount": "4092.48",
+        "date_of_signing": "2023-12-01",
+        "type_of_jobs": 6,
+        "company": 4
+    }
+},
+{
+    "model": "job_manager_app.serviceagreement",
+    "pk": 3,
+    "fields": {
+        "number": "3-1-23-ЛЭ",
+        "amount": "569.85",
+        "date_of_signing": "2023-01-25",
+        "type_of_jobs": 2,
+        "company": 5
+    }
+},
+{
+    "model": "job_manager_app.serviceagreement",
+    "pk": 4,
+    "fields": {
+        "number": "1-2-23-Э",
+        "amount": "4892.85",
+        "date_of_signing": "2023-02-02",
+        "type_of_jobs": 5,
+        "company": 1
+    }
+}
+]
