@@ -1,8 +1,11 @@
 import json
 import os
 
+import pytest
 from django.conf import settings
 from django.test import TestCase
+
+from job_manager_app.tests import PATH_TO_FIXTURES
 from job_manager_app.models import (
     ActOfCompletedWork,
     Company,
@@ -13,7 +16,6 @@ from job_manager_app.models import (
     TypeOfJob,
 )
 
-PATH_TO_FIXTURES = "job_manager_app/tests/fixtures/"
 CUSTOM_TYPES = (
     ActOfCompletedWork,
     Company,
@@ -24,6 +26,7 @@ CUSTOM_TYPES = (
     TypeOfJob,
 )
 
+pytestmark = [pytest.mark.django_db]
 
 class ModelsTestCase(TestCase):
     fixtures = [
@@ -51,14 +54,14 @@ class ModelsTestCase(TestCase):
         name_model = model.__name__.lower()
         for db_object in db_objects:
             valid_obj: dict = getattr(self, name_model)[db_object.pk]
-            for name_field, valid_field in valid_obj.items():
+            for name_field, valid_value_of_field in valid_obj.items():
                 db_field = getattr(db_object, str(name_field))
                 db_field = (
                     db_field.pk if isinstance(db_field, CUSTOM_TYPES) else db_field
                 )
-                assert str(db_field) == str(valid_field), (
+                assert str(db_field) == str(valid_value_of_field), (
                     f"Поле в БД не соответствует исходной фикстуре: "
-                    f"'{str(db_field)}' != '{str(valid_field)}'"
+                    f"'{str(db_field)}' != '{str(valid_value_of_field)}'"
                 )
 
     def test_ActOfCompletedWork(self):
