@@ -96,7 +96,7 @@ class ServiceAgreement(models.Model):
     amount = models.DecimalField(max_digits=14, decimal_places=2)
     date_of_signing = models.DateField()
     type_of_jobs = models.ForeignKey(
-        "TypeOfJobs", on_delete=models.CASCADE, related_name="agreements", null=True
+        "TypeOfJob", on_delete=models.CASCADE, related_name="agreements", null=True
     )
     company = models.ForeignKey(
         "Company", on_delete=models.CASCADE, related_name="agreements", null=True
@@ -109,7 +109,7 @@ class ServiceAgreement(models.Model):
         db_table = "service_agreement"
 
 
-class TypeOfJobs(models.Model):
+class TypeOfJob(models.Model):
     name = models.CharField(max_length=40)
 
     def __str__(self):

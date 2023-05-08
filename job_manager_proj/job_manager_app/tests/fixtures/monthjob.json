@@ -1,0 +1,182 @@
+[
+  {
+    "model": "job_manager_app.monthjob",
+    "pk": 1,
+    "fields": {
+        "man_hours": 23.0,
+        "employee": 3,
+        "month": 1,
+        "act": 6
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 2,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 1,
+        "month": 1,
+        "act": 6
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 3,
+    "fields": {
+        "man_hours": 55.0,
+        "employee": 2,
+        "month": 2,
+        "act": 7
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 4,
+    "fields": {
+        "man_hours": 55.0,
+        "employee": 2,
+        "month": 3,
+        "act": 7
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 5,
+    "fields": {
+        "man_hours": 9.0,
+        "employee": 4,
+        "month": 2,
+        "act": 7
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 6,
+    "fields": {
+        "man_hours": 125.0,
+        "employee": 2,
+        "month": 4,
+        "act": 8
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 7,
+    "fields": {
+        "man_hours": 80.0,
+        "employee": 1,
+        "month": 2,
+        "act": 5
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 8,
+    "fields": {
+        "man_hours": 80.0,
+        "employee": 1,
+        "month": 3,
+        "act": 5
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 9,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 4,
+        "month": 2,
+        "act": 5
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 10,
+    "fields": {
+        "man_hours": 16.0,
+        "employee": 3,
+        "month": 3,
+        "act": 1
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 11,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 4,
+        "month": 3,
+        "act": 1
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 12,
+    "fields": {
+        "man_hours": 16.0,
+        "employee": 3,
+        "month": 6,
+        "act": 2
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 13,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 4,
+        "month": 6,
+        "act": 2
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 14,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 3,
+        "month": 7,
+        "act": 3
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 15,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 3,
+        "month": 8,
+        "act": 3
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 16,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 4,
+        "month": 7,
+        "act": 3
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 17,
+    "fields": {
+        "man_hours": 8.0,
+        "employee": 1,
+        "month": 11,
+        "act": 4
+    }
+},
+{
+    "model": "job_manager_app.monthjob",
+    "pk": 18,
+    "fields": {
+        "man_hours": 16.0,
+        "employee": 3,
+        "month": 11,
+        "act": 4
+    }
+}
+]

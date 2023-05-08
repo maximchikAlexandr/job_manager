@@ -1,0 +1,46 @@
+[
+  {
+    "model": "job_manager_app.serviceagreement",
+    "pk": 1,
+    "fields": {
+        "number": "2-1-23-ЛЭ",
+        "amount": "5679.12",
+        "date_of_signing": "2023-12-01",
+        "type_of_jobs": 5,
+        "company": 3
+    }
+},
+{
+    "model": "job_manager_app.serviceagreement",
+    "pk": 2,
+    "fields": {
+        "number": "1-1-23-ЛЭ",
+        "amount": "4092.48",
+        "date_of_signing": "2023-12-01",
+        "type_of_jobs": 6,
+        "company": 4
+    }
+},
+{
+    "model": "job_manager_app.serviceagreement",
+    "pk": 3,
+    "fields": {
+        "number": "3-1-23-ЛЭ",
+        "amount": "569.85",
+        "date_of_signing": "2023-01-25",
+        "type_of_jobs": 2,
+        "company": 5
+    }
+},
+{
+    "model": "job_manager_app.serviceagreement",
+    "pk": 4,
+    "fields": {
+        "number": "1-2-23-Э",
+        "amount": "4892.85",
+        "date_of_signing": "2023-02-02",
+        "type_of_jobs": 5,
+        "company": 1
+    }
+}
+]

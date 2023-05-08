@@ -1,0 +1,42 @@
+[
+  {
+    "model": "job_manager_app.employee",
+    "pk": 1,
+    "fields": {
+        "name": "Петр",
+        "surname": "Петров",
+        "patronymic": "Петрович",
+        "rate": 1.0
+    }
+},
+{
+    "model": "job_manager_app.employee",
+    "pk": 2,
+    "fields": {
+        "name": "Иван",
+        "surname": "Иванов",
+        "patronymic": "Иванович",
+        "rate": 0.5
+    }
+},
+{
+    "model": "job_manager_app.employee",
+    "pk": 3,
+    "fields": {
+        "name": "Никита",
+        "surname": "Никитов",
+        "patronymic": "Никитович",
+        "rate": 1.0
+    }
+},
+{
+    "model": "job_manager_app.employee",
+    "pk": 4,
+    "fields": {
+        "name": "Алла",
+        "surname": "Али",
+        "patronymic": "Александровна",
+        "rate": 1.0
+    }
+}
+]
