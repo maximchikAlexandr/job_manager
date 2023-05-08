@@ -3,7 +3,7 @@ from django.core.handlers.wsgi import WSGIRequest
 
 from job_manager_app.models import (ActOfCompletedWork, Company, Employee,
                                     Month, MonthJob, ServiceAgreement,
-                                    TypeOfJobs)
+                                    TypeOfJob)
 from job_manager_app.services import ServiceAgreementValidator, ActOfCompletedWorkValidator
 
 
@@ -129,6 +129,6 @@ class ServiceAgreementJobAdmin(admin.ModelAdmin):
             validator.send_error_message(request)
 
 
-@admin.register(TypeOfJobs)
+@admin.register(TypeOfJob)
 class TypeOfJobsAdmin(admin.ModelAdmin):
     list_display = ["name"]
