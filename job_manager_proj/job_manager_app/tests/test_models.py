@@ -2,10 +2,9 @@ import json
 import os
 
 import pytest
-from django.conf import settings
 from django.test import TestCase
 
-from job_manager_app.tests import PATH_TO_FIXTURES
+from job_manager_app.tests import fixtures as fixs
 from job_manager_app.models import (
     ActOfCompletedWork,
     Company,
@@ -29,10 +28,7 @@ CUSTOM_TYPES = (
 pytestmark = [pytest.mark.django_db]
 
 class ModelsTestCase(TestCase):
-    fixtures = [
-        f"{PATH_TO_FIXTURES}/{fix}"
-        for fix in os.listdir(f"{settings.BASE_DIR}/{PATH_TO_FIXTURES}")
-    ]
+    fixtures = fixs
 
     def setUp(self) -> None:
         """
@@ -49,7 +45,7 @@ class ModelsTestCase(TestCase):
             for model in fixture:
                 getattr(self, attr_name)[model["pk"]] = model["fields"]
 
-    def check_model(self, model):
+    def check_model(self, *, model):
         db_objects = model.objects.all()
         name_model = model.__name__.lower()
         for db_object in db_objects:
@@ -65,22 +61,22 @@ class ModelsTestCase(TestCase):
                 )
 
     def test_ActOfCompletedWork(self):
-        self.check_model(ActOfCompletedWork)
+        self.check_model(model=ActOfCompletedWork)
 
     def test_Company(self):
-        self.check_model(Company)
+        self.check_model(model=Company)
 
     def test_Employee(self):
-        self.check_model(Employee)
+        self.check_model(model=Employee)
 
     def test_Month(self):
-        self.check_model(Month)
+        self.check_model(model=Month)
 
     def test_MonthJob(self):
-        self.check_model(MonthJob)
+        self.check_model(model=MonthJob)
 
     def test_ServiceAgreement(self):
-        self.check_model(ServiceAgreement)
+        self.check_model(model=ServiceAgreement)
 
     def test_TypeOfJobs(self):
-        self.check_model(TypeOfJob)
+        self.check_model(model=TypeOfJob)
