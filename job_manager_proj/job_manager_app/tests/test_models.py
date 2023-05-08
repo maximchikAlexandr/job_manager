@@ -10,7 +10,7 @@ from job_manager_app.models import (
     Month,
     MonthJob,
     ServiceAgreement,
-    TypeOfJobs,
+    TypeOfJob,
 )
 
 
