@@ -27,15 +27,18 @@ nano .env
 and fill it with the following environment variables:
 
 ```sh
-SECRET_KEY=some_key
+# Django parameters
 DEBUG=True
-POSTGRES_DB=some_db
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=some_password
-DB_HOST=postgres_db
-DB_PORT=some_port1
-DB_OUT_PORT=some_port2
+SECRET_KEY="the_key_used_for_encryption"
 PRODUCTION_HOST=some_prod_host
+
+# database parameters
+POSTGRES_DB="database_name" 
+POSTGRES_USER="your_database_username"
+POSTGRES_PASSWORD="your_database_password"
+DB_HOST="your_database_host"
+DB_PORT="port_of_your_database_in_container"
+DB_OUT_PORT="outer_port_of_your_database"
 ```
 
 Create and start the docker containers:
