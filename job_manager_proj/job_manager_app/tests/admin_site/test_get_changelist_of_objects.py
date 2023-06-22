@@ -60,7 +60,7 @@ class AdminSiteGetChangelistTestCase(BaseAdminSiteTestCaseMixin, TestCase):
 
     def test_typeofjob(self):
         self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
-        url = reverse(f"admin:{JobManagerAppConfig.name}_typeofjob_changelist")
+        url = reverse(f"admin:{JobManagerAppConfig.name}_typeofjobs_changelist")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Type of jobs")

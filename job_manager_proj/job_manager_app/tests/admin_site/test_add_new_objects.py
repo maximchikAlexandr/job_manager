@@ -70,7 +70,7 @@ class AdminSiteAddObjectTestCase(BaseAdminSiteTestCaseMixin, TestCase):
         self.assertTrue(object_added)
 
     def test_add_typeofjob(self):
-        url = reverse(f"admin:{JobManagerAppConfig.name}_typeofjob_add")
+        url = reverse(f"admin:{JobManagerAppConfig.name}_typeofjobs_add")
         data = {"name": "test_type"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 302)

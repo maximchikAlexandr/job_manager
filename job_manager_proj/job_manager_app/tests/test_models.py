@@ -27,6 +27,7 @@ CUSTOM_TYPES = (
 
 pytestmark = [pytest.mark.django_db]
 
+
 class ModelsTestCase(TestCase):
     fixtures = fixs
 
@@ -39,7 +40,7 @@ class ModelsTestCase(TestCase):
             with open(fix_path, "r", encoding="utf-8") as fixture_file:
                 fixture = json.load(fixture_file)
                 attr_name = os.path.basename(fix_path)
-                attr_name = attr_name.rstrip(".json")
+                attr_name = attr_name.replace(".json", "")
             setattr(self, attr_name, {})
 
             for model in fixture:

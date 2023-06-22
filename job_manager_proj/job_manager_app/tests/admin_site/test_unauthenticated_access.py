@@ -45,4 +45,4 @@ class AdminSiteGetRequestTestCase(BaseAdminSiteTestCaseMixin, TestCase):
         self.check_redirect_unauthenticated_user(name_model="serviceagreement")
 
     def test_typeofjob_redirect_unauthenticated_user(self):
-        self.check_redirect_unauthenticated_user(name_model="typeofjob")
+        self.check_redirect_unauthenticated_user(name_model="typeofjobs")
