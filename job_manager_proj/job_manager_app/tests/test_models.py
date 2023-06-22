@@ -12,7 +12,7 @@ from job_manager_app.models import (
     Month,
     MonthJob,
     ServiceAgreement,
-    TypeOfJob,
+    TypeOfJobs,
 )
 
 CUSTOM_TYPES = (
@@ -22,7 +22,7 @@ CUSTOM_TYPES = (
     Month,
     MonthJob,
     ServiceAgreement,
-    TypeOfJob,
+    TypeOfJobs,
 )
 
 pytestmark = [pytest.mark.django_db]
@@ -79,4 +79,4 @@ class ModelsTestCase(TestCase):
         self.check_model(model=ServiceAgreement)
 
     def test_TypeOfJobs(self):
-        self.check_model(model=TypeOfJob)
+        self.check_model(model=TypeOfJobs)

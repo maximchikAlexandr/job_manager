@@ -10,7 +10,7 @@ from job_manager_app.models import (
     Month,
     MonthJob,
     ServiceAgreement,
-    TypeOfJob,
+    TypeOfJobs,
 )
 from job_manager_app.tests.admin_site import BaseAdminSiteTestCaseMixin
 
@@ -74,5 +74,5 @@ class AdminSiteAddObjectTestCase(BaseAdminSiteTestCaseMixin, TestCase):
         data = {"name": "test_type"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 302)
-        object_added: bool = TypeOfJob.objects.filter(name=data["name"]).exists()
+        object_added: bool = TypeOfJobs.objects.filter(name=data["name"]).exists()
         self.assertTrue(object_added)

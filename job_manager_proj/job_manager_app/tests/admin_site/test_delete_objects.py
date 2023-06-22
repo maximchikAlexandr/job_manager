@@ -10,7 +10,7 @@ from job_manager_app.models import (
     Month,
     MonthJob,
     ServiceAgreement,
-    TypeOfJob,
+    TypeOfJobs,
 )
 from job_manager_app.tests.admin_site import BaseAdminSiteTestCaseMixin
 
@@ -49,4 +49,4 @@ class AdminSiteDeleteObjectTestCase(BaseAdminSiteTestCaseMixin, TestCase):
         self.check_delete_object(model=ServiceAgreement)
 
     def test_delete_typeofjob(self):
-        self.check_delete_object(model=TypeOfJob)
+        self.check_delete_object(model=TypeOfJobs)
