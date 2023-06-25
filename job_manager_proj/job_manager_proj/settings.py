@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_extensions",
 
-    "job_manager_app.apps.JobManagerAppConfig",
+    "catalog.apps.CatalogConfig",
+    "commerce.apps.CommerceConfig",
+    "management.apps.ManagementConfig",
 ]
 
 MIDDLEWARE = [

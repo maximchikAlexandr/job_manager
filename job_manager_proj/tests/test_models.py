@@ -4,16 +4,13 @@ import os
 import pytest
 from django.test import TestCase
 
-from job_manager_app.tests import fixtures as fixs
-from job_manager_app.models import (
-    ActOfCompletedWork,
-    Company,
-    Employee,
-    Month,
-    MonthJob,
-    ServiceAgreement,
-    TypeOfJob,
-)
+from catalog.models import Company, Month, TypeOfJobs
+from commerce.models import ActOfCompletedWork, ServiceAgreement
+from management.models import Employee, MonthJob
+from tests import fixtures as fixs
+
+
+
 
 CUSTOM_TYPES = (
     ActOfCompletedWork,
@@ -22,10 +19,11 @@ CUSTOM_TYPES = (
     Month,
     MonthJob,
     ServiceAgreement,
-    TypeOfJob,
+    TypeOfJobs,
 )
 
 pytestmark = [pytest.mark.django_db]
+
 
 class ModelsTestCase(TestCase):
     fixtures = fixs
@@ -39,7 +37,7 @@ class ModelsTestCase(TestCase):
             with open(fix_path, "r", encoding="utf-8") as fixture_file:
                 fixture = json.load(fixture_file)
                 attr_name = os.path.basename(fix_path)
-                attr_name = attr_name.rstrip(".json")
+                attr_name = attr_name.replace(".json", "")
             setattr(self, attr_name, {})
 
             for model in fixture:
@@ -79,4 +77,4 @@ class ModelsTestCase(TestCase):
         self.check_model(model=ServiceAgreement)
 
     def test_TypeOfJobs(self):
-        self.check_model(model=TypeOfJob)
+        self.check_model(model=TypeOfJobs)

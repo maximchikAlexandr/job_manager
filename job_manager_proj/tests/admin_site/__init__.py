@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 
-from job_manager_app.tests import fixtures as fixs
+from tests import fixtures as fixs
 
 
 class BaseAdminSiteTestCaseMixin:
