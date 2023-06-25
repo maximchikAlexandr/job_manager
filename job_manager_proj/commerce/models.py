@@ -7,7 +7,9 @@ class PlannedBusinessTrip(models.Model):
     day_count = models.IntegerField(null=False, default=1)
     staff_count = models.IntegerField(null=False, default=2)
     lodging_cost = models.DecimalField(max_digits=14, decimal_places=2, default=0)
-    public_transportation_fare = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    public_transportation_fare = models.DecimalField(
+        max_digits=14, decimal_places=2, default=0
+    )
     one_way_distance_on_company_transport = models.IntegerField(null=True, default=250)
     locality = models.CharField(max_length=50)
     budget_calculation = models.ForeignKey(
@@ -19,7 +21,6 @@ class PlannedBusinessTrip(models.Model):
 
     def __str__(self):
         return f"{self.locality} - {self.day_count} дня {self.staff_count} чел."
-
 
 
 class BudgetCalculation(models.Model):
@@ -46,7 +47,6 @@ class BudgetCalculation(models.Model):
         return f"{self.type_of_jobs} - {self.workload} чч."
 
 
-
 class CommercialProposal(models.Model):
     service_descriptions = models.TextField(null=False)
     service_delivery_period = models.IntegerField(null=False, default=168)
@@ -67,14 +67,14 @@ class CommercialProposal(models.Model):
         "ServiceAgreement",
         on_delete=models.CASCADE,
         related_name="commercial_proposals",
-        null=True, blank=True
+        null=True,
+        blank=True,
     )
 
     crm_deal_id = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.company} - {self.type_of_jobs}"
-
 
 
 class ServiceAgreement(models.Model):
@@ -93,7 +93,6 @@ class ServiceAgreement(models.Model):
         return f"№{self.number}"
 
 
-
 class AgreementStage(models.Model):
     service_descriptions = models.TextField(null=False)
     number = models.CharField(max_length=30)
@@ -104,7 +103,6 @@ class AgreementStage(models.Model):
         related_name="agreement_stages",
         null=False,
     )
-
 
 
 class ActOfCompletedWork(models.Model):
