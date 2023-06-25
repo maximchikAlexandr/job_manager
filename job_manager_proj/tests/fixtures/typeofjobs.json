@@ -1,41 +1,41 @@
 [
 {
-    "model": "job_manager_app.typeofjob",
+    "model": "job_manager_app.typeofjobs",
     "pk": 1,
     "fields": {
         "name": "Вентиляция"
     }
 },
 {
-    "model": "job_manager_app.typeofjob",
+    "model": "job_manager_app.typeofjobs",
     "pk": 2,
     "fields": {
         "name": "ГОУ"
     }
 },
 {
-    "model": "job_manager_app.typeofjob",
+    "model": "job_manager_app.typeofjobs",
     "pk": 3,
     "fields": {
         "name": "ГОУ. Вентиляция"
     }
 },
 {
-    "model": "job_manager_app.typeofjob",
+    "model": "job_manager_app.typeofjobs",
     "pk": 4,
     "fields": {
         "name": "Журналы ПОД-1-2-3"
     }
 },
 {
-    "model": "job_manager_app.typeofjob",
+    "model": "job_manager_app.typeofjobs",
     "pk": 5,
     "fields": {
         "name": "Инвентаризация выбросов"
     }
 },
 {
-    "model": "job_manager_app.typeofjob",
+    "model": "job_manager_app.typeofjobs",
     "pk": 6,
     "fields": {
         "name": "Инструментальные измерения"
