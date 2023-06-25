@@ -1,21 +1,58 @@
-from django.contrib.admin import (ModelAdmin, StackedInline, TabularInline,
-                                  models, register, widgets)
-from django.core.handlers.wsgi import WSGIRequest
-from job_manager_app.models import (ActOfCompletedWork, AgreementStage,
-                                    BankBranchAddress, BudgetCalculation,
-                                    CommercialProposal, Company, Department,
-                                    Employee, HeadOfDepartment, Month,
-                                    MonthJob, PlannedBusinessTrip,
-                                    RegisteredAddress, ServiceAgreement,
-                                    TypeOfJobs)
-from job_manager_app.services import (ActOfCompletedWorkValidator,
-                                      ServiceAgreementValidator)
+from django.contrib.admin import (
+    ModelAdmin,
+    StackedInline,
+    TabularInline,
+    models,
+    register,
+    widgets,
+)
+from django import forms
+from django.contrib.admin.widgets import AdminTextInputWidget
+
+from job_manager_app.models import (
+    ActOfCompletedWork,
+    AgreementStage,
+    BankBranchAddress,
+    BudgetCalculation,
+    CommercialProposal,
+    Company,
+    Department,
+    Employee,
+    HeadOfDepartment,
+    Month,
+    MonthJob,
+    PlannedBusinessTrip,
+    RegisteredAddress,
+    ServiceAgreement,
+    TypeOfJobs,
+)
 
 
-def get_logs_by(obj, model_name):
-    return models.LogEntry.objects.filter(
-        object_id=obj.pk, content_type__model=model_name
-    )
+class AbstractModelAdmin(ModelAdmin):
+    def get_logs_by(self, obj):
+        return models.LogEntry.objects.filter(
+            object_id=obj.pk, content_type__model=self.opts.model_name
+        )
+
+    def author(self, obj=None):
+        if obj is not None:
+            return getattr(self.get_logs_by(obj).first(), "user", None)
+        return "unknown"
+
+    def editor(self, obj=None):
+        if obj is not None:
+            return getattr(self.get_logs_by(obj).last(), "user", None)
+        return "unknown"
+
+    def created(self, obj=None):
+        if obj is not None:
+            return getattr(self.get_logs_by(obj).first(), "action_time", None)
+        return "unknown"
+
+    def edited(self, obj=None):
+        if obj is not None:
+            return getattr(self.get_logs_by(obj).last(), "action_time", None)
+        return "unknown"
 
 
 # ________________________________________________________________
@@ -25,16 +62,50 @@ class TypeOfJobsAdmin(ModelAdmin):
     list_display = ["name"]
 
 
-class RegisteredAddressInline(TabularInline):
+class AddressTabularInline(TabularInline):
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        field = super().formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == "postal_code":
+            field.widget.attrs["style"] = "width: 100px;"
+        elif db_field.name == "region":
+            field.widget.attrs["style"] = "width: 150px;"
+        elif db_field.name == "district":
+            field.widget.attrs["style"] = "width: 150px;"
+        elif db_field.name == "locality":
+            field.widget.attrs["style"] = "width: 150px;"
+        elif db_field.name == "street":
+            field.widget.attrs["style"] = "width: 250px;"
+        elif db_field.name == "house_number":
+            field.widget.attrs["style"] = "width: 50px;"
+        elif db_field.name == "office_number":
+            field.widget.attrs["style"] = "width: 50px;"
+        return field
+
+
+class RegisteredAddressInline(AddressTabularInline):
     model = RegisteredAddress
 
 
-class BankBranchAddressInline(TabularInline):
+class BankBranchAddressInline(AddressTabularInline):
     model = BankBranchAddress
+
+
+class CompanyAdminForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=AdminTextInputWidget(attrs={"class": "name", "style": "width: 400px;"})
+    )
+    unp = forms.CharField(
+        widget=AdminTextInputWidget(attrs={"class": "unp", "style": "width: 260px;"})
+    )
+
+    class Meta:
+        model = Company
+        fields = "__all__"
 
 
 @register(Company)
 class CompanyAdmin(ModelAdmin):
+    form = CompanyAdminForm
     inlines = [RegisteredAddressInline, BankBranchAddressInline]
     list_display = ["name"]
 
@@ -62,11 +133,11 @@ class MonthAdmin(ModelAdmin):
 
 class PlannedBusinessTripInline(StackedInline):
     model = PlannedBusinessTrip
-    extra = 1
+    extra = 0
 
 
 @register(BudgetCalculation)
-class BudgetCalculationAdmin(ModelAdmin):
+class BudgetCalculationAdmin(AbstractModelAdmin):
     list_display = ["company", "type_of_jobs", "created", "edited"]
     inlines = [PlannedBusinessTripInline]
 
@@ -77,87 +148,40 @@ class BudgetCalculationAdmin(ModelAdmin):
         except AttributeError:
             return f"Смета не связана с КП"
 
-    def created(self, obj=None):
-        if obj is not None:
-            return getattr(
-                get_logs_by(obj, self.opts.model_name).first(), "action_time", None
-            )
-        return "unknown"
-
-    def edited(self, obj=None):
-        if obj is not None:
-            return getattr(
-                get_logs_by(obj, self.opts.model_name).last(), "action_time", None
-            )
-        return "unknown"
-
 
 @register(CommercialProposal)
-class CommercialProposalAdmin(ModelAdmin):
-    list_display = ["service_descriptions", "created", "edited"]
-
-    def created(self, obj=None):
-        if obj is not None:
-            return getattr(
-                get_logs_by(obj, self.opts.model_name).first(), "action_time", None
-            )
-        return "unknown"
-
-    def edited(self, obj=None):
-        if obj is not None:
-            return getattr(
-                get_logs_by(obj, self.opts.model_name).last(), "action_time", None
-            )
-        return "unknown"
+class CommercialProposalAdmin(AbstractModelAdmin):
+    list_display = ["company", "type_of_jobs", "created", "edited"]
 
 
 class StageItemInline(StackedInline):
     model = AgreementStage
-    extra = 2
+    extra = 0
 
 
 @register(ServiceAgreement)
-class ServiceAgreementJobAdmin(ModelAdmin):
+class ServiceAgreementJobAdmin(AbstractModelAdmin):
     inlines = [StageItemInline]
     list_display = ["number", "amount", "company"]
-    list_editable = ["company"]
 
-    def save_model(
-        self,
-        request: WSGIRequest,
-        obj: ServiceAgreement,
-        form: "ServiceAgreementForm",
-        change: bool,
-    ):
-        obj.save()
-        validator = ServiceAgreementValidator(obj)
-        if not validator.has_valid_sum():
-            validator.send_error_message(request)
+    # def save_model(
+    #     self,
+    #     request: WSGIRequest,
+    #     obj: ServiceAgreement,
+    #     form: "ServiceAgreementForm",
+    #     change: bool,
+    # ):
+    #     obj.save()
+    #     validator = ServiceAgreementValidator(obj)
+    #     if not validator.has_valid_sum():
+    #         validator.send_error_message(request)
 
-    def created(self, obj=None):
-        if obj is not None:
-            return getattr(
-                get_logs_by(obj, self.opts.model_name).first(), "action_time", None
-            )
-        return "unknown"
-
-    def edited(self, obj=None):
-        if obj is not None:
-            return getattr(
-                get_logs_by(obj, self.opts.model_name).last(), "action_time", None
-            )
-        return "unknown"
 
 
 @register(ActOfCompletedWork)
-class ActOfCompletedWorkAdmin(ModelAdmin):
+class ActOfCompletedWorkAdmin(AbstractModelAdmin):
     list_display = [
         "company",
-        "status",
-        "month_signing_the_act",
-        "month_of_accounting_act_in_salary",
-    ]
-    list_editable = [
         "status",
         "month_signing_the_act",
         "month_of_accounting_act_in_salary",
@@ -166,38 +190,27 @@ class ActOfCompletedWorkAdmin(ModelAdmin):
     def company(self, obj):
         return obj.agreement.company
 
-    def save_model(
-        self,
-        request: WSGIRequest,
-        obj: ActOfCompletedWork,
-        form: "ActOfCompletedWorkForm",
-        change: bool,
-    ):
-        obj.save()
-
-        money_validator = ServiceAgreementValidator(obj.agreement)
-        if not money_validator.has_valid_sum():
-            money_validator.send_error_message(request)
-
-        hour_validator = ActOfCompletedWorkValidator(obj)
-        if not hour_validator.has_valid_sum():
-            hour_validator.send_error_message(request)
-
-    def created(self, obj=None):
-        if obj is not None:
-            return getattr(
-                get_logs_by(obj, self.opts.model_name).first(), "action_time", None
-            )
-        return "unknown"
-
-    def edited(self, obj=None):
-        if obj is not None:
-            return getattr(
-                get_logs_by(obj, self.opts.model_name).last(), "action_time", None
-            )
-        return "unknown"
+    # def save_model(
+    #     self,
+    #     request: WSGIRequest,
+    #     obj: ActOfCompletedWork,
+    #     form: "ActOfCompletedWorkForm",
+    #     change: bool,
+    # ):
+    #     obj.save()
+    #
+    #     money_validator = ServiceAgreementValidator(obj.agreement)
+    #     if not money_validator.has_valid_sum():
+    #         money_validator.send_error_message(request)
+    #
+    #     hour_validator = ActOfCompletedWorkValidator(obj)
+    #     if not hour_validator.has_valid_sum():
+    #         hour_validator.send_error_message(request)
 
 
+
+# ________________________________________________________________
+# Management
 @register(MonthJob)
 class MonthJobAdmin(ModelAdmin):
     list_display = ["company", "man_hours", "employee", "month"]
@@ -206,18 +219,18 @@ class MonthJobAdmin(ModelAdmin):
     def company(self, obj):
         return obj.act.agreement.company
 
-    def save_model(
-        self,
-        request: WSGIRequest,
-        obj: MonthJob,
-        form: "MonthJobAdminWorkForm",
-        change: bool,
-    ):
-        obj.save()
-
-        hour_validator = ActOfCompletedWorkValidator(obj.act)
-        if not hour_validator.has_valid_sum():
-            hour_validator.send_error_message(request)
+    # def save_model(
+    #     self,
+    #     request: WSGIRequest,
+    #     obj: MonthJob,
+    #     form: "MonthJobAdminWorkForm",
+    #     change: bool,
+    # ):
+    #     obj.save()
+    #
+    #     hour_validator = ActOfCompletedWorkValidator(obj.act)
+    #     if not hour_validator.has_valid_sum():
+    #         hour_validator.send_error_message(request)
 
 
 @register(Employee)
