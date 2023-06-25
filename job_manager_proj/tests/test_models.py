@@ -4,16 +4,13 @@ import os
 import pytest
 from django.test import TestCase
 
-from job_manager_app.tests import fixtures as fixs
-from job_manager_app.models import (
-    ActOfCompletedWork,
-    Company,
-    Employee,
-    Month,
-    MonthJob,
-    ServiceAgreement,
-    TypeOfJobs,
-)
+from catalog.models import Company, Month, TypeOfJobs
+from commerce.models import ActOfCompletedWork, ServiceAgreement
+from management.models import Employee, MonthJob
+from tests import fixtures as fixs
+
+
+
 
 CUSTOM_TYPES = (
     ActOfCompletedWork,
