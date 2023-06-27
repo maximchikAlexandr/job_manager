@@ -1,11 +1,10 @@
 from django.contrib.admin import (
-    ModelAdmin,
     StackedInline,
-    models,
+TabularInline,
     register,
 )
 
-
+from commerce.calculations import calc_total_cost
 from commerce.models import (
     ActOfCompletedWork,
     AgreementStage,
@@ -17,7 +16,7 @@ from commerce.models import (
 from shared_classes import AbstractModelAdmin
 
 
-class PlannedBusinessTripInline(StackedInline):
+class PlannedBusinessTripInline(TabularInline):
     model = PlannedBusinessTrip
     extra = 0
 
@@ -25,11 +24,16 @@ class PlannedBusinessTripInline(StackedInline):
 @register(BudgetCalculation)
 class BudgetCalculationAdmin(AbstractModelAdmin):
     list_display = ["company", "type_of_jobs", "created", "edited"]
+    readonly_fields = ('total_cost',)
     inlines = [PlannedBusinessTripInline]
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        obj = calc_total_cost(obj)
+        obj.save()
 
     def company(self, obj):
         try:
-            # company = obj.commercial_proposal.company
             return obj.commercial_proposal.company
         except AttributeError:
             return f"Смета не связана с КП"

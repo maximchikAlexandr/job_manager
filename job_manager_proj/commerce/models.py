@@ -28,7 +28,7 @@ class BudgetCalculation(models.Model):
     hourly_rate = models.DecimalField(max_digits=14, decimal_places=2, default=5.8)
     outsourcing_costs = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     profit = models.IntegerField(null=True, default=25)
-    total_cost = models.DecimalField(max_digits=14, decimal_places=2)
+    total_cost = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     type_of_jobs = models.ForeignKey(
         TypeOfJobs,
         on_delete=models.CASCADE,
