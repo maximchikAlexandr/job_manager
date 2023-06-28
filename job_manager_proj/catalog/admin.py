@@ -56,6 +56,7 @@ class CompanyAdminForm(forms.ModelForm):
     unp = forms.CharField(
         widget=AdminTextInputWidget(attrs={"class": "unp", "style": "width: 260px;"})
     )
+    save_on_top = True
 
     class Meta:
         model = Company

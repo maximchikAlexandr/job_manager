@@ -26,6 +26,7 @@ class BudgetCalculationAdmin(AbstractModelAdmin):
     list_display = ["company", "type_of_jobs", "created", "edited"]
     readonly_fields = ('total_cost',)
     inlines = [PlannedBusinessTripInline]
+    save_on_top = True
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
@@ -53,6 +54,7 @@ class StageItemInline(StackedInline):
 class ServiceAgreementJobAdmin(AbstractModelAdmin):
     inlines = [StageItemInline]
     list_display = ["number", "amount", "company"]
+    save_on_top = True
 
     # def save_model(
     #     self,
