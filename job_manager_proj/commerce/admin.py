@@ -1,9 +1,8 @@
-from django.contrib.admin import (
-    StackedInline,
-TabularInline,
-    register,
-)
+from django import forms
+from django.contrib.admin import StackedInline, TabularInline, register
+from django.db.models import Q
 
+from shared_classes import AbstractModelAdmin
 from commerce.calculations import calc_total_cost
 from commerce.models import (
     ActOfCompletedWork,
@@ -13,7 +12,6 @@ from commerce.models import (
     PlannedBusinessTrip,
     ServiceAgreement,
 )
-from shared_classes import AbstractModelAdmin
 
 
 class PlannedBusinessTripInline(TabularInline):
@@ -24,7 +22,7 @@ class PlannedBusinessTripInline(TabularInline):
 @register(BudgetCalculation)
 class BudgetCalculationAdmin(AbstractModelAdmin):
     list_display = ["company", "type_of_jobs", "created", "edited"]
-    readonly_fields = ('total_cost',)
+    readonly_fields = ("total_cost",)
     inlines = [PlannedBusinessTripInline]
     save_on_top = True
 
@@ -40,9 +38,46 @@ class BudgetCalculationAdmin(AbstractModelAdmin):
             return f"Смета не связана с КП"
 
 
+class CommercialProposalForm(forms.ModelForm):
+    new_budget_calculations = forms.ModelMultipleChoiceField(
+        queryset=BudgetCalculation.objects.exclude(
+            Q(commercial_proposal__isnull=False)
+        ),
+        required=False,
+    )
+
+    class Meta:
+        model = CommercialProposal
+        fields = "__all__"
+
+    def save(self, commit=True):
+        commercial_proposal = super().save(commit=commit)
+        commercial_proposal.save()
+
+        for calculation in self.cleaned_data["new_budget_calculations"].all():
+            calculation.commercial_proposal = commercial_proposal
+            calculation.save()
+
+        total_cost = 0
+        for calculation in commercial_proposal.budget_calculations.all():
+            total_cost += calculation.total_cost
+
+        commercial_proposal.total_cost = total_cost
+
+        return commercial_proposal
+
+
+class BudgetCalculationInline(TabularInline):
+    model = BudgetCalculation
+    extra = 0
+
+
 @register(CommercialProposal)
 class CommercialProposalAdmin(AbstractModelAdmin):
+    inlines = [BudgetCalculationInline]
     list_display = ["company", "type_of_jobs", "created", "edited"]
+    readonly_fields = ("total_cost",)
+    form = CommercialProposalForm
 
 
 class StageItemInline(StackedInline):
