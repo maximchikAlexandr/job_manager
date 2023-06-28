@@ -18,7 +18,7 @@ function updateTotalCost() {
             travel_expenses += (day_count * staff_count * 9 + lodging_cost + public_transportation_fare);
         }
     }
-    var travel_expenses = Math.ceil(travel_expenses);
+    travel_expenses = Math.ceil(travel_expenses);
     var transportation_expenses = Math.ceil(0.5630625 * mileage);
     var workload = parseFloat(document.getElementById('id_workload').value);
     var hourlyRate = parseFloat(document.getElementById('id_hourly_rate').value);
@@ -49,22 +49,6 @@ function updateTotalCost() {
 
     var totalCostElement = document.querySelector('.form-row.field-total_cost .flex-container' +
         ' .readonly');
-    console.log("salary = " + salary);
-    console.log("income_taxes = " + income_taxes);
-    console.log("social_security_contributions = " + social_security_contributions);
-    console.log("overhead_expenses = " + overhead_expenses);
-    console.log("depreciation_expenses = " + depreciation_expenses);
-    console.log("transportation_expenses = " + transportation_expenses);
-    console.log("accident_insurance = " + accident_insurance);
-    console.log("travel_expenses = " + travel_expenses);
-    console.log("mileage = " + mileage);
-    console.log("travel_expenses = " + travel_expenses);
-    console.log("workload = " + workload);
-    console.log("hourlyRate = " + hourlyRate);
-    console.log("profit = " + profit);
-    console.log("price_excluding_vat = " + price_excluding_vat);
-    console.log("vat = " + vat);
-    console.log("selling_price_including_vat = " + selling_price_including_vat);
 
     totalCostElement.textContent = selling_price_including_vat.toFixed(2);
 }
