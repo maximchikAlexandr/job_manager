@@ -1,6 +1,6 @@
+from catalog.models import Company, Month, TypeOfJobs
+from commerce.services import calc_total_cost
 from django.db import models
-
-from catalog.models import Company, TypeOfJobs, Month
 
 
 class PlannedBusinessTrip(models.Model):
@@ -20,7 +20,7 @@ class PlannedBusinessTrip(models.Model):
     )
 
     def __str__(self):
-        return f"{self.locality} - {self.day_count} дня {self.staff_count} чел."
+        return f"{self.locality} - {self.day_count} дн. {self.staff_count} чел."
 
 
 class BudgetCalculation(models.Model):
@@ -32,7 +32,7 @@ class BudgetCalculation(models.Model):
     type_of_jobs = models.ForeignKey(
         TypeOfJobs,
         on_delete=models.CASCADE,
-        related_name="agreements",
+        related_name="budget_calculations",
         null=False,
     )
     commercial_proposal = models.ForeignKey(
@@ -44,24 +44,35 @@ class BudgetCalculation(models.Model):
     )
 
     def __str__(self):
-        return f"{self.type_of_jobs} - {self.workload} чч."
+        return f"{self.type_of_jobs} - {self.workload} чч. - {self.total_cost} р."
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super().save(*args, **kwargs)
+
+        new_total_cost = calc_total_cost(self)
+        if self.total_cost != new_total_cost:
+            self.total_cost = new_total_cost
+        super().save(*args, **kwargs)
+
+        if self.commercial_proposal:
+            self.commercial_proposal.save()
 
 
 class CommercialProposal(models.Model):
-    service_descriptions = models.TextField(null=False)
-    service_delivery_period = models.IntegerField(null=False, default=168)
-    total_cost = models.DecimalField(max_digits=14, decimal_places=2)
+    service_descriptions = models.TextField(null=False, blank=True)
+    service_delivery_period = models.IntegerField(null=False, default=60)
+    total_cost = models.DecimalField(
+        max_digits=14, decimal_places=2, null=True, blank=True
+    )
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE,
         related_name="commercial_proposals",
         null=False,
     )
-    type_of_jobs = models.ForeignKey(
-        TypeOfJobs,
-        on_delete=models.CASCADE,
-        related_name="commercial_proposals",
-        null=True,
+    type_of_jobs = models.ManyToManyField(
+        TypeOfJobs, related_name="commercial_proposals", null=True, blank=True
     )
     service_agreement = models.ForeignKey(
         "ServiceAgreement",
@@ -74,13 +85,24 @@ class CommercialProposal(models.Model):
     crm_deal_id = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.company} - {self.type_of_jobs}"
+        return f"{self.company} - {self.total_cost} р. - {self.service_delivery_period} дн."
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            total_cost = 0
+            for calculation in self.budget_calculations.all():
+                total_cost += calculation.total_cost
+            if self.total_cost != total_cost:
+                self.total_cost = total_cost
+        super().save(*args, **kwargs)
+        if self.service_agreement:
+            self.service_agreement.save()
 
 
 class ServiceAgreement(models.Model):
     service_descriptions = models.TextField(null=False)
     number = models.CharField(max_length=30)
-    amount = models.DecimalField(max_digits=14, decimal_places=2)
+    amount = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)
     date_of_signing = models.DateField()
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, related_name="agreements", null=False
@@ -90,7 +112,16 @@ class ServiceAgreement(models.Model):
     task_id = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f"№{self.number}"
+        return f"№{self.number} - {self.amount} р."
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            total_cost = 0
+            for proposal in self.commercial_proposals.all():
+                total_cost += proposal.total_cost
+            if self.amount != total_cost:
+                self.amount = total_cost
+        super().save(*args, **kwargs)
 
 
 class AgreementStage(models.Model):
@@ -137,9 +168,11 @@ class ActOfCompletedWork(models.Model):
     def __str__(self):
         message = ""
         try:
-            message += f"этап №{self.agreement_stage.number}\n"
+            message += f"этап №{self.agreement_stage and self.agreement_stage.number}\n"
         except AgreementStage.DoesNotExist:
             message += f"дог. №{self.service_agreement.number}"
+        except AttributeError:
+            message += f"Новый АВР"
         return message
 
     class Meta:
