@@ -1,12 +1,7 @@
-from django.contrib.admin import (
-    ModelAdmin,
-    TabularInline,
-    register,
-)
-from django import forms
-from django.contrib.admin.widgets import AdminTextInputWidget
+from django.contrib.admin import ModelAdmin, TabularInline, register
 from import_export.admin import ImportExportMixin
 
+from catalog.forms import CompanyAdminForm
 from catalog.models import (
     BankBranchAddress,
     Company,
@@ -14,7 +9,7 @@ from catalog.models import (
     RegisteredAddress,
     TypeOfJobs,
 )
-from catalog.resources import MonthResource, CompanyResource
+from catalog.resources import CompanyResource, MonthResource
 
 
 @register(TypeOfJobs)
@@ -50,26 +45,14 @@ class BankBranchAddressInline(AddressTabularInline):
     model = BankBranchAddress
 
 
-class CompanyAdminForm(forms.ModelForm):
-    name = forms.CharField(
-        widget=AdminTextInputWidget(attrs={"class": "name", "style": "width: 400px;"})
-    )
-    unp = forms.CharField(
-        widget=AdminTextInputWidget(attrs={"class": "unp", "style": "width: 260px;"})
-    )
-    save_on_top = True
-
-    class Meta:
-        model = Company
-        fields = "__all__"
-
-
 @register(Company)
 class CompanyAdmin(ImportExportMixin, ModelAdmin):
     resource_class = CompanyResource
     form = CompanyAdminForm
     inlines = [RegisteredAddressInline, BankBranchAddressInline]
-    list_display = ["name"]
+    list_display = ("name",)
+    list_per_page = 20
+    ordering = ("name",)
 
 
 @register(Month)

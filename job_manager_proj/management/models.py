@@ -4,8 +4,6 @@ from catalog.models import Month
 from commerce.models import ServiceAgreement
 
 
-# ________________________________________________________________
-# Management
 class MonthJob(models.Model):
     PRODUCED = "produced"
     PLANNED = "planned"
