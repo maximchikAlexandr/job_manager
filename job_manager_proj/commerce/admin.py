@@ -1,22 +1,20 @@
+from django.contrib.admin import TabularInline, register
+from django.core.handlers.wsgi import WSGIRequest
+from import_export.admin import ImportExportMixin
+from shared_classes import AbstractModelAdmin
+
 from commerce.forms import CommercialProposalForm, ServiceAgreementForm
 from commerce.models import (
-    ActOfCompletedWork,
-    AgreementStage,
     BudgetCalculation,
     CommercialProposal,
     PlannedBusinessTrip,
     ServiceAgreement,
 )
-from django.contrib.admin import TabularInline, register
-from django.core.handlers.wsgi import WSGIRequest
-from import_export.admin import ImportExportMixin
-
 from commerce.resources import (
     BudgetCalculationResource,
     CommercialProposalResource,
     ServiceAgreementResource,
 )
-from shared_classes import AbstractModelAdmin
 
 
 class PlannedBusinessTripInline(TabularInline):
@@ -31,6 +29,8 @@ class BudgetCalculationAdmin(ImportExportMixin, AbstractModelAdmin):
     readonly_fields = ("total_cost",)
     inlines = (PlannedBusinessTripInline,)
     save_on_top = True
+    list_per_page = 15
+    search_fields = ("type_of_jobs__name",)
 
     def company(self, obj):
         try:
@@ -49,12 +49,15 @@ class BudgetCalculationInline(TabularInline):
 class CommercialProposalAdmin(ImportExportMixin, AbstractModelAdmin):
     resource_class = CommercialProposalResource
     inlines = (BudgetCalculationInline,)
-    list_display = ("company", "job", "total_cost", "created", "edited")
-    readonly_fields = ("total_cost", "type_of_jobs")
+    list_display = ("company", "type_of_jobs", "total_cost", "created", "edited")
+    readonly_fields = ("total_cost",)
     form = CommercialProposalForm
     save_on_top = True
+    list_per_page = 15
+    search_fields = ("company__name",)
+    exclude = ("crm_deal_id",)
 
-    def job(self, obj):
+    def type_of_jobs(self, obj):
         queryset = obj.budget_calculations.all()
         types = set(str(calc.type_of_jobs) for calc in queryset)
         return "\n".join(types)
@@ -67,22 +70,14 @@ class CommercialProposalAdmin(ImportExportMixin, AbstractModelAdmin):
         change: bool,
     ):
         super().save_model(request, obj, form, change)
-        if obj.pk and not obj.type_of_jobs.exists():
-            queryset = obj.budget_calculations.all()
-            types = [calc.type_of_jobs for calc in queryset]
-            obj.type_of_jobs.add(*types)
-            super().save_model(request, obj, form, change)
 
         if obj.pk and obj.service_descriptions == "":
-            queryset = obj.type_of_jobs.all()
-            for type_ in queryset:
-                obj.service_descriptions += f"{type_.service_descriptions}\n\n"
+            queryset = obj.budget_calculations.all()
+            for calc in queryset:
+                obj.service_descriptions += (
+                    f"{calc.type_of_jobs.service_descriptions}\n\n"
+                )
             super().save_model(request, obj, form, change)
-
-
-class StageItemInline(TabularInline):
-    model = AgreementStage
-    extra = 0
 
 
 class CommercialProposalInline(TabularInline):
@@ -96,21 +91,18 @@ class CommercialProposalInline(TabularInline):
 @register(ServiceAgreement)
 class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
     resource_class = ServiceAgreementResource
-    inlines = (StageItemInline, CommercialProposalInline)
-    list_display = ("number", "amount", "company")
+    inlines = (CommercialProposalInline,)
+    list_display = ("number", "company", "amount", "created", "edited")
     readonly_fields = ("amount",)
     form = ServiceAgreementForm
     save_on_top = True
-
-
-@register(ActOfCompletedWork)
-class ActOfCompletedWorkAdmin(AbstractModelAdmin):
-    list_display = (
-        "company",
-        "status",
-        "month_signing_the_act",
-        "month_of_accounting_act_in_salary",
-    )
+    list_per_page = 15
+    ordering = ("-date_of_signing",)
+    exclude = ("task_id",)
 
     def company(self, obj):
-        return obj.service_agreement.company
+        try:
+            proposal = obj.commercial_proposals.first()
+            return str(proposal.company)
+        except AttributeError:
+            return f"Договор не связан с КП"
