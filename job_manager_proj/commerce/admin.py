@@ -31,6 +31,8 @@ class BudgetCalculationAdmin(ImportExportMixin, AbstractModelAdmin):
     readonly_fields = ("total_cost",)
     inlines = (PlannedBusinessTripInline,)
     save_on_top = True
+    list_per_page = 15
+    search_fields = ("type_of_jobs__name",)
 
     def company(self, obj):
         try:
@@ -53,6 +55,8 @@ class CommercialProposalAdmin(ImportExportMixin, AbstractModelAdmin):
     readonly_fields = ("total_cost", "type_of_jobs")
     form = CommercialProposalForm
     save_on_top = True
+    list_per_page = 15
+    search_fields = ("company__name",)
 
     def job(self, obj):
         queryset = obj.budget_calculations.all()
@@ -101,7 +105,8 @@ class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
     readonly_fields = ("amount",)
     form = ServiceAgreementForm
     save_on_top = True
-
+    list_per_page = 15
+    search_fields = ("company__name",)
 
 @register(ActOfCompletedWork)
 class ActOfCompletedWorkAdmin(AbstractModelAdmin):

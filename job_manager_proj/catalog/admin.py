@@ -70,6 +70,7 @@ class CompanyAdmin(ImportExportMixin, ModelAdmin):
     form = CompanyAdminForm
     inlines = [RegisteredAddressInline, BankBranchAddressInline]
     list_display = ["name"]
+    list_per_page = 20
 
 
 @register(Month)
