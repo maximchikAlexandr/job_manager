@@ -71,9 +71,6 @@ class CommercialProposal(models.Model):
         related_name="commercial_proposals",
         null=False,
     )
-    type_of_jobs = models.ManyToManyField(
-        TypeOfJobs, related_name="commercial_proposals", null=True, blank=True
-    )
     service_agreement = models.ForeignKey(
         "ServiceAgreement",
         on_delete=models.CASCADE,
@@ -100,50 +97,19 @@ class CommercialProposal(models.Model):
 
 
 class ServiceAgreement(models.Model):
-    service_descriptions = models.TextField(null=False)
-    number = models.CharField(max_length=30)
-    amount = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)
-    date_of_signing = models.DateField()
-    company = models.ForeignKey(
-        Company, on_delete=models.CASCADE, related_name="agreements", null=False
-    )
-
-    is_signed = models.BooleanField(default=False, null=False)
-    task_id = models.IntegerField(null=True, blank=True)
-
-    def __str__(self):
-        return f"№{self.number} - {self.amount} р."
-
-    def save(self, *args, **kwargs):
-        if self.pk:
-            total_cost = 0
-            for proposal in self.commercial_proposals.all():
-                total_cost += proposal.total_cost
-            if self.amount != total_cost:
-                self.amount = total_cost
-        super().save(*args, **kwargs)
-
-
-class AgreementStage(models.Model):
-    service_descriptions = models.TextField(null=False)
-    number = models.CharField(max_length=30)
-    amount = models.DecimalField(max_digits=14, decimal_places=2)
-    service_agreement = models.ForeignKey(
-        "ServiceAgreement",
-        on_delete=models.CASCADE,
-        related_name="agreement_stages",
-        null=False,
-    )
-
-
-class ActOfCompletedWork(models.Model):
     COMPLETED = "completed"
     NOT_COMPLETED = "not completed"
     STATUSES = (
         (COMPLETED, "completed"),
         (NOT_COMPLETED, "not completed"),
     )
-    status = models.CharField(max_length=20, choices=STATUSES, default=NOT_COMPLETED)
+    service_descriptions = models.TextField(null=False)
+    number = models.CharField(max_length=30)
+    amount = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)
+    date_of_signing = models.DateField()
+    is_signed = models.BooleanField(default=False, null=False)
+    task_id = models.IntegerField(null=True, blank=True)
+    act_status = models.CharField(max_length=20, choices=STATUSES, default=NOT_COMPLETED)
     month_signing_the_act = models.ForeignKey(
         Month,
         on_delete=models.CASCADE,
@@ -158,22 +124,14 @@ class ActOfCompletedWork(models.Model):
         null=True,
         blank=True,
     )
-    agreement_stage = models.OneToOneField(
-        "AgreementStage", on_delete=models.CASCADE, null=True, blank=True
-    )
-    service_agreement = models.OneToOneField(
-        "ServiceAgreement", on_delete=models.CASCADE, null=True
-    )
-
     def __str__(self):
-        message = ""
-        try:
-            message += f"этап №{self.agreement_stage and self.agreement_stage.number}\n"
-        except AgreementStage.DoesNotExist:
-            message += f"дог. №{self.service_agreement.number}"
-        except AttributeError:
-            message += f"Новый АВР"
-        return message
+        return f"№{self.number} - {self.amount} р."
 
-    class Meta:
-        verbose_name_plural = "Acts of completed work"
+    def save(self, *args, **kwargs):
+        if self.pk:
+            total_cost = 0
+            for proposal in self.commercial_proposals.all():
+                total_cost += proposal.total_cost
+            if self.amount != total_cost:
+                self.amount = total_cost
+        super().save(*args, **kwargs)
