@@ -59,6 +59,11 @@ class Month(models.Model):
     end_date = models.DateField(null=False)
     count_of_working_days = models.IntegerField(null=False)
     number_of_employees = models.FloatField(null=False)
+    year = models.PositiveIntegerField(null=True, editable=False)
 
     def __str__(self):
         return self.start_date.strftime("%b.%y")
+
+    def save(self, *args, **kwargs):
+        self.year = self.start_date.year
+        super().save(*args, **kwargs)

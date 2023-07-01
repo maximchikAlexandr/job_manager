@@ -74,6 +74,7 @@ class CompanyAdmin(ModelAdmin):
 class MonthAdmin(ModelAdmin):
     list_display = [
         "month",
+        "year",
         "count_of_working_days",
         "number_of_employees",
     ]
@@ -82,6 +83,7 @@ class MonthAdmin(ModelAdmin):
         "number_of_employees",
     ]
     list_per_page = 12
+    list_filter = ("year",)
 
     def month(self, obj):
         return obj.start_date.strftime("%b - %Y")
