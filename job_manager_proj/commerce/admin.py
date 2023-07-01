@@ -9,6 +9,13 @@ from commerce.models import (
 )
 from django.contrib.admin import TabularInline, register
 from django.core.handlers.wsgi import WSGIRequest
+from import_export.admin import ImportExportMixin
+
+from commerce.resources import (
+    BudgetCalculationResource,
+    CommercialProposalResource,
+    ServiceAgreementResource,
+)
 from shared_classes import AbstractModelAdmin
 
 
@@ -18,7 +25,8 @@ class PlannedBusinessTripInline(TabularInline):
 
 
 @register(BudgetCalculation)
-class BudgetCalculationAdmin(AbstractModelAdmin):
+class BudgetCalculationAdmin(ImportExportMixin, AbstractModelAdmin):
+    resource_class = BudgetCalculationResource
     list_display = ("company", "type_of_jobs", "total_cost", "created", "edited")
     readonly_fields = ("total_cost",)
     inlines = (PlannedBusinessTripInline,)
@@ -38,7 +46,8 @@ class BudgetCalculationInline(TabularInline):
 
 
 @register(CommercialProposal)
-class CommercialProposalAdmin(AbstractModelAdmin):
+class CommercialProposalAdmin(ImportExportMixin, AbstractModelAdmin):
+    resource_class = CommercialProposalResource
     inlines = (BudgetCalculationInline,)
     list_display = ("company", "job", "total_cost", "created", "edited")
     readonly_fields = ("total_cost", "type_of_jobs")
@@ -85,7 +94,8 @@ class CommercialProposalInline(TabularInline):
 
 
 @register(ServiceAgreement)
-class ServiceAgreementJobAdmin(AbstractModelAdmin):
+class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
+    resource_class = ServiceAgreementResource
     inlines = (StageItemInline, CommercialProposalInline)
     list_display = ("number", "amount", "company")
     readonly_fields = ("amount",)

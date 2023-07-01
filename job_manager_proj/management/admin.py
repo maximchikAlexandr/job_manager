@@ -2,6 +2,7 @@ from django.contrib.admin import (
     ModelAdmin,
     register,
 )
+from import_export.admin import ImportExportMixin
 
 
 from management.models import (
@@ -10,6 +11,7 @@ from management.models import (
     HeadOfDepartment,
     MonthJob,
 )
+from management.resources import EmployeeResource
 
 
 @register(MonthJob)
@@ -20,22 +22,10 @@ class MonthJobAdmin(ModelAdmin):
     def company(self, obj):
         return obj.act.agreement.company
 
-    # def save_model(
-    #     self,
-    #     request: WSGIRequest,
-    #     obj: MonthJob,
-    #     form: "MonthJobAdminWorkForm",
-    #     change: bool,
-    # ):
-    #     obj.save()
-    #
-    #     hour_validator = ActOfCompletedWorkValidator(obj.act)
-    #     if not hour_validator.has_valid_sum():
-    #         hour_validator.send_error_message(request)
-
 
 @register(Employee)
-class EmployeeAdmin(ModelAdmin):
+class EmployeeAdmin(ImportExportMixin, ModelAdmin):
+    resource_class = EmployeeResource
     list_display = ["surname", "name", "patronymic", "rate"]
     list_editable = ["rate"]
 
@@ -48,4 +38,3 @@ class DepartmentAdmin(ModelAdmin):
 @register(HeadOfDepartment)
 class DHeadOfDepartmentAdmin(ModelAdmin):
     list_display = ["employee"]
-

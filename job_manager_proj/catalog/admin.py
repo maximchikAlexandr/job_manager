@@ -5,6 +5,7 @@ from django.contrib.admin import (
 )
 from django import forms
 from django.contrib.admin.widgets import AdminTextInputWidget
+from import_export.admin import ImportExportMixin
 
 from catalog.models import (
     BankBranchAddress,
@@ -13,7 +14,7 @@ from catalog.models import (
     RegisteredAddress,
     TypeOfJobs,
 )
-
+from catalog.resources import MonthResource, CompanyResource
 
 
 @register(TypeOfJobs)
@@ -64,24 +65,18 @@ class CompanyAdminForm(forms.ModelForm):
 
 
 @register(Company)
-class CompanyAdmin(ModelAdmin):
+class CompanyAdmin(ImportExportMixin, ModelAdmin):
+    resource_class = CompanyResource
     form = CompanyAdminForm
     inlines = [RegisteredAddressInline, BankBranchAddressInline]
     list_display = ["name"]
 
 
 @register(Month)
-class MonthAdmin(ModelAdmin):
-    list_display = [
-        "month",
-        "year",
-        "count_of_working_days",
-        "number_of_employees",
-    ]
-    list_editable = [
-        "count_of_working_days",
-        "number_of_employees",
-    ]
+class MonthAdmin(ImportExportMixin, ModelAdmin):
+    resource_class = MonthResource
+    list_display = ("month", "year", "count_of_working_days", "number_of_employees")
+    list_editable = ("count_of_working_days", "number_of_employees")
     list_per_page = 12
     list_filter = ("year",)
 
