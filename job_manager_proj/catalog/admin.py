@@ -1,7 +1,6 @@
 from django.contrib.admin import (
     ModelAdmin,
     TabularInline,
-    models,
     register,
 )
 from django import forms
@@ -15,32 +14,6 @@ from catalog.models import (
     TypeOfJobs,
 )
 
-
-class AbstractModelAdmin(ModelAdmin):
-    def get_logs_by(self, obj):
-        return models.LogEntry.objects.filter(
-            object_id=obj.pk, content_type__model=self.opts.model_name
-        )
-
-    def author(self, obj=None):
-        if obj is not None:
-            return getattr(self.get_logs_by(obj).first(), "user", None)
-        return "unknown"
-
-    def editor(self, obj=None):
-        if obj is not None:
-            return getattr(self.get_logs_by(obj).last(), "user", None)
-        return "unknown"
-
-    def created(self, obj=None):
-        if obj is not None:
-            return getattr(self.get_logs_by(obj).first(), "action_time", None)
-        return "unknown"
-
-    def edited(self, obj=None):
-        if obj is not None:
-            return getattr(self.get_logs_by(obj).last(), "action_time", None)
-        return "unknown"
 
 
 @register(TypeOfJobs)
@@ -83,6 +56,7 @@ class CompanyAdminForm(forms.ModelForm):
     unp = forms.CharField(
         widget=AdminTextInputWidget(attrs={"class": "unp", "style": "width: 260px;"})
     )
+    save_on_top = True
 
     class Meta:
         model = Company
@@ -100,6 +74,7 @@ class CompanyAdmin(ModelAdmin):
 class MonthAdmin(ModelAdmin):
     list_display = [
         "month",
+        "year",
         "count_of_working_days",
         "number_of_employees",
     ]
@@ -108,6 +83,7 @@ class MonthAdmin(ModelAdmin):
         "number_of_employees",
     ]
     list_per_page = 12
+    list_filter = ("year",)
 
     def month(self, obj):
         return obj.start_date.strftime("%b - %Y")
