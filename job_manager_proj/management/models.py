@@ -48,7 +48,7 @@ class Employee(models.Model):
 
 
 class Department(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     head = models.ForeignKey(
         "HeadOfDepartment",
         on_delete=models.CASCADE,
