@@ -7,7 +7,7 @@ from commerce.apps import CommerceConfig
 from management.apps import ManagementConfig
 
 from catalog.models import Company, Month, TypeOfJobs
-from commerce.models import ActOfCompletedWork, ServiceAgreement
+from commerce.models import ServiceAgreement
 from management.models import Employee, MonthJob
 from tests.admin_site import BaseAdminSiteTestCaseMixin
 
@@ -26,9 +26,6 @@ class AdminSiteDeleteObjectTestCase(BaseAdminSiteTestCaseMixin, TestCase):
         response = self.client.post(url, {"post": "yes"})
         self.assertEqual(response.status_code, 302)
         self.assertFalse(model.objects.filter(id=obj.id).exists())
-
-    def test_delete_actofcompletedwork(self):
-        self.check_delete_object(model=ActOfCompletedWork, app_name=CommerceConfig.name)
 
     def test_delete_company(self):
         self.check_delete_object(model=Company, app_name=CatalogConfig.name)
