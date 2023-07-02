@@ -1,0 +1,30 @@
+[
+{
+    "model": "catalog.bankbranchaddress",
+    "pk": 3,
+    "fields": {
+        "postal_code": "220099",
+        "region": null,
+        "district": null,
+        "locality": "г. Минск",
+        "street": "ул. Притыцкого",
+        "house_number": "60/2",
+        "office_number": "12",
+        "сompany": 114
+    }
+},
+{
+    "model": "catalog.bankbranchaddress",
+    "pk": 4,
+    "fields": {
+        "postal_code": "231103",
+        "region": "Гродненская обл.",
+        "district": null,
+        "locality": "г.Ошмяны",
+        "street": "пер.Я.Коласа",
+        "house_number": "12",
+        "office_number": "12",
+        "сompany": 123
+    }
+}
+]

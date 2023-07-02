@@ -1,42 +1,1168 @@
 [
-  {
-    "model": "job_manager_app.company",
-    "pk": 1,
+{
+    "model": "catalog.company",
+    "pk": 114,
     "fields": {
-        "name": "ОАО \"Предприятие коммунальное\"",
-        "unp": 290111111
+        "name": "ОАО 'Предприятие №1'",
+        "unp": 117115972,
+        "IBAN": "BY20OLMP313576970005",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21317"
     }
 },
 {
-    "model": "job_manager_app.company",
-    "pk": 2,
+    "model": "catalog.company",
+    "pk": 115,
     "fields": {
-        "name": "ОАО \"Предприятие м/о\"",
-        "unp": 500011111
+        "name": "ОАО 'Предприятие №2'",
+        "unp": 233485979,
+        "IBAN": "BY20OLMP3135689453097",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21318"
     }
 },
 {
-    "model": "job_manager_app.company",
-    "pk": 3,
+    "model": "catalog.company",
+    "pk": 116,
     "fields": {
-        "name": "ОАО \"Предприятие д/о\"",
-        "unp": 600111111
+        "name": "ОАО 'Предприятие №3'",
+        "unp": 458084703,
+        "IBAN": "BY20OLMP3135585504938",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21319"
     }
 },
 {
-    "model": "job_manager_app.company",
-    "pk": 4,
+    "model": "catalog.company",
+    "pk": 117,
     "fields": {
-        "name": "ОАО \"Предприятие энергетическое\"",
-        "unp": 200077777
+        "name": "ОАО 'Предприятие №4'",
+        "unp": 514781743,
+        "IBAN": "BY20OLMP3135247486989",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21320"
     }
 },
 {
-    "model": "job_manager_app.company",
-    "pk": 5,
+    "model": "catalog.company",
+    "pk": 118,
     "fields": {
-        "name": "ОАО \"Предприятие строительное\"",
-        "unp": 200077888
+        "name": "ОАО 'Предприятие №5'",
+        "unp": 567946984,
+        "IBAN": "BY20OLMP3135499711421",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21321"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 119,
+    "fields": {
+        "name": "ОАО 'Предприятие №6'",
+        "unp": 545010206,
+        "IBAN": "BY20OLMP3135241836874",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21322"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 120,
+    "fields": {
+        "name": "ОАО 'Предприятие №7'",
+        "unp": 937535257,
+        "IBAN": "BY20OLMP3135105415720",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21323"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 121,
+    "fields": {
+        "name": "ОАО 'Предприятие №8'",
+        "unp": 751566552,
+        "IBAN": "BY20OLMP3135119347329",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21324"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 122,
+    "fields": {
+        "name": "ОАО 'Предприятие №9'",
+        "unp": 107871050,
+        "IBAN": "BY20OLMP3135913287445",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21325"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 123,
+    "fields": {
+        "name": "ОАО 'Предприятие №10'",
+        "unp": 113554510,
+        "IBAN": "BY20OLMP3135543222771",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21326"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 124,
+    "fields": {
+        "name": "ОАО 'Предприятие №11'",
+        "unp": 455918659,
+        "IBAN": "BY20OLMP3135409393900",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21327"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 125,
+    "fields": {
+        "name": "ОАО 'Предприятие №12'",
+        "unp": 355176104,
+        "IBAN": "BY20OLMP3135690401441",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21328"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 126,
+    "fields": {
+        "name": "ОАО 'Предприятие №13'",
+        "unp": 230886322,
+        "IBAN": "BY20OLMP3135556276198",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21329"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 127,
+    "fields": {
+        "name": "ОАО 'Предприятие №14'",
+        "unp": 908007654,
+        "IBAN": "BY20OLMP3135281198103",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21330"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 128,
+    "fields": {
+        "name": "ОАО 'Предприятие №15'",
+        "unp": 523633849,
+        "IBAN": "BY20OLMP313559160268",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21331"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 129,
+    "fields": {
+        "name": "ОАО 'Предприятие №16'",
+        "unp": 578730003,
+        "IBAN": "BY20OLMP3135699945672",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21332"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 130,
+    "fields": {
+        "name": "ОАО 'Предприятие №17'",
+        "unp": 513449503,
+        "IBAN": "BY20OLMP3135424413863",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21333"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 131,
+    "fields": {
+        "name": "ОАО 'Предприятие №18'",
+        "unp": 760250589,
+        "IBAN": "BY20OLMP313579193230",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21334"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 132,
+    "fields": {
+        "name": "ОАО 'Предприятие №19'",
+        "unp": 666847247,
+        "IBAN": "BY20OLMP3135533219304",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21335"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 133,
+    "fields": {
+        "name": "ОАО 'Предприятие №20'",
+        "unp": 845295880,
+        "IBAN": "BY20OLMP313586002607",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21336"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 134,
+    "fields": {
+        "name": "ОАО 'Предприятие №21'",
+        "unp": 981916004,
+        "IBAN": "BY20OLMP3135969630054",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21337"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 135,
+    "fields": {
+        "name": "ОАО 'Предприятие №22'",
+        "unp": 124764018,
+        "IBAN": "BY20OLMP3135369135839",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21338"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 136,
+    "fields": {
+        "name": "ОАО 'Предприятие №23'",
+        "unp": 140495657,
+        "IBAN": "BY20OLMP3135903008993",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21339"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 137,
+    "fields": {
+        "name": "ОАО 'Предприятие №24'",
+        "unp": 946476929,
+        "IBAN": "BY20OLMP3135627197221",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21340"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 138,
+    "fields": {
+        "name": "ОАО 'Предприятие №25'",
+        "unp": 573023069,
+        "IBAN": "BY20OLMP3135169017721",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21341"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 139,
+    "fields": {
+        "name": "ОАО 'Предприятие №26'",
+        "unp": 650910635,
+        "IBAN": "BY20OLMP313587681469",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21342"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 140,
+    "fields": {
+        "name": "ОАО 'Предприятие №27'",
+        "unp": 298083825,
+        "IBAN": "BY20OLMP3135833408445",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21343"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 141,
+    "fields": {
+        "name": "ОАО 'Предприятие №28'",
+        "unp": 767768608,
+        "IBAN": "BY20OLMP3135862173881",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21344"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 142,
+    "fields": {
+        "name": "ОАО 'Предприятие №29'",
+        "unp": 638814686,
+        "IBAN": "BY20OLMP313540612999",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21345"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 143,
+    "fields": {
+        "name": "ОАО 'Предприятие №30'",
+        "unp": 634280775,
+        "IBAN": "BY20OLMP3135898385280",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21346"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 144,
+    "fields": {
+        "name": "ОАО 'Предприятие №31'",
+        "unp": 917575604,
+        "IBAN": "BY20OLMP3135328752089",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21347"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 145,
+    "fields": {
+        "name": "ОАО 'Предприятие №32'",
+        "unp": 109183106,
+        "IBAN": "BY20OLMP3135331540019",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21348"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 146,
+    "fields": {
+        "name": "ОАО 'Предприятие №33'",
+        "unp": 189219235,
+        "IBAN": "BY20OLMP3135309778462",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21349"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 147,
+    "fields": {
+        "name": "ОАО 'Предприятие №34'",
+        "unp": 580052928,
+        "IBAN": "BY20OLMP3135998675084",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21350"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 148,
+    "fields": {
+        "name": "ОАО 'Предприятие №35'",
+        "unp": 883180504,
+        "IBAN": "BY20OLMP3135826464868",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21351"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 149,
+    "fields": {
+        "name": "ОАО 'Предприятие №36'",
+        "unp": 383360990,
+        "IBAN": "BY20OLMP3135278789913",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21352"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 150,
+    "fields": {
+        "name": "ОАО 'Предприятие №37'",
+        "unp": 231175606,
+        "IBAN": "BY20OLMP3135111206786",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21353"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 151,
+    "fields": {
+        "name": "ОАО 'Предприятие №38'",
+        "unp": 553832474,
+        "IBAN": "BY20OLMP313531742795",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21354"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 152,
+    "fields": {
+        "name": "ОАО 'Предприятие №39'",
+        "unp": 872984802,
+        "IBAN": "BY20OLMP3135140944842",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21355"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 153,
+    "fields": {
+        "name": "ОАО 'Предприятие №40'",
+        "unp": 180741760,
+        "IBAN": "BY20OLMP3135662200791",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21356"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 154,
+    "fields": {
+        "name": "ОАО 'Предприятие №41'",
+        "unp": 845822244,
+        "IBAN": "BY20OLMP3135959590542",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21357"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 155,
+    "fields": {
+        "name": "ОАО 'Предприятие №42'",
+        "unp": 160749095,
+        "IBAN": "BY20OLMP3135638021142",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21358"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 156,
+    "fields": {
+        "name": "ОАО 'Предприятие №43'",
+        "unp": 107960666,
+        "IBAN": "BY20OLMP3135628313470",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21359"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 157,
+    "fields": {
+        "name": "ОАО 'Предприятие №44'",
+        "unp": 234548749,
+        "IBAN": "BY20OLMP3135668465128",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21360"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 158,
+    "fields": {
+        "name": "ОАО 'Предприятие №45'",
+        "unp": 283202594,
+        "IBAN": "BY20OLMP3135411616480",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21361"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 159,
+    "fields": {
+        "name": "ОАО 'Предприятие №46'",
+        "unp": 612823128,
+        "IBAN": "BY20OLMP3135874230125",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21362"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 160,
+    "fields": {
+        "name": "ОАО 'Предприятие №47'",
+        "unp": 231269892,
+        "IBAN": "BY20OLMP313531565536",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21363"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 161,
+    "fields": {
+        "name": "ОАО 'Предприятие №48'",
+        "unp": 394914083,
+        "IBAN": "BY20OLMP3135298218867",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21364"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 162,
+    "fields": {
+        "name": "ОАО 'Предприятие №49'",
+        "unp": 607478890,
+        "IBAN": "BY20OLMP3135454940426",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21365"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 163,
+    "fields": {
+        "name": "ОАО 'Предприятие №50'",
+        "unp": 194163002,
+        "IBAN": "BY20OLMP3135458535857",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21366"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 164,
+    "fields": {
+        "name": "ОАО 'Предприятие №51'",
+        "unp": 543267415,
+        "IBAN": "BY20OLMP3135472247860",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21367"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 165,
+    "fields": {
+        "name": "ОАО 'Предприятие №52'",
+        "unp": 907759964,
+        "IBAN": "BY20OLMP3135244396488",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21368"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 166,
+    "fields": {
+        "name": "ОАО 'Предприятие №53'",
+        "unp": 785058117,
+        "IBAN": "BY20OLMP3135433304617",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21369"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 167,
+    "fields": {
+        "name": "ОАО 'Предприятие №54'",
+        "unp": 542500325,
+        "IBAN": "BY20OLMP3135610479123",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21370"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 168,
+    "fields": {
+        "name": "ОАО 'Предприятие №55'",
+        "unp": 835507093,
+        "IBAN": "BY20OLMP3135745632598",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21371"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 169,
+    "fields": {
+        "name": "ОАО 'Предприятие №56'",
+        "unp": 194683611,
+        "IBAN": "BY20OLMP3135125098347",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21372"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 170,
+    "fields": {
+        "name": "ОАО 'Предприятие №57'",
+        "unp": 837298393,
+        "IBAN": "BY20OLMP3135499789489",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21373"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 171,
+    "fields": {
+        "name": "ОАО 'Предприятие №58'",
+        "unp": 498239231,
+        "IBAN": "BY20OLMP3135134047736",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21374"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 172,
+    "fields": {
+        "name": "ОАО 'Предприятие №59'",
+        "unp": 508255194,
+        "IBAN": "BY20OLMP3135642607643",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21375"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 173,
+    "fields": {
+        "name": "ОАО 'Предприятие №60'",
+        "unp": 511876144,
+        "IBAN": "BY20OLMP3135394189152",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21376"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 174,
+    "fields": {
+        "name": "ОАО 'Предприятие №61'",
+        "unp": 944182052,
+        "IBAN": "BY20OLMP3135376257468",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21377"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 175,
+    "fields": {
+        "name": "ОАО 'Предприятие №62'",
+        "unp": 129876245,
+        "IBAN": "BY20OLMP3135963786831",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21378"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 176,
+    "fields": {
+        "name": "ОАО 'Предприятие №63'",
+        "unp": 710845671,
+        "IBAN": "BY20OLMP3135449643348",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21379"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 177,
+    "fields": {
+        "name": "ОАО 'Предприятие №64'",
+        "unp": 111262917,
+        "IBAN": "BY20OLMP3135152958066",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21380"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 178,
+    "fields": {
+        "name": "ОАО 'Предприятие №65'",
+        "unp": 219635952,
+        "IBAN": "BY20OLMP3135947783908",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21381"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 179,
+    "fields": {
+        "name": "ОАО 'Предприятие №66'",
+        "unp": 116544766,
+        "IBAN": "BY20OLMP3135137686541",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21382"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 180,
+    "fields": {
+        "name": "ОАО 'Предприятие №67'",
+        "unp": 996741632,
+        "IBAN": "BY20OLMP3135594497839",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21383"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 181,
+    "fields": {
+        "name": "ОАО 'Предприятие №68'",
+        "unp": 912137163,
+        "IBAN": "BY20OLMP3135712420569",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21384"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 182,
+    "fields": {
+        "name": "ОАО 'Предприятие №69'",
+        "unp": 845485472,
+        "IBAN": "BY20OLMP3135374220201",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21385"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 183,
+    "fields": {
+        "name": "ОАО 'Предприятие №70'",
+        "unp": 676598036,
+        "IBAN": "BY20OLMP3135546739663",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21386"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 184,
+    "fields": {
+        "name": "ОАО 'Предприятие №71'",
+        "unp": 211540600,
+        "IBAN": "BY20OLMP3135465510946",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21387"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 185,
+    "fields": {
+        "name": "ОАО 'Предприятие №72'",
+        "unp": 967971525,
+        "IBAN": "BY20OLMP3135580021157",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21388"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 186,
+    "fields": {
+        "name": "ОАО 'Предприятие №73'",
+        "unp": 682535795,
+        "IBAN": "BY20OLMP3135104548307",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21389"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 187,
+    "fields": {
+        "name": "ОАО 'Предприятие №74'",
+        "unp": 317283935,
+        "IBAN": "BY20OLMP3135139186825",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21390"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 188,
+    "fields": {
+        "name": "ОАО 'Предприятие №75'",
+        "unp": 523921268,
+        "IBAN": "BY20OLMP3135595043340",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21391"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 189,
+    "fields": {
+        "name": "ОАО 'Предприятие №76'",
+        "unp": 873671249,
+        "IBAN": "BY20OLMP3135507829918",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21392"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 190,
+    "fields": {
+        "name": "ОАО 'Предприятие №77'",
+        "unp": 764084860,
+        "IBAN": "BY20OLMP3135532070607",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21393"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 191,
+    "fields": {
+        "name": "ОАО 'Предприятие №78'",
+        "unp": 597098653,
+        "IBAN": "BY20OLMP3135597201340",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21394"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 192,
+    "fields": {
+        "name": "ОАО 'Предприятие №79'",
+        "unp": 791220649,
+        "IBAN": "BY20OLMP3135133142857",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21395"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 193,
+    "fields": {
+        "name": "ОАО 'Предприятие №80'",
+        "unp": 700855059,
+        "IBAN": "BY20OLMP3135795394275",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21396"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 194,
+    "fields": {
+        "name": "ОАО 'Предприятие №81'",
+        "unp": 108944673,
+        "IBAN": "BY20OLMP3135215575416",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21397"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 195,
+    "fields": {
+        "name": "ОАО 'Предприятие №82'",
+        "unp": 576683221,
+        "IBAN": "BY20OLMP3135155249986",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21398"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 196,
+    "fields": {
+        "name": "ОАО 'Предприятие №83'",
+        "unp": 935726986,
+        "IBAN": "BY20OLMP3135195937271",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21399"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 197,
+    "fields": {
+        "name": "ОАО 'Предприятие №84'",
+        "unp": 610782186,
+        "IBAN": "BY20OLMP3135816168354",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21400"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 198,
+    "fields": {
+        "name": "ОАО 'Предприятие №85'",
+        "unp": 172034288,
+        "IBAN": "BY20OLMP3135135577685",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21401"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 199,
+    "fields": {
+        "name": "ОАО 'Предприятие №86'",
+        "unp": 360238209,
+        "IBAN": "BY20OLMP3135494489794",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21402"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 200,
+    "fields": {
+        "name": "ОАО 'Предприятие №87'",
+        "unp": 640275617,
+        "IBAN": "BY20OLMP3135278287109",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21403"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 201,
+    "fields": {
+        "name": "ОАО 'Предприятие №88'",
+        "unp": 978039248,
+        "IBAN": "BY20OLMP3135316488277",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21404"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 202,
+    "fields": {
+        "name": "ОАО 'Предприятие №89'",
+        "unp": 454397102,
+        "IBAN": "BY20OLMP3135693550996",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21405"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 203,
+    "fields": {
+        "name": "ОАО 'Предприятие №90'",
+        "unp": 867453190,
+        "IBAN": "BY20OLMP3135752903396",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21406"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 204,
+    "fields": {
+        "name": "ОАО 'Предприятие №91'",
+        "unp": 420071044,
+        "IBAN": "BY20OLMP313571238907",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21407"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 205,
+    "fields": {
+        "name": "ОАО 'Предприятие №92'",
+        "unp": 449307700,
+        "IBAN": "BY20OLMP3135719148712",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21408"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 206,
+    "fields": {
+        "name": "ОАО 'Предприятие №93'",
+        "unp": 773773107,
+        "IBAN": "BY20OLMP3135510303207",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21409"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 207,
+    "fields": {
+        "name": "ОАО 'Предприятие №94'",
+        "unp": 925211177,
+        "IBAN": "BY20OLMP3135879047629",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21410"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 208,
+    "fields": {
+        "name": "ОАО 'Предприятие №95'",
+        "unp": 955938550,
+        "IBAN": "BY20OLMP3135285190853",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21411"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 209,
+    "fields": {
+        "name": "ОАО 'Предприятие №96'",
+        "unp": 713468700,
+        "IBAN": "BY20OLMP3135297952824",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21412"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 210,
+    "fields": {
+        "name": "ОАО 'Предприятие №97'",
+        "unp": 819421369,
+        "IBAN": "BY20OLMP3135978863800",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21413"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 211,
+    "fields": {
+        "name": "ОАО 'Предприятие №98'",
+        "unp": 750642214,
+        "IBAN": "BY20OLMP3135935103285",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21414"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 212,
+    "fields": {
+        "name": "ОАО 'Предприятие №99'",
+        "unp": 954928775,
+        "IBAN": "BY20OLMP3135749139338",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21415"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 213,
+    "fields": {
+        "name": "ОАО 'Предприятие №100'",
+        "unp": 509215202,
+        "IBAN": "BY20OLMP313550332648",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21416"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 214,
+    "fields": {
+        "name": "ОАО 'Предприятие №101'",
+        "unp": 716513548,
+        "IBAN": "BY20OLMP3135312965640",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21417"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 215,
+    "fields": {
+        "name": "ОАО 'Предприятие №102'",
+        "unp": 323363931,
+        "IBAN": "BY20OLMP3135256477779",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21418"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 216,
+    "fields": {
+        "name": "ОАО 'Предприятие №103'",
+        "unp": 733368386,
+        "IBAN": "BY20OLMP3135507871872",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21419"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 217,
+    "fields": {
+        "name": "ОАО 'Предприятие №104'",
+        "unp": 144607108,
+        "IBAN": "BY20OLMP3135699492121",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21420"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 218,
+    "fields": {
+        "name": "ОАО 'Предприятие №105'",
+        "unp": 696959241,
+        "IBAN": "BY20OLMP3135846058836",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21421"
+    }
+},
+{
+    "model": "catalog.company",
+    "pk": 219,
+    "fields": {
+        "name": "ОАО 'Предприятие №106'",
+        "unp": 911236988,
+        "IBAN": "BY20OLMP3135710776896",
+        "bank_name": "ОАО \"АСБ БЕЛАРУСБАНК\"",
+        "BIC": "AKBBBY21422"
     }
 }
 ]
