@@ -1,44 +1,34 @@
 [
 {
-    "model": "job_manager_app.typeofjobs",
+    "model": "catalog.typeofjobs",
     "pk": 1,
     "fields": {
-        "name": "Вентиляция"
+        "name": "ГОУ",
+        "service_descriptions": "Испытания газоочистных установок на соответствие проектным данным"
     }
 },
 {
-    "model": "job_manager_app.typeofjobs",
+    "model": "catalog.typeofjobs",
     "pk": 2,
     "fields": {
-        "name": "ГОУ"
+        "name": "Инвентаризация выбросов",
+        "service_descriptions": "Разработка акта инвентаризации выбросов загрязняющих веществ в атмосферный воздух. Разработка проекта нормативов допустимых выбросов. Сопровождение разработанной документации в территориальных органах Минприроды с целью получения разрешения на выбросы загрязняющих веществ в атмосферный воздух"
     }
 },
 {
-    "model": "job_manager_app.typeofjobs",
+    "model": "catalog.typeofjobs",
     "pk": 3,
     "fields": {
-        "name": "ГОУ. Вентиляция"
+        "name": "Вентиляция",
+        "service_descriptions": "Аэродинамические испытания на соответствие параметров работы вентиляционных установок проектным значением. Паспортизация вентиляционных установок"
     }
 },
 {
-    "model": "job_manager_app.typeofjobs",
+    "model": "catalog.typeofjobs",
     "pk": 4,
     "fields": {
-        "name": "Журналы ПОД-1-2-3"
-    }
-},
-{
-    "model": "job_manager_app.typeofjobs",
-    "pk": 5,
-    "fields": {
-        "name": "Инвентаризация выбросов"
-    }
-},
-{
-    "model": "job_manager_app.typeofjobs",
-    "pk": 6,
-    "fields": {
-        "name": "Инструментальные измерения"
+        "name": "Инструментальные измерения",
+        "service_descriptions": "Инструментальные измерения концентраций загрязняющих веществ в выбросах в атмосферный воздух"
     }
 }
 ]

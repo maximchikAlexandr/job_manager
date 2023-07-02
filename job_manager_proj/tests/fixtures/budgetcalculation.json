@@ -1,0 +1,652 @@
+[
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 194,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 20,
+        "total_cost": "4566.24",
+        "type_of_jobs": 1,
+        "commercial_proposal": 130
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 195,
+    "fields": {
+        "workload": 20,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "570.00",
+        "type_of_jobs": 2,
+        "commercial_proposal": 131
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 196,
+    "fields": {
+        "workload": 200,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "5658.00",
+        "type_of_jobs": 1,
+        "commercial_proposal": 132
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 197,
+    "fields": {
+        "workload": 240,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 50,
+        "total_cost": "8150.40",
+        "type_of_jobs": 2,
+        "commercial_proposal": 133
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 198,
+    "fields": {
+        "workload": 40,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "1135.50",
+        "type_of_jobs": 1,
+        "commercial_proposal": 134
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 199,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "4756.50",
+        "type_of_jobs": 3,
+        "commercial_proposal": 135
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 200,
+    "fields": {
+        "workload": 56,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "1587.00",
+        "type_of_jobs": 1,
+        "commercial_proposal": 136
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 201,
+    "fields": {
+        "workload": 180,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "5094.00",
+        "type_of_jobs": 1,
+        "commercial_proposal": 137
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 202,
+    "fields": {
+        "workload": 170,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 20,
+        "total_cost": "4619.52",
+        "type_of_jobs": 4,
+        "commercial_proposal": 138
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 203,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "4756.50",
+        "type_of_jobs": 1,
+        "commercial_proposal": 139
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 204,
+    "fields": {
+        "workload": 20,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "570.00",
+        "type_of_jobs": 3,
+        "commercial_proposal": 140
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 205,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 50,
+        "total_cost": "5707.80",
+        "type_of_jobs": 1,
+        "commercial_proposal": 141
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 206,
+    "fields": {
+        "workload": 20,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "570.00",
+        "type_of_jobs": 2,
+        "commercial_proposal": 142
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 207,
+    "fields": {
+        "workload": 200,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "5658.00",
+        "type_of_jobs": 1,
+        "commercial_proposal": 143
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 208,
+    "fields": {
+        "workload": 240,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "6792.00",
+        "type_of_jobs": 2,
+        "commercial_proposal": 144
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 209,
+    "fields": {
+        "workload": 40,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "1135.50",
+        "type_of_jobs": 1,
+        "commercial_proposal": 145
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 210,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 100,
+        "total_cost": "7610.40",
+        "type_of_jobs": 3,
+        "commercial_proposal": 146
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 211,
+    "fields": {
+        "workload": 20,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 20,
+        "total_cost": "547.20",
+        "type_of_jobs": 1,
+        "commercial_proposal": 147
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 212,
+    "fields": {
+        "workload": 200,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "5658.00",
+        "type_of_jobs": 4,
+        "commercial_proposal": 148
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 213,
+    "fields": {
+        "workload": 240,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "6792.00",
+        "type_of_jobs": 2,
+        "commercial_proposal": 149
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 214,
+    "fields": {
+        "workload": 40,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 50,
+        "total_cost": "1362.60",
+        "type_of_jobs": 1,
+        "commercial_proposal": 150
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 215,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "4756.50",
+        "type_of_jobs": 2,
+        "commercial_proposal": 151
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 216,
+    "fields": {
+        "workload": 20,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "570.00",
+        "type_of_jobs": 1,
+        "commercial_proposal": 152
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 217,
+    "fields": {
+        "workload": 200,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "5658.00",
+        "type_of_jobs": 1,
+        "commercial_proposal": 153
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 218,
+    "fields": {
+        "workload": 240,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "6792.00",
+        "type_of_jobs": 2,
+        "commercial_proposal": 154
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 219,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 100,
+        "total_cost": "7610.40",
+        "type_of_jobs": 1,
+        "commercial_proposal": 155
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 220,
+    "fields": {
+        "workload": 20,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "570.00",
+        "type_of_jobs": 1,
+        "commercial_proposal": 156
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 221,
+    "fields": {
+        "workload": 200,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "5658.00",
+        "type_of_jobs": 1,
+        "commercial_proposal": 157
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 222,
+    "fields": {
+        "workload": 240,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "6792.00",
+        "type_of_jobs": 2,
+        "commercial_proposal": 158
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 223,
+    "fields": {
+        "workload": 40,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 100,
+        "total_cost": "1816.80",
+        "type_of_jobs": 4,
+        "commercial_proposal": 159
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 224,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "4756.50",
+        "type_of_jobs": 2,
+        "commercial_proposal": 160
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 225,
+    "fields": {
+        "workload": 56,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "1587.00",
+        "type_of_jobs": 1,
+        "commercial_proposal": 161
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 226,
+    "fields": {
+        "workload": 240,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 50,
+        "total_cost": "8150.40",
+        "type_of_jobs": 1,
+        "commercial_proposal": 162
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 227,
+    "fields": {
+        "workload": 40,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 20,
+        "total_cost": "1090.08",
+        "type_of_jobs": 1,
+        "commercial_proposal": 163
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 228,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "4756.50",
+        "type_of_jobs": 4,
+        "commercial_proposal": 164
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 229,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "4756.50",
+        "type_of_jobs": 1,
+        "commercial_proposal": 165
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 230,
+    "fields": {
+        "workload": 20,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 50,
+        "total_cost": "684.00",
+        "type_of_jobs": 4,
+        "commercial_proposal": 166
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 231,
+    "fields": {
+        "workload": 200,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "5658.00",
+        "type_of_jobs": 2,
+        "commercial_proposal": 167
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 232,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "4756.50",
+        "type_of_jobs": 1,
+        "commercial_proposal": 168
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 233,
+    "fields": {
+        "workload": 20,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 20,
+        "total_cost": "547.20",
+        "type_of_jobs": 2,
+        "commercial_proposal": 169
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 234,
+    "fields": {
+        "workload": 200,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "5658.00",
+        "type_of_jobs": 1,
+        "commercial_proposal": 170
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 235,
+    "fields": {
+        "workload": 20,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "570.00",
+        "type_of_jobs": 4,
+        "commercial_proposal": 171
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 236,
+    "fields": {
+        "workload": 200,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 50,
+        "total_cost": "6789.60",
+        "type_of_jobs": 2,
+        "commercial_proposal": 172
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 237,
+    "fields": {
+        "workload": 240,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "7030.50",
+        "type_of_jobs": 1,
+        "commercial_proposal": 173
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 238,
+    "fields": {
+        "workload": 40,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "1135.50",
+        "type_of_jobs": 4,
+        "commercial_proposal": 174
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 239,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "4756.50",
+        "type_of_jobs": 1,
+        "commercial_proposal": 175
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 240,
+    "fields": {
+        "workload": 56,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 50,
+        "total_cost": "1904.40",
+        "type_of_jobs": 1,
+        "commercial_proposal": 176
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 241,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "4756.50",
+        "type_of_jobs": 4,
+        "commercial_proposal": 177
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 242,
+    "fields": {
+        "workload": 20,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "570.00",
+        "type_of_jobs": 1,
+        "commercial_proposal": 178
+    }
+},
+{
+    "model": "commerce.budgetcalculation",
+    "pk": 245,
+    "fields": {
+        "workload": 168,
+        "hourly_rate": "5.80",
+        "outsourcing_costs": "0.00",
+        "profit": 25,
+        "total_cost": "4995.00",
+        "type_of_jobs": 2,
+        "commercial_proposal": 181
+    }
+}
+]

@@ -1,0 +1,26 @@
+[
+{
+    "model": "management.department",
+    "pk": 1,
+    "fields": {
+        "name": "Отдел экологии",
+        "head": 3
+    }
+},
+{
+    "model": "management.department",
+    "pk": 2,
+    "fields": {
+        "name": "Испытательная лаборатория",
+        "head": 4
+    }
+},
+{
+    "model": "management.department",
+    "pk": 3,
+    "fields": {
+        "name": "Отдел энергетического менеджмента",
+        "head": 5
+    }
+}
+]
