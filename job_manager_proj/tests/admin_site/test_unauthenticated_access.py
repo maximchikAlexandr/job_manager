@@ -28,15 +28,39 @@ class AdminSiteGetRequestTestCase(BaseAdminSiteTestCaseMixin, TestCase):
             target_status_code=200,
         )
 
-    def test_actofcompletedwork_redirect_unauthenticated_user(self):
-        self.check_redirect_unauthenticated_user(
-            name_model="actofcompletedwork", app_name=CommerceConfig.name
-        )
-
     def test_company_redirect_unauthenticated_user(self):
         self.check_redirect_unauthenticated_user(
             name_model="company", app_name=CatalogConfig.name
         )
+
+    def test_typeofjob_redirect_unauthenticated_user(self):
+        self.check_redirect_unauthenticated_user(
+            name_model="typeofjobs", app_name=CatalogConfig.name
+        )
+
+    def test_month_redirect_unauthenticated_user(self):
+        self.check_redirect_unauthenticated_user(
+            name_model="month", app_name=CatalogConfig.name
+        )
+
+
+
+
+
+    def test_budgetcalculation_redirect_unauthenticated_user(self):
+        self.check_redirect_unauthenticated_user(
+            name_model="budgetcalculation", app_name=CommerceConfig.name
+        )
+    def test_commercialproposal_redirect_unauthenticated_user(self):
+        self.check_redirect_unauthenticated_user(
+            name_model="commercialproposal", app_name=CommerceConfig.name
+        )
+
+    def test_serviceagreement_redirect_unauthenticated_user(self):
+        self.check_redirect_unauthenticated_user(
+            name_model="serviceagreement", app_name=CommerceConfig.name
+        )
+
 
     def test_employee_redirect_unauthenticated_user(self):
         self.check_redirect_unauthenticated_user(
@@ -48,17 +72,12 @@ class AdminSiteGetRequestTestCase(BaseAdminSiteTestCaseMixin, TestCase):
             name_model="monthjob", app_name=ManagementConfig.name
         )
 
-    def test_month_redirect_unauthenticated_user(self):
+    def test_department_redirect_unauthenticated_user(self):
         self.check_redirect_unauthenticated_user(
-            name_model="month", app_name=CatalogConfig.name
+            name_model="department", app_name=ManagementConfig.name
         )
 
-    def test_serviceagreement_redirect_unauthenticated_user(self):
+    def test_headofdepartment_redirect_unauthenticated_user(self):
         self.check_redirect_unauthenticated_user(
-            name_model="serviceagreement", app_name=CommerceConfig.name
-        )
-
-    def test_typeofjob_redirect_unauthenticated_user(self):
-        self.check_redirect_unauthenticated_user(
-            name_model="typeofjobs", app_name=CatalogConfig.name
+            name_model="headofdepartment", app_name=ManagementConfig.name
         )
