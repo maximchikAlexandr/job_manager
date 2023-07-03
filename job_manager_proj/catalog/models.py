@@ -20,7 +20,7 @@ class AbstractAddress(models.Model):
     street = models.CharField(max_length=50)
     house_number = models.CharField(max_length=6)
     office_number = models.CharField(max_length=6, null=True, blank=True)
-    сompany = models.OneToOneField(
+    company = models.OneToOneField(
         "Company", on_delete=models.CASCADE, null=True, blank=True
     )
 
@@ -44,7 +44,7 @@ class Company(models.Model):
     name = models.CharField(max_length=150)
     unp = models.IntegerField(null=False)
     IBAN = models.CharField(max_length=28)
-    bank_name = models.CharField(max_length=30)
+    bank_name = models.CharField(max_length=50)
     BIC = models.CharField(max_length=11)
 
     def __str__(self):
