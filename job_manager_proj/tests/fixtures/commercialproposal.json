@@ -1,0 +1,602 @@
+[
+{
+    "model": "commerce.commercialproposal",
+    "pk": 130,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "4566.24",
+        "company": 114,
+        "service_agreement": 62,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 131,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "570.00",
+        "company": 115,
+        "service_agreement": 63,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 132,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "5658.00",
+        "company": 145,
+        "service_agreement": 64,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 133,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "8150.40",
+        "company": 117,
+        "service_agreement": 65,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 134,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "1135.50",
+        "company": 118,
+        "service_agreement": 66,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 135,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "4756.50",
+        "company": 119,
+        "service_agreement": 67,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 136,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "1587.00",
+        "company": 120,
+        "service_agreement": 68,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 137,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "5094.00",
+        "company": 121,
+        "service_agreement": 69,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 138,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "4619.52",
+        "company": 122,
+        "service_agreement": 70,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 139,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "4756.50",
+        "company": 145,
+        "service_agreement": 71,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 140,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "570.00",
+        "company": 126,
+        "service_agreement": 72,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 141,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "5707.80",
+        "company": 145,
+        "service_agreement": 73,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 142,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "570.00",
+        "company": 126,
+        "service_agreement": 74,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 143,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "5658.00",
+        "company": 127,
+        "service_agreement": 75,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 144,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "6792.00",
+        "company": 128,
+        "service_agreement": 76,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 145,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "1135.50",
+        "company": 129,
+        "service_agreement": 77,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 146,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "7610.40",
+        "company": 114,
+        "service_agreement": 78,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 147,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "547.20",
+        "company": 131,
+        "service_agreement": 79,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 148,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "5658.00",
+        "company": 132,
+        "service_agreement": 80,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 149,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "6792.00",
+        "company": 145,
+        "service_agreement": 81,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 150,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "1362.60",
+        "company": 134,
+        "service_agreement": 82,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 151,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "4756.50",
+        "company": 135,
+        "service_agreement": 83,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 152,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "570.00",
+        "company": 136,
+        "service_agreement": 84,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 153,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "5658.00",
+        "company": 137,
+        "service_agreement": 85,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 154,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "6792.00",
+        "company": 138,
+        "service_agreement": 86,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 155,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "7610.40",
+        "company": 139,
+        "service_agreement": 87,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 156,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "570.00",
+        "company": 140,
+        "service_agreement": 88,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 157,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "5658.00",
+        "company": 141,
+        "service_agreement": 89,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 158,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "6792.00",
+        "company": 142,
+        "service_agreement": 90,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 159,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "1816.80",
+        "company": 143,
+        "service_agreement": 91,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 160,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "4756.50",
+        "company": 144,
+        "service_agreement": 92,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 161,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "1587.00",
+        "company": 162,
+        "service_agreement": 93,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 162,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "8150.40",
+        "company": 162,
+        "service_agreement": 94,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 163,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "1090.08",
+        "company": 147,
+        "service_agreement": 95,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 164,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "4756.50",
+        "company": 148,
+        "service_agreement": 96,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 165,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "4756.50",
+        "company": 149,
+        "service_agreement": 97,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 166,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "684.00",
+        "company": 150,
+        "service_agreement": 98,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 167,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "5658.00",
+        "company": 151,
+        "service_agreement": 99,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 168,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "4756.50",
+        "company": 152,
+        "service_agreement": 100,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 169,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "547.20",
+        "company": 153,
+        "service_agreement": 101,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 170,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "5658.00",
+        "company": 154,
+        "service_agreement": 102,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 171,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "570.00",
+        "company": 155,
+        "service_agreement": 103,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 172,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "6789.60",
+        "company": 156,
+        "service_agreement": 104,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 173,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "7030.50",
+        "company": 157,
+        "service_agreement": 105,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 174,
+    "fields": {
+        "service_descriptions": "Инструментальные измерения концентраций загрязняющих веществ в выбросах в атмосферный воздух\n\n",
+        "service_delivery_period": 60,
+        "total_cost": "1135.50",
+        "company": 158,
+        "service_agreement": 106,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 175,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "4756.50",
+        "company": 159,
+        "service_agreement": 107,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 176,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "1904.40",
+        "company": 160,
+        "service_agreement": 108,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 177,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "4756.50",
+        "company": 161,
+        "service_agreement": 109,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 178,
+    "fields": {
+        "service_descriptions": "",
+        "service_delivery_period": 60,
+        "total_cost": "570.00",
+        "company": 162,
+        "service_agreement": 110,
+        "crm_deal_id": null
+    }
+},
+{
+    "model": "commerce.commercialproposal",
+    "pk": 181,
+    "fields": {
+        "service_descriptions": "Разработка акта инвентаризации выбросов загрязняющих веществ в атмосферный воздух. Разработка проекта нормативов допустимых выбросов. Сопровождение разработанной документации в территориальных органах Минприроды с целью получения разрешения на выбросы загрязняющих веществ в атмосферный воздух",
+        "service_delivery_period": 60,
+        "total_cost": "4995.00",
+        "company": 114,
+        "service_agreement": 111,
+        "crm_deal_id": null
+    }
+}
+]

@@ -2,7 +2,7 @@ import os
 
 from django.conf import settings
 
-_PATH_TO_FIXTURES = "job_manager_app/tests/fixtures/"
+_PATH_TO_FIXTURES = "tests/fixtures/"
 
 fixtures = [
     f"{_PATH_TO_FIXTURES}/{fix}"

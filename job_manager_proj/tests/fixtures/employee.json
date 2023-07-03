@@ -1,42 +1,170 @@
 [
-  {
-    "model": "job_manager_app.employee",
-    "pk": 1,
-    "fields": {
-        "name": "Петр",
-        "surname": "Петров",
-        "patronymic": "Петрович",
-        "rate": 1.0
-    }
-},
 {
-    "model": "job_manager_app.employee",
-    "pk": 2,
+    "model": "management.employee",
+    "pk": 73,
     "fields": {
         "name": "Иван",
         "surname": "Иванов",
         "patronymic": "Иванович",
-        "rate": 0.5
+        "rate": 1.0,
+        "id_in_task_manager": "",
+        "department": 3
     }
 },
 {
-    "model": "job_manager_app.employee",
-    "pk": 3,
+    "model": "management.employee",
+    "pk": 74,
+    "fields": {
+        "name": "Петр",
+        "surname": "Петров",
+        "patronymic": "Петрович",
+        "rate": 1.0,
+        "id_in_task_manager": "",
+        "department": 3
+    }
+},
+{
+    "model": "management.employee",
+    "pk": 75,
+    "fields": {
+        "name": "Владимир",
+        "surname": "Ленин",
+        "patronymic": "Ильич",
+        "rate": 1.0,
+        "id_in_task_manager": "",
+        "department": 1
+    }
+},
+{
+    "model": "management.employee",
+    "pk": 76,
+    "fields": {
+        "name": "Иосиф",
+        "surname": "Сталин",
+        "patronymic": "Виссарионович",
+        "rate": 2.0,
+        "id_in_task_manager": "",
+        "department": 1
+    }
+},
+{
+    "model": "management.employee",
+    "pk": 77,
+    "fields": {
+        "name": "Георгий",
+        "surname": "Маленков",
+        "patronymic": "Максимилианович",
+        "rate": 1.0,
+        "id_in_task_manager": "",
+        "department": 1
+    }
+},
+{
+    "model": "management.employee",
+    "pk": 78,
     "fields": {
         "name": "Никита",
-        "surname": "Никитов",
-        "patronymic": "Никитович",
-        "rate": 1.0
+        "surname": "Хрущёв",
+        "patronymic": "Сергеевич",
+        "rate": 2.0,
+        "id_in_task_manager": "",
+        "department": 1
     }
 },
 {
-    "model": "job_manager_app.employee",
-    "pk": 4,
+    "model": "management.employee",
+    "pk": 79,
     "fields": {
-        "name": "Алла",
-        "surname": "Али",
-        "patronymic": "Александровна",
-        "rate": 1.0
+        "name": "Леонид",
+        "surname": "Брежнев",
+        "patronymic": "Ильич",
+        "rate": 1.0,
+        "id_in_task_manager": "",
+        "department": 1
+    }
+},
+{
+    "model": "management.employee",
+    "pk": 80,
+    "fields": {
+        "name": "Юрий",
+        "surname": "Андропов",
+        "patronymic": "Владимирович",
+        "rate": 1.0,
+        "id_in_task_manager": "",
+        "department": null
+    }
+},
+{
+    "model": "management.employee",
+    "pk": 81,
+    "fields": {
+        "name": "Константин",
+        "surname": "Черненко",
+        "patronymic": "Устинович",
+        "rate": 1.0,
+        "id_in_task_manager": "",
+        "department": 3
+    }
+},
+{
+    "model": "management.employee",
+    "pk": 82,
+    "fields": {
+        "name": "Михаил",
+        "surname": "Горбачёв",
+        "patronymic": "Сергеевич",
+        "rate": 2.0,
+        "id_in_task_manager": "",
+        "department": 1
+    }
+},
+{
+    "model": "management.employee",
+    "pk": 83,
+    "fields": {
+        "name": "Николай II",
+        "surname": "Романов",
+        "patronymic": "Александрович",
+        "rate": 1.0,
+        "id_in_task_manager": "",
+        "department": 2
+    }
+},
+{
+    "model": "management.employee",
+    "pk": 84,
+    "fields": {
+        "name": "Александр III",
+        "surname": "Романов",
+        "patronymic": "Александрович",
+        "rate": 1.0,
+        "id_in_task_manager": "",
+        "department": 2
+    }
+},
+{
+    "model": "management.employee",
+    "pk": 85,
+    "fields": {
+        "name": "Александр II",
+        "surname": "Романов",
+        "patronymic": "Николаевич",
+        "rate": 1.0,
+        "id_in_task_manager": "",
+        "department": 2
+    }
+},
+{
+    "model": "management.employee",
+    "pk": 86,
+    "fields": {
+        "name": "Николай I",
+        "surname": "Романов",
+        "patronymic": "Павлович",
+        "rate": 1.0,
+        "id_in_task_manager": "",
+        "department": 1
     }
 }
 ]

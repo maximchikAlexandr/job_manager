@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
                 ('street', models.CharField(max_length=50)),
                 ('house_number', models.CharField(max_length=6)),
                 ('office_number', models.CharField(blank=True, max_length=6, null=True)),
-                ('сompany', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='catalog.company')),
+                ('company', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='catalog.company')),
             ],
             options={
                 'abstract': False,
@@ -72,7 +72,7 @@ class Migration(migrations.Migration):
                 ('street', models.CharField(max_length=50)),
                 ('house_number', models.CharField(max_length=6)),
                 ('office_number', models.CharField(blank=True, max_length=6, null=True)),
-                ('сompany', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='catalog.company')),
+                ('company', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='catalog.company')),
             ],
             options={
                 'abstract': False,

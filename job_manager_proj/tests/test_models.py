@@ -2,24 +2,37 @@ import json
 import os
 
 import pytest
+from catalog.models import (
+    BankBranchAddress,
+    Company,
+    Month,
+    RegisteredAddress,
+    TypeOfJobs,
+)
+from commerce.models import (
+    BudgetCalculation,
+    CommercialProposal,
+    PlannedBusinessTrip,
+    ServiceAgreement,
+)
 from django.test import TestCase
-
-from catalog.models import Company, Month, TypeOfJobs
-from commerce.models import ActOfCompletedWork, ServiceAgreement
-from management.models import Employee, MonthJob
+from management.models import Department, Employee, HeadOfDepartment, MonthJob
 from tests import fixtures as fixs
 
-
-
-
 CUSTOM_TYPES = (
-    ActOfCompletedWork,
+    BankBranchAddress,
     Company,
-    Employee,
     Month,
-    MonthJob,
-    ServiceAgreement,
+    RegisteredAddress,
     TypeOfJobs,
+    BudgetCalculation,
+    CommercialProposal,
+    PlannedBusinessTrip,
+    ServiceAgreement,
+    Department,
+    Employee,
+    HeadOfDepartment,
+    MonthJob
 )
 
 pytestmark = [pytest.mark.django_db]
@@ -58,23 +71,41 @@ class ModelsTestCase(TestCase):
                     f"'{str(db_field)}' != '{str(valid_value_of_field)}'"
                 )
 
-    def test_ActOfCompletedWork(self):
-        self.check_model(model=ActOfCompletedWork)
-
-    def test_Company(self):
+    def test_company(self):
         self.check_model(model=Company)
 
-    def test_Employee(self):
-        self.check_model(model=Employee)
+    def test_bank_branch_address(self):
+        self.check_model(model=BankBranchAddress)
 
-    def test_Month(self):
+    def test_registered_address(self):
+        self.check_model(model=RegisteredAddress)
+
+    def test_type_of_jobs(self):
+        self.check_model(model=TypeOfJobs)
+
+    def test_month(self):
         self.check_model(model=Month)
 
-    def test_MonthJob(self):
-        self.check_model(model=MonthJob)
+    def test_planned_business_trip(self):
+        self.check_model(model=PlannedBusinessTrip)
 
-    def test_ServiceAgreement(self):
+    def test_budgetcalculation(self):
+        self.check_model(model=BudgetCalculation)
+
+    def test_commercialproposal(self):
+        self.check_model(model=CommercialProposal)
+
+    def test_service_agreement(self):
         self.check_model(model=ServiceAgreement)
 
-    def test_TypeOfJobs(self):
-        self.check_model(model=TypeOfJobs)
+    def test_employee(self):
+        self.check_model(model=Employee)
+
+    def test_month_job(self):
+        self.check_model(model=MonthJob)
+
+    def test_department(self):
+        self.check_model(model=Department)
+
+    def test_headofdepartment(self):
+        self.check_model(model=HeadOfDepartment)

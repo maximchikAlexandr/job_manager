@@ -36,7 +36,7 @@ class BudgetCalculationAdmin(ImportExportMixin, AbstractModelAdmin):
         try:
             return obj.commercial_proposal.company
         except AttributeError:
-            return f"Смета не связана с КП"
+            return "Смета не связана с КП"
 
 
 class BudgetCalculationInline(TabularInline):
@@ -105,4 +105,4 @@ class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
             proposal = obj.commercial_proposals.first()
             return str(proposal.company)
         except AttributeError:
-            return f"Договор не связан с КП"
+            return "Договор не связан с КП"
