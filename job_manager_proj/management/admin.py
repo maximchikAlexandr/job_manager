@@ -16,11 +16,9 @@ from management.resources import EmployeeResource
 
 @register(MonthJob)
 class MonthJobAdmin(ModelAdmin):
-    list_display = ["company", "man_hours", "employee", "month"]
-    list_editable = ["man_hours", "employee", "month"]
+    list_display = ["man_hours", "employee", "month"]
+    list_editable = ["employee", "month"]
 
-    def company(self, obj):
-        return obj.act.agreement.company
 
 
 @register(Employee)

@@ -22,8 +22,7 @@ class MonthJob(models.Model):
     )
 
     def __str__(self):
-        return f"{self.employee} - {self.act} - {self.month}"
-
+        return f"{self.employee} - {self.month}"
 
 
 class Employee(models.Model):
@@ -44,7 +43,6 @@ class Employee(models.Model):
         return f"{self.name[0]}.{self.patronymic[0]}. {self.surname}"
 
 
-
 class Department(models.Model):
     name = models.CharField(max_length=50)
     head = models.ForeignKey(
@@ -59,7 +57,6 @@ class Department(models.Model):
         return self.name
 
 
-
 class HeadOfDepartment(models.Model):
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, related_name="heads"
@@ -67,7 +64,6 @@ class HeadOfDepartment(models.Model):
 
     def __str__(self):
         return str(self.employee)
-
 
     class Meta:
         verbose_name_plural = "Heads of departments"

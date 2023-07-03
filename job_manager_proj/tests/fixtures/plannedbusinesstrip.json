@@ -1,0 +1,93 @@
+[
+{
+    "model": "commerce.plannedbusinesstrip",
+    "pk": 30,
+    "fields": {
+        "day_count": 1,
+        "staff_count": 2,
+        "lodging_cost": "0.00",
+        "public_transportation_fare": "0.00",
+        "one_way_distance_on_company_transport": 250,
+        "locality": "Дзержинск",
+        "budget_calculation": 245
+    }
+},
+{
+    "model": "commerce.plannedbusinesstrip",
+    "pk": 31,
+    "fields": {
+        "day_count": 1,
+        "staff_count": 2,
+        "lodging_cost": "0.00",
+        "public_transportation_fare": "0.00",
+        "one_way_distance_on_company_transport": 250,
+        "locality": "Kobrin",
+        "budget_calculation": 237
+    }
+},
+{
+    "model": "commerce.plannedbusinesstrip",
+    "pk": 32,
+    "fields": {
+        "day_count": 1,
+        "staff_count": 2,
+        "lodging_cost": "0.00",
+        "public_transportation_fare": "0.00",
+        "one_way_distance_on_company_transport": 250,
+        "locality": "Дзержинск",
+        "budget_calculation": 241
+    }
+},
+{
+    "model": "commerce.plannedbusinesstrip",
+    "pk": 33,
+    "fields": {
+        "day_count": 2,
+        "staff_count": 2,
+        "lodging_cost": "0.00",
+        "public_transportation_fare": "0.00",
+        "one_way_distance_on_company_transport": 250,
+        "locality": "Дзержинск",
+        "budget_calculation": 241
+    }
+},
+{
+    "model": "commerce.plannedbusinesstrip",
+    "pk": 34,
+    "fields": {
+        "day_count": 5,
+        "staff_count": 2,
+        "lodging_cost": "0.00",
+        "public_transportation_fare": "0.00",
+        "one_way_distance_on_company_transport": 250,
+        "locality": "Дзержинск",
+        "budget_calculation": 241
+    }
+},
+{
+    "model": "commerce.plannedbusinesstrip",
+    "pk": 35,
+    "fields": {
+        "day_count": 5,
+        "staff_count": 5,
+        "lodging_cost": "50.00",
+        "public_transportation_fare": "0.00",
+        "one_way_distance_on_company_transport": 250,
+        "locality": "Дзержинск",
+        "budget_calculation": 241
+    }
+},
+{
+    "model": "commerce.plannedbusinesstrip",
+    "pk": 36,
+    "fields": {
+        "day_count": 5,
+        "staff_count": 5,
+        "lodging_cost": "50.00",
+        "public_transportation_fare": "0.00",
+        "one_way_distance_on_company_transport": 250,
+        "locality": "Дзержинск",
+        "budget_calculation": 241
+    }
+}
+]

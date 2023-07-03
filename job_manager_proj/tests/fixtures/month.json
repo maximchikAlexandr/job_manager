@@ -1,122 +1,134 @@
 [
 {
-    "model": "job_manager_app.month",
-    "pk": 1,
-    "fields": {
-        "start_date": "2023-01-01",
-        "end_date": "2023-01-31",
-        "count_of_working_days": 21,
-        "number_of_employees": 3.5
-    }
-},
-{
-    "model": "job_manager_app.month",
-    "pk": 2,
+    "model": "catalog.month",
+    "pk": 27,
     "fields": {
         "start_date": "2023-02-01",
         "end_date": "2023-02-28",
         "count_of_working_days": 20,
-        "number_of_employees": 3.5
+        "number_of_employees": 5.0,
+        "year": 2023
     }
 },
 {
-    "model": "job_manager_app.month",
-    "pk": 3,
+    "model": "catalog.month",
+    "pk": 28,
+    "fields": {
+        "start_date": "2023-01-01",
+        "end_date": "2023-01-31",
+        "count_of_working_days": 20,
+        "number_of_employees": 4.0,
+        "year": 2023
+    }
+},
+{
+    "model": "catalog.month",
+    "pk": 29,
     "fields": {
         "start_date": "2023-03-01",
-        "end_date": "2023-03-31",
-        "count_of_working_days": 22,
-        "number_of_employees": 3.5
+        "end_date": "2023-01-31",
+        "count_of_working_days": 20,
+        "number_of_employees": 3.0,
+        "year": 2023
     }
 },
 {
-    "model": "job_manager_app.month",
-    "pk": 4,
-    "fields": {
-        "start_date": "2023-04-01",
-        "end_date": "2023-04-30",
-        "count_of_working_days": 19,
-        "number_of_employees": 3.5
-    }
-},
-{
-    "model": "job_manager_app.month",
-    "pk": 5,
-    "fields": {
-        "start_date": "2023-05-01",
-        "end_date": "2023-05-31",
-        "count_of_working_days": 21,
-        "number_of_employees": 3.5
-    }
-},
-{
-    "model": "job_manager_app.month",
-    "pk": 6,
-    "fields": {
-        "start_date": "2023-06-01",
-        "end_date": "2023-06-30",
-        "count_of_working_days": 22,
-        "number_of_employees": 3.5
-    }
-},
-{
-    "model": "job_manager_app.month",
-    "pk": 7,
+    "model": "catalog.month",
+    "pk": 30,
     "fields": {
         "start_date": "2023-07-01",
         "end_date": "2023-07-31",
         "count_of_working_days": 20,
-        "number_of_employees": 3.5
+        "number_of_employees": 3.0,
+        "year": 2023
     }
 },
 {
-    "model": "job_manager_app.month",
-    "pk": 8,
+    "model": "catalog.month",
+    "pk": 31,
+    "fields": {
+        "start_date": "2023-04-01",
+        "end_date": "2023-04-30",
+        "count_of_working_days": 20,
+        "number_of_employees": 5.0,
+        "year": 2023
+    }
+},
+{
+    "model": "catalog.month",
+    "pk": 32,
+    "fields": {
+        "start_date": "2023-05-01",
+        "end_date": "2023-05-31",
+        "count_of_working_days": 20,
+        "number_of_employees": 4.0,
+        "year": 2023
+    }
+},
+{
+    "model": "catalog.month",
+    "pk": 33,
+    "fields": {
+        "start_date": "2023-06-01",
+        "end_date": "2023-06-30",
+        "count_of_working_days": 20,
+        "number_of_employees": 3.0,
+        "year": 2023
+    }
+},
+{
+    "model": "catalog.month",
+    "pk": 34,
     "fields": {
         "start_date": "2023-08-01",
         "end_date": "2023-08-31",
-        "count_of_working_days": 23,
-        "number_of_employees": 3.5
+        "count_of_working_days": 20,
+        "number_of_employees": 3.0,
+        "year": 2023
     }
 },
 {
-    "model": "job_manager_app.month",
-    "pk": 9,
+    "model": "catalog.month",
+    "pk": 35,
     "fields": {
         "start_date": "2023-09-01",
         "end_date": "2023-09-30",
-        "count_of_working_days": 21,
-        "number_of_employees": 3.5
+        "count_of_working_days": 20,
+        "number_of_employees": 5.0,
+        "year": 2023
     }
 },
 {
-    "model": "job_manager_app.month",
-    "pk": 10,
+    "model": "catalog.month",
+    "pk": 36,
     "fields": {
         "start_date": "2023-10-01",
         "end_date": "2023-10-31",
-        "count_of_working_days": 22,
-        "number_of_employees": 3.5
+        "count_of_working_days": 20,
+        "number_of_employees": 5.0,
+        "year": 2023
     }
 },
 {
-    "model": "job_manager_app.month",
-    "pk": 11,
+    "model": "catalog.month",
+    "pk": 37,
     "fields": {
         "start_date": "2023-11-01",
         "end_date": "2023-11-30",
-        "count_of_working_days": 21,
-        "number_of_employees": 3.5
+        "count_of_working_days": 20,
+        "number_of_employees": 5.0,
+        "year": 2023
     }
 },
 {
-    "model": "job_manager_app.month",
-    "pk": 12,
+    "model": "catalog.month",
+    "pk": 38,
     "fields": {
         "start_date": "2023-12-01",
-        "end_date": "2023-12-31",
+        "end_date": "2023-07-31",
         "count_of_working_days": 20,
-        "number_of_employees": 3.5
+        "number_of_employees": 5.0,
+        "year": 2023
     }
 }
 ]

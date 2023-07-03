@@ -1,0 +1,23 @@
+[
+{
+    "model": "management.headofdepartment",
+    "pk": 3,
+    "fields": {
+        "employee": 76
+    }
+},
+{
+    "model": "management.headofdepartment",
+    "pk": 4,
+    "fields": {
+        "employee": 83
+    }
+},
+{
+    "model": "management.headofdepartment",
+    "pk": 5,
+    "fields": {
+        "employee": 74
+    }
+}
+]

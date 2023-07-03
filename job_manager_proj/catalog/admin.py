@@ -61,6 +61,7 @@ class MonthAdmin(ImportExportMixin, ModelAdmin):
     list_display = ("month", "year", "count_of_working_days", "number_of_employees")
     list_editable = ("count_of_working_days", "number_of_employees")
     list_per_page = 12
+    ordering = ("start_date",)
     list_filter = ("year",)
 
     def month(self, obj):

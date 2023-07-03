@@ -7,6 +7,7 @@ pylint:
     - import-outside-toplevel
     - unused-import
     - arguments-differ
+    - too-many-locals
 pyflakes:
   disable:
     - F401

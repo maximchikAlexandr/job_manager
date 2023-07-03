@@ -1,0 +1,30 @@
+[
+{
+    "model": "catalog.registeredaddress",
+    "pk": 3,
+    "fields": {
+        "postal_code": "220099",
+        "region": null,
+        "district": null,
+        "locality": "г. Минск",
+        "street": "ул.Гоголя",
+        "house_number": "34к1",
+        "office_number": "2",
+        "company": 114
+    }
+},
+{
+    "model": "catalog.registeredaddress",
+    "pk": 4,
+    "fields": {
+        "postal_code": "231103",
+        "region": "Гродненская обл.",
+        "district": null,
+        "locality": "г.Ошмяны",
+        "street": "пер.Я.Коласа",
+        "house_number": "20",
+        "office_number": "2",
+        "company": 123
+    }
+}
+]
