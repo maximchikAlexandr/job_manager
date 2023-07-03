@@ -1,7 +1,8 @@
 from django.db import models
+from django.db.models import Sum
 
 from catalog.models import Month
-from commerce.models import ServiceAgreement
+from commerce.models import ServiceAgreement, BudgetCalculation
 
 
 class MonthJob(models.Model):
@@ -42,6 +43,13 @@ class Employee(models.Model):
     def __str__(self):
         return f"{self.name[0]}.{self.patronymic[0]}. {self.surname}"
 
+class MonthProxy(Month):
+    class Meta:
+        proxy = True
+        verbose_name_plural = "MonthJobs - Months"
+        verbose_name = "MonthJob - Month"
+
+
 
 class Department(models.Model):
     name = models.CharField(max_length=50)
@@ -67,3 +75,19 @@ class HeadOfDepartment(models.Model):
 
     class Meta:
         verbose_name_plural = "Heads of departments"
+
+
+class ServiceAgreementProxy(ServiceAgreement):
+    class Meta:
+        proxy = True
+        verbose_name_plural = "MonthJobs - Agreements"
+        verbose_name = "MonthJob - Agreement"
+
+    def __str__(self):
+        return f"№{self.number} от {self.date_of_signing}"
+
+    def total_workload(self):
+        total_workload = BudgetCalculation.objects.filter(
+            commercial_proposal__service_agreement=self
+        ).aggregate(Sum("workload"))["workload__sum"]
+        return total_workload
