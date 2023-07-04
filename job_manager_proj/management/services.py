@@ -2,7 +2,6 @@ from django.db.models import Sum
 
 from catalog.models import Month
 from commerce.models import BudgetCalculation, ServiceAgreement
-from management.models import MonthJob
 
 
 def get_workload_by_agreement_from_calculations(agreement: ServiceAgreement) -> int:
@@ -12,12 +11,14 @@ def get_workload_by_agreement_from_calculations(agreement: ServiceAgreement) -> 
 
 
 def get_planned_workload_by_agreement(agreement: ServiceAgreement) -> int:
+    from management.models import MonthJob
     return MonthJob.objects.filter(agreement=agreement).aggregate(Sum("man_hours"))[
         "man_hours__sum"
     ]
 
 
 def get_planned_workload_by_month(month: Month) -> int:
+    from management.models import MonthJob
     return MonthJob.objects.filter(month=month).aggregate(Sum("man_hours"))[
         "man_hours__sum"
     ]

@@ -67,3 +67,46 @@ class Month(models.Model):
     def save(self, *args, **kwargs):
         self.year = self.start_date.year
         super().save(*args, **kwargs)
+
+
+
+class Employee(models.Model):
+    name = models.CharField(max_length=20)
+    surname = models.CharField(max_length=20)
+    patronymic = models.CharField(max_length=20)
+    rate = models.FloatField(null=False)
+    id_in_task_manager = models.CharField(max_length=36, null=False, blank=True)
+    department = models.ForeignKey(
+        "Department",
+        on_delete=models.CASCADE,
+        related_name="employees",
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self):
+        return f"{self.name[0]}.{self.patronymic[0]}. {self.surname}"
+
+class HeadOfDepartment(models.Model):
+    employee = models.ForeignKey(
+        Employee, on_delete=models.CASCADE, related_name="heads"
+    )
+
+    def __str__(self):
+        return str(self.employee)
+
+    class Meta:
+        verbose_name_plural = "Heads of departments"
+
+class Department(models.Model):
+    name = models.CharField(max_length=50)
+    head = models.ForeignKey(
+        "HeadOfDepartment",
+        on_delete=models.CASCADE,
+        related_name="departments",
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self):
+        return self.name

@@ -4,44 +4,15 @@ from django.contrib.admin import (
     TabularInline,
 )
 from django.db.models import Sum
-from import_export.admin import ImportExportMixin
 
-from commerce.models import BudgetCalculation, ServiceAgreement
+from commerce.models import BudgetCalculation
 from management.forms import ServiceAgreementProxyForm, MonthProxyForm
 from management.models import (
-    Department,
-    Employee,
-    HeadOfDepartment,
     MonthJob,
     ServiceAgreementProxy,
     MonthProxy,
 )
-from management.resources import EmployeeResource
 from shared_classes import ReadOnlyModelMixin
-
-
-@register(MonthJob)
-class MonthJobAdmin(ModelAdmin):
-    list_display = ["man_hours", "employee", "month"]
-    list_editable = ["employee", "month"]
-
-
-@register(Employee)
-class EmployeeAdmin(ImportExportMixin, ModelAdmin):
-    resource_class = EmployeeResource
-    list_display = ["surname", "name", "patronymic", "rate"]
-    list_editable = ["rate"]
-
-
-@register(Department)
-class DepartmentAdmin(ModelAdmin):
-    list_display = ["name", "head"]
-
-
-@register(HeadOfDepartment)
-class DHeadOfDepartmentAdmin(ModelAdmin):
-    list_display = ["employee"]
-
 
 class MonthJobTabularInline(TabularInline):
     model = MonthJob
