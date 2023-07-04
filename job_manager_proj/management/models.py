@@ -1,8 +1,8 @@
 from django.db import models
-from django.db.models import Sum
 
 from catalog.models import Month
-from commerce.models import ServiceAgreement, BudgetCalculation
+from commerce.models import ServiceAgreement
+from management.services import get_workload_by_agreement_from_calculations
 
 
 class MonthJob(models.Model):
@@ -87,7 +87,4 @@ class ServiceAgreementProxy(ServiceAgreement):
         return f"№{self.number} от {self.date_of_signing}"
 
     def total_workload(self):
-        total_workload = BudgetCalculation.objects.filter(
-            commercial_proposal__service_agreement=self
-        ).aggregate(Sum("workload"))["workload__sum"]
-        return total_workload
+        return get_workload_by_agreement_from_calculations(self)

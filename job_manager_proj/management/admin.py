@@ -3,9 +3,11 @@ from django.contrib.admin import (
     register,
     TabularInline,
 )
+from django.db.models import Sum
 from import_export.admin import ImportExportMixin
 
-from commerce.models import BudgetCalculation
+from commerce.models import BudgetCalculation, ServiceAgreement
+from management.forms import ServiceAgreementProxyForm, MonthProxyForm
 from management.models import (
     Department,
     Employee,
@@ -43,16 +45,16 @@ class DHeadOfDepartmentAdmin(ModelAdmin):
 
 class MonthJobTabularInline(TabularInline):
     model = MonthJob
+    extra = 0
 
 
 @register(ServiceAgreementProxy)
-class ServiceAgreementAdmin(ReadOnlyModelMixin, ModelAdmin):
+class ServiceAgreementProxyAdmin(ReadOnlyModelMixin, ModelAdmin):
     inlines = (MonthJobTabularInline,)
+    form = ServiceAgreementProxyForm
+    list_per_page = 30
+    readonly_fields = ("service_descriptions", "amount")
     ordering = ("-date_of_signing",)
-    readonly_fields = (
-        "service_descriptions",
-        "amount",
-    )
     exclude = (
         "task_id",
         "is_signed",
@@ -62,7 +64,7 @@ class ServiceAgreementAdmin(ReadOnlyModelMixin, ModelAdmin):
         "date_of_signing",
         "number",
     )
-    list_display = ("number", "amount", "company", "type_of_jobs", "total_workload")
+    list_display = ("company", "type_of_jobs", "number", "amount", "total_workload")
 
     def company(self, obj):
         try:
@@ -81,10 +83,11 @@ class ServiceAgreementAdmin(ReadOnlyModelMixin, ModelAdmin):
         return "\n".join(type_of_jobs)
 
 
-
 @register(MonthProxy)
 class MonthProxyAdmin(ReadOnlyModelMixin, ModelAdmin):
+    form = MonthProxyForm
     inlines = (MonthJobTabularInline,)
+    list_display = ("month", "planned_workload", "normative_workload")
     readonly_fields = (
         "count_of_working_days",
         "number_of_employees",
@@ -95,3 +98,14 @@ class MonthProxyAdmin(ReadOnlyModelMixin, ModelAdmin):
         "patronymic",
         "year",
     )
+
+    def month(self, obj):
+        return str(obj)
+
+    def planned_workload(self, obj):
+        return MonthJob.objects.filter(month=obj).aggregate(Sum("man_hours"))[
+            "man_hours__sum"
+        ]
+
+    def normative_workload(self, obj):
+        return obj.count_of_working_days * 8 * obj.number_of_employees
