@@ -5,6 +5,8 @@ import pytest
 from catalog.models import (
     BankBranchAddress,
     Company,
+    Department,
+    HeadOfDepartment,
     Month,
     RegisteredAddress,
     TypeOfJobs,
@@ -16,7 +18,7 @@ from commerce.models import (
     ServiceAgreement,
 )
 from django.test import TestCase
-from management.models import Department, Employee, HeadOfDepartment, MonthJob
+from management.models import Employee, MonthJob
 from tests import fixtures as fixs
 
 CUSTOM_TYPES = (

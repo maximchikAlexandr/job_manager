@@ -1,6 +1,6 @@
 [
 {
-    "model": "management.department",
+    "model": "catalog.department",
     "pk": 1,
     "fields": {
         "name": "Отдел экологии",
@@ -8,7 +8,7 @@
     }
 },
 {
-    "model": "management.department",
+    "model": "catalog.department",
     "pk": 2,
     "fields": {
         "name": "Испытательная лаборатория",
@@ -16,7 +16,7 @@
     }
 },
 {
-    "model": "management.department",
+    "model": "catalog.department",
     "pk": 3,
     "fields": {
         "name": "Отдел энергетического менеджмента",

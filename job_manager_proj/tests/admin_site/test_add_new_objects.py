@@ -6,6 +6,9 @@ from catalog.apps import CatalogConfig
 from catalog.models import (
     BankBranchAddress,
     Company,
+    Department,
+    Employee,
+    HeadOfDepartment,
     Month,
     RegisteredAddress,
     TypeOfJobs,
@@ -18,7 +21,7 @@ from commerce.models import (
     ServiceAgreement,
 )
 from management.apps import ManagementConfig
-from management.models import Employee, MonthJob, Department, HeadOfDepartment
+from management.models import MonthJob
 from tests.admin_site import BaseAdminSiteTestCaseMixin
 
 pytestmark = [pytest.mark.django_db]
@@ -28,6 +31,49 @@ class AdminSiteAddObjectTestCase(BaseAdminSiteTestCaseMixin, TestCase):
     def setUp(self) -> None:
         super().setUp()
         self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
+
+    def test_add_employee(self):
+        url = reverse(f"admin:{CatalogConfig.name}_employee_add")
+        data = {
+            "name": "Django",
+            "surname": "Smith",
+            "patronymic": "Djangovich",
+            "rate": 1.0,
+        }
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 302)
+        object_added: bool = Employee.objects.filter(
+            name=data["name"],
+            surname=data["surname"],
+            patronymic=data["patronymic"],
+            rate=data["rate"]
+        ).exists()
+        self.assertTrue(object_added)
+
+    def test_add_department(self):
+        url = reverse(f"admin:{CatalogConfig.name}_department_add")
+        data = {
+            "name": "Тестовый отдел",
+            "head": 3
+        }
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 302)
+        object_added: bool = Department.objects.filter(
+            name=data["name"]
+        ).exists()
+        self.assertTrue(object_added)
+
+    def test_add_headofdepartment(self):
+        url = reverse(f"admin:{CatalogConfig.name}_headofdepartment_add")
+        data = {
+            "employee": 73
+        }
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 302)
+        object_added: bool = HeadOfDepartment.objects.filter(
+            employee=data["employee"]
+        ).exists()
+        self.assertTrue(object_added)
 
     def test_add_month(self):
         url = reverse(f"admin:{CatalogConfig.name}_month_add")
@@ -199,68 +245,5 @@ class AdminSiteAddObjectTestCase(BaseAdminSiteTestCaseMixin, TestCase):
             number=data["number"],
             date_of_signing=data["date_of_signing"],
             act_status=data["act_status"],
-        ).exists()
-        self.assertTrue(object_added)
-
-    def test_add_monthjob(self):
-        url = reverse(f"admin:{ManagementConfig.name}_monthjob_add")
-        data = {
-            "man_hours": 50,
-            "employee": 73,
-            "month": 27,
-            "status": "planned",
-            "agreement": 62,
-        }
-        response = self.client.post(url, data)
-        self.assertEqual(response.status_code, 302)
-        object_added: bool = MonthJob.objects.filter(
-            man_hours=data["man_hours"],
-            employee=data["employee"],
-            month=data["month"],
-            status=data["status"],
-            agreement=data["agreement"]
-        ).exists()
-        self.assertTrue(object_added)
-
-    def test_add_employee(self):
-        url = reverse(f"admin:{ManagementConfig.name}_employee_add")
-        data = {
-            "name": "Django",
-            "surname": "Smith",
-            "patronymic": "Djangovich",
-            "rate": 1.0,
-        }
-        response = self.client.post(url, data)
-        self.assertEqual(response.status_code, 302)
-        object_added: bool = Employee.objects.filter(
-            name=data["name"],
-            surname=data["surname"],
-            patronymic=data["patronymic"],
-            rate=data["rate"]
-        ).exists()
-        self.assertTrue(object_added)
-
-    def test_add_department(self):
-        url = reverse(f"admin:{ManagementConfig.name}_department_add")
-        data = {
-            "name": "Тестовый отдел",
-            "head": 3
-        }
-        response = self.client.post(url, data)
-        self.assertEqual(response.status_code, 302)
-        object_added: bool = Department.objects.filter(
-            name=data["name"]
-        ).exists()
-        self.assertTrue(object_added)
-
-    def test_add_headofdepartment(self):
-        url = reverse(f"admin:{ManagementConfig.name}_headofdepartment_add")
-        data = {
-            "employee": 73
-        }
-        response = self.client.post(url, data)
-        self.assertEqual(response.status_code, 302)
-        object_added: bool = HeadOfDepartment.objects.filter(
-            employee=data["employee"]
         ).exists()
         self.assertTrue(object_added)

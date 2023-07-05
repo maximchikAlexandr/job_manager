@@ -18,6 +18,27 @@ class AdminSiteGetChangelistTestCase(BaseAdminSiteTestCaseMixin, TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
+    def test_employee(self):
+        self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
+        url = reverse(f"admin:{CatalogConfig.name}_employee_changelist")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Employees")
+
+    def test_department(self):
+        self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
+        url = reverse(f"admin:{CatalogConfig.name}_department_changelist")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Departments")
+
+    def test_headofdepartment(self):
+        self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
+        url = reverse(f"admin:{CatalogConfig.name}_headofdepartment_changelist")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Heads of departments")
+
     def test_company(self):
         self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
         url = reverse(f"admin:{CatalogConfig.name}_company_changelist")
@@ -38,7 +59,6 @@ class AdminSiteGetChangelistTestCase(BaseAdminSiteTestCaseMixin, TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Types of jobs")
-
 
     def test_serviceagreement(self):
         self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
@@ -61,33 +81,17 @@ class AdminSiteGetChangelistTestCase(BaseAdminSiteTestCaseMixin, TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Commercial proposals")
 
-
-
-    def test_employee(self):
+    def test_serviceagreementproxy(self):
         self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
-        url = reverse(f"admin:{ManagementConfig.name}_employee_changelist")
+        url = reverse(f"admin:{ ManagementConfig.name}_serviceagreementproxy_changelist")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Employees")
+        self.assertContains(response, "MonthJobs - Agreements")
 
-    def test_monthjob(self):
+
+    def test_monthproxy(self):
         self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
-        url = reverse(f"admin:{ManagementConfig.name}_monthjob_changelist")
+        url = reverse(f"admin:{ManagementConfig.name}_monthproxy_changelist")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Month jobs")
-
-    def test_department(self):
-        self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
-        url = reverse(f"admin:{ManagementConfig.name}_department_changelist")
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Departments")
-
-
-    def test_headofdepartment(self):
-        self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
-        url = reverse(f"admin:{ManagementConfig.name}_headofdepartment_changelist")
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Heads of departments")
+        self.assertContains(response, "MonthJobs - Months")

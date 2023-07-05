@@ -28,6 +28,21 @@ class AdminSiteGetRequestTestCase(BaseAdminSiteTestCaseMixin, TestCase):
             target_status_code=200,
         )
 
+    def test_employee_redirect_unauthenticated_user(self):
+        self.check_redirect_unauthenticated_user(
+            name_model="employee", app_name=CatalogConfig.name
+        )
+
+    def test_department_redirect_unauthenticated_user(self):
+        self.check_redirect_unauthenticated_user(
+            name_model="department", app_name=CatalogConfig.name
+        )
+
+    def test_headofdepartment_redirect_unauthenticated_user(self):
+        self.check_redirect_unauthenticated_user(
+            name_model="headofdepartment", app_name=CatalogConfig.name
+        )
+
     def test_company_redirect_unauthenticated_user(self):
         self.check_redirect_unauthenticated_user(
             name_model="company", app_name=CatalogConfig.name
@@ -43,14 +58,11 @@ class AdminSiteGetRequestTestCase(BaseAdminSiteTestCaseMixin, TestCase):
             name_model="month", app_name=CatalogConfig.name
         )
 
-
-
-
-
     def test_budgetcalculation_redirect_unauthenticated_user(self):
         self.check_redirect_unauthenticated_user(
             name_model="budgetcalculation", app_name=CommerceConfig.name
         )
+
     def test_commercialproposal_redirect_unauthenticated_user(self):
         self.check_redirect_unauthenticated_user(
             name_model="commercialproposal", app_name=CommerceConfig.name
@@ -62,22 +74,12 @@ class AdminSiteGetRequestTestCase(BaseAdminSiteTestCaseMixin, TestCase):
         )
 
 
-    def test_employee_redirect_unauthenticated_user(self):
+    def test_serviceagreementproxy_redirect_unauthenticated_user(self):
         self.check_redirect_unauthenticated_user(
-            name_model="employee", app_name=ManagementConfig.name
+            name_model="serviceagreementproxy", app_name=ManagementConfig.name
         )
 
-    def test_monthjob_redirect_unauthenticated_user(self):
+    def test_monthproxy_redirect_unauthenticated_user(self):
         self.check_redirect_unauthenticated_user(
-            name_model="monthjob", app_name=ManagementConfig.name
-        )
-
-    def test_department_redirect_unauthenticated_user(self):
-        self.check_redirect_unauthenticated_user(
-            name_model="department", app_name=ManagementConfig.name
-        )
-
-    def test_headofdepartment_redirect_unauthenticated_user(self):
-        self.check_redirect_unauthenticated_user(
-            name_model="headofdepartment", app_name=ManagementConfig.name
+            name_model="monthproxy", app_name=ManagementConfig.name
         )
