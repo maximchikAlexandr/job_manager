@@ -80,3 +80,18 @@ class AdminSiteGetChangelistTestCase(BaseAdminSiteTestCaseMixin, TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Commercial proposals")
+
+    def test_serviceagreementproxy(self):
+        self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
+        url = reverse(f"admin:{ ManagementConfig.name}_serviceagreementproxy_changelist")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "MonthJobs - Agreements")
+
+
+    def test_monthproxy(self):
+        self.client.login(username=self.TEST_USERNAME, password=self.TEST_PASSWORD)
+        url = reverse(f"admin:{ManagementConfig.name}_monthproxy_changelist")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "MonthJobs - Months")

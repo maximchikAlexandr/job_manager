@@ -72,3 +72,14 @@ class AdminSiteGetRequestTestCase(BaseAdminSiteTestCaseMixin, TestCase):
         self.check_redirect_unauthenticated_user(
             name_model="serviceagreement", app_name=CommerceConfig.name
         )
+
+
+    def test_serviceagreementproxy_redirect_unauthenticated_user(self):
+        self.check_redirect_unauthenticated_user(
+            name_model="serviceagreementproxy", app_name=ManagementConfig.name
+        )
+
+    def test_monthproxy_redirect_unauthenticated_user(self):
+        self.check_redirect_unauthenticated_user(
+            name_model="monthproxy", app_name=ManagementConfig.name
+        )
