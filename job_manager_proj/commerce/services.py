@@ -1,6 +1,9 @@
 import decimal
 import math
 
+from django.conf import settings
+from docxtpl import DocxTemplate
+
 
 def calc_total_cost(obj):
     planned_business_trips = obj.planned_business_trips.all()
@@ -42,3 +45,25 @@ def calc_total_cost(obj):
     vat = decimal.Decimal("0.2") * price_excluding_vat
     selling_price_including_vat = decimal.Decimal(price_excluding_vat + vat)
     return selling_price_including_vat
+
+
+def create_service_agreement_file(object_id):
+    from commerce.models import ServiceAgreement
+    word_template_path = settings.BASE_DIR / "temp/template_service_agreement.docx"
+    doc = DocxTemplate(word_template_path)
+    agreement = ServiceAgreement.objects.get(pk=object_id)
+    company = agreement.commercial_proposals.first().company
+    context = {
+        "SERVICE_DESCRIPTIONS": agreement.service_descriptions,
+        "NUMBER": agreement.number,
+        "AMOUNT": agreement.amount,
+        "VOT": round(agreement.amount * decimal.Decimal(0.2), 2),
+        "DATE_OF_SIGNING": agreement.date_of_signing,
+        "CLIENT_NAME": company.name,
+        "CLIENT_UNP": company.unp,
+        "CLIENT_IBAN": company.IBAN,
+        "CLIENT_BANK_NAME": company.bank_name,
+        "CLIENT_BIC": company.BIC,
+    }
+    doc.render(context)
+    doc.save(settings.BASE_DIR / f"temp/{context['NUMBER']}.{context['CLIENT_NAME']}.docx")

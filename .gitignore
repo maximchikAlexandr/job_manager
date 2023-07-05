@@ -2,3 +2,4 @@ job_manager_proj/.env
 .idea
 /job_manager_db/
 /job_manager_proj/static/
+/job_manager_proj/temp/
