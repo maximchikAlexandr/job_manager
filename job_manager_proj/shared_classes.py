@@ -35,7 +35,7 @@ class ReadOnlyModelMixin:
     def has_add_permission(self, request):
         return False
 
-    def has_delete_permission(self, request, obj=None):
+    def has_delete_permission(self, request, _=None):
         return False
 
     def delete_view(self, request, object_id, extra_context=None):
