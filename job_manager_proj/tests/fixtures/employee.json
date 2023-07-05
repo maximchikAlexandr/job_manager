@@ -1,6 +1,6 @@
 [
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 73,
     "fields": {
         "name": "Иван",
@@ -12,7 +12,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 74,
     "fields": {
         "name": "Петр",
@@ -24,7 +24,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 75,
     "fields": {
         "name": "Владимир",
@@ -36,7 +36,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 76,
     "fields": {
         "name": "Иосиф",
@@ -48,7 +48,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 77,
     "fields": {
         "name": "Георгий",
@@ -60,7 +60,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 78,
     "fields": {
         "name": "Никита",
@@ -72,7 +72,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 79,
     "fields": {
         "name": "Леонид",
@@ -84,7 +84,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 80,
     "fields": {
         "name": "Юрий",
@@ -96,7 +96,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 81,
     "fields": {
         "name": "Константин",
@@ -108,7 +108,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 82,
     "fields": {
         "name": "Михаил",
@@ -120,7 +120,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 83,
     "fields": {
         "name": "Николай II",
@@ -132,7 +132,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 84,
     "fields": {
         "name": "Александр III",
@@ -144,7 +144,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 85,
     "fields": {
         "name": "Александр II",
@@ -156,7 +156,7 @@
     }
 },
 {
-    "model": "management.employee",
+    "model": "catalog.employee",
     "pk": 86,
     "fields": {
         "name": "Николай I",

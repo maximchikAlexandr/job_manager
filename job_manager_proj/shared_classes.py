@@ -29,3 +29,16 @@ class AbstractModelAdmin(ModelAdmin):
         if obj is not None:
             return getattr(self.get_logs_by(obj).last(), "action_time", None)
         return "unknown"
+
+
+class ReadOnlyModelMixin:
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, _=None):
+        return False
+
+    def delete_view(self, request, object_id, extra_context=None):
+        extra_context = extra_context or {}
+        extra_context["show_delete"] = False
+        return super().delete_view(request, object_id, extra_context=extra_context)

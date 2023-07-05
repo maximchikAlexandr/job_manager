@@ -5,11 +5,15 @@ from catalog.forms import CompanyAdminForm
 from catalog.models import (
     BankBranchAddress,
     Company,
+    Department,
+    Employee,
+    HeadOfDepartment,
     Month,
     RegisteredAddress,
     TypeOfJobs,
 )
-from catalog.resources import CompanyResource, MonthResource
+from catalog.resources import CompanyResource, EmployeeResource, MonthResource
+
 
 
 @register(TypeOfJobs)
@@ -66,3 +70,20 @@ class MonthAdmin(ImportExportMixin, ModelAdmin):
 
     def month(self, obj):
         return obj.start_date.strftime("%b - %Y")
+
+
+@register(Employee)
+class EmployeeAdmin(ImportExportMixin, ModelAdmin):
+    resource_class = EmployeeResource
+    list_display = ["surname", "name", "patronymic", "rate"]
+    list_editable = ["rate"]
+
+
+@register(Department)
+class DepartmentAdmin(ModelAdmin):
+    list_display = ["name", "head"]
+
+
+@register(HeadOfDepartment)
+class DHeadOfDepartmentAdmin(ModelAdmin):
+    list_display = ["employee"]
