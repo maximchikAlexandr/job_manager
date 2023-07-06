@@ -1,7 +1,11 @@
+from urllib.parse import quote
+
+from django.conf import settings
 from django.contrib.admin import TabularInline, register
 from django.core.handlers.wsgi import WSGIRequest
+from django.http import HttpResponse
+from django.urls import path, reverse
 from import_export.admin import ImportExportMixin
-from shared_classes import AbstractModelAdmin
 
 from commerce.forms import CommercialProposalForm, ServiceAgreementForm
 from commerce.models import (
@@ -15,6 +19,8 @@ from commerce.resources import (
     CommercialProposalResource,
     ServiceAgreementResource,
 )
+from commerce.tasks import create_act_task, create_agreement_task
+from shared_classes import AbstractModelAdmin
 
 
 class PlannedBusinessTripInline(TabularInline):
@@ -98,7 +104,55 @@ class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
     save_on_top = True
     list_per_page = 15
     ordering = ("-date_of_signing",)
-    exclude = ("task_id",)
+    exclude = ("task_id", "agreement_file", "act_file")
+
+    def change_view(self, request, object_id, form_url="", extra_context=None):
+        extra_context = extra_context or {}
+        agreement = ServiceAgreement.objects.get(pk=object_id)
+
+        if agreement.agreement_file:
+            encoded_path = quote(agreement.agreement_file)
+            url = f"https://disk.yandex.ru/edit/disk{encoded_path}?sk={settings.YANDEX_SK}"
+            extra_context["change_agreement_file_url"] = url
+        else:
+            extra_context["create_agreement_file_url"] = reverse(
+                "admin:admin_create_agreement", args=(object_id,)
+            )
+
+        if agreement.act_file:
+            encoded_path = quote(agreement.act_file)
+            url = f"https://disk.yandex.ru/edit/disk{encoded_path}?sk={settings.YANDEX_SK}"
+            extra_context["change_act_file_url"] = url
+        else:
+            extra_context["create_act_file_url"] = reverse(
+                "admin:admin_create_act", args=(object_id,)
+            )
+
+        return super().change_view(request, object_id, form_url, extra_context)
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                "<path:object_id>/create_agreement_file/",
+                self.admin_site.admin_view(self.create_agreement_file_view),
+                name="admin_create_agreement",
+            ),
+            path(
+                "<path:object_id>/create_act_file/",
+                self.admin_site.admin_view(self.create_act_file_view),
+                name="admin_create_act",
+            ),
+        ]
+        return custom_urls + urls
+
+    def create_agreement_file_view(self, request, object_id):
+        create_agreement_task.delay(object_id)
+        return HttpResponse()
+
+    def create_act_file_view(self, request, object_id):
+        create_act_task.delay(object_id)
+        return HttpResponse()
 
     def company(self, obj):
         try:
