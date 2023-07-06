@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.urls import reverse, path
 from import_export.admin import ImportExportMixin
 
-from commerce.services import create_service_agreement_file
+from commerce.tasks import create_agreement_task
 from shared_classes import AbstractModelAdmin
 
 from commerce.forms import CommercialProposalForm, ServiceAgreementForm
@@ -127,7 +127,7 @@ class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
         return custom_urls + urls
 
     def create_agreement_file_view(self, request, object_id):
-        create_service_agreement_file(object_id)
+        create_agreement_task.delay(object_id)
         return HttpResponse()
 
     def company(self, obj):
