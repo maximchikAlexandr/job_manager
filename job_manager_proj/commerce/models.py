@@ -124,6 +124,8 @@ class ServiceAgreement(models.Model):
         null=True,
         blank=True,
     )
+    agreement_file = models.CharField(max_length=256, null=True, blank=True)
+    act_file = models.CharField(max_length=256, null=True, blank=True)
     def __str__(self):
         return f"№{self.number} - {self.amount} р."
 

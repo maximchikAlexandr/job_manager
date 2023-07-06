@@ -24,9 +24,11 @@ class ServiceAgreementProxyAdmin(ReadOnlyModelMixin, ModelAdmin):
     inlines = (MonthJobTabularInline,)
     form = ServiceAgreementProxyForm
     list_per_page = 30
-    readonly_fields = ("service_descriptions", "amount")
+    readonly_fields = ("service_descriptions", "amount", )
     ordering = ("-date_of_signing",)
     exclude = (
+        "agreement_file",
+        "act_file",
         "task_id",
         "is_signed",
         "act_status",

@@ -43,3 +43,9 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
+
+  redis:
+    image: redis
+    container_name: job_manager_broker
+    ports:
+      - '127.0.0.1:63791:6379'

@@ -21,6 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
+CELERY_BROKER_URL = f"redis://{env('CELERY_HOST')}:{env('CELERY_PORT')}"
+CELERY_RESULT_BACKEND = f"redis://{env('CELERY_HOST')}:{env('CELERY_PORT')}"
+CELERY_IMPORTS = [
+    "commerce.tasks",
+]
+YANDEX_TOKEN = env("YANDEX_TOKEN")
+YANDEX_SK = env("YANDEX_SK")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -43,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_extensions",
     'import_export',
+    "django_celery_beat",
 
     "catalog.apps.CatalogConfig",
     "commerce.apps.CommerceConfig",
