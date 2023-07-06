@@ -26,11 +26,8 @@ CELERY_RESULT_BACKEND = f"redis://{env('CELERY_HOST')}:{env('CELERY_PORT')}"
 CELERY_IMPORTS = [
     "commerce.tasks",
 ]
-
-
-
-
-
+YANDEX_TOKEN = env("YANDEX_TOKEN")
+YANDEX_SK = env("YANDEX_SK")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 

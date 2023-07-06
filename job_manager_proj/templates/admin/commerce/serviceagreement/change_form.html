@@ -4,9 +4,9 @@
 {% block submit_buttons_bottom %}
 
 <div class="submit-row">
-    {% if change_agreement_file_url %}
+    {% if create_agreement_file_url %}
     <input type="button" value="{% trans 'Create the agreement file' %}"
-           name="_anotherbutton"
+           name="_continue"
            onclick="window.open('{{ create_agreement_file_url }}')"/>
     {% endif %}
 
@@ -14,6 +14,20 @@
     <input type="button" value="{% trans 'Change the agreement file' %}"
            name="_anotherbutton" onclick="window.open('{{ change_agreement_file_url }}')"/>
     {% endif %}
+
+
+    {% if create_act_file_url %}
+    <input type="button" value="{% trans 'Create the act file' %}"
+           name="_continue"
+           onclick="window.open('{{ create_act_file_url }}')"/>
+    {% endif %}
+
+    {% if change_act_file_url %}
+    <input type="button" value="{% trans 'Change the act file' %}"
+           name="_anotherbutton" onclick="window.open('{{ change_act_file_url }}')"/>
+    {% endif %}
+
+
 </div>
 {{ block.super }}
 {% endblock %}
