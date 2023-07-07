@@ -39,6 +39,20 @@ POSTGRES_PASSWORD="your_database_password"
 DB_HOST="your_database_host"
 DB_PORT="port_of_your_database_in_container"
 DB_OUT_PORT="outer_port_of_your_database"
+
+# Celery parameters
+CELERY_HOST=127.0.0.1
+CELERY_PORT=63791
+
+# Yandex disk
+YANDEX_TOKEN="yandex_token_for_your_application"
+YANDEX_SK="yandex_secret_key_for_opening_documents"
+
+# Bitrix24
+BX24_HOSTNAME="your_Bitrix24_host"
+BX24_TOKEN_ADD="token_for_query_crm.deal.add"
+BX24_TOKEN_UPDATE="token_for_query_crm.deal.update"
+BX24_TOKEN_LIST="token_for_query_crm.deal.list"
 ```
 
 Create and start the docker containers:
@@ -48,3 +62,31 @@ docker compose up -d
 ```
 
 Open up the browser and navigate to the main page of the project at http://localhost:8001/.
+
+
+## Yandex Disk
+
+
+To use the application, you need to grant full access permissions to Yandex.Disk:
+
+https://oauth.yandex.ru/client/new/id
+
+To obtain an OAuth token:
+
+https://yandex.ru/dev/id/doc/ru/access
+
+## Bitrix24
+
+Create three external webhooks in your Bitrix24 account:
+https://helpdesk.bitrix24.com/open/12357038/
+
+
+The webhooks are needed for the following methods:
+
+1. crm.deal.add
+2. crm.deal.update
+3. crm.deal.list
+
+API documentation of Bitrix24:
+
+https://dev.1c-bitrix.ru/rest_help/
