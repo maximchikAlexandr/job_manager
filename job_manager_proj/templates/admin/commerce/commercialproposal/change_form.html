@@ -1,0 +1,21 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block submit_buttons_bottom %}
+
+<div class="submit-row">
+    {% if create_deal_url %}
+    <input type="button" value="{% trans 'Create the deal in BX24' %}"
+           name="_continue"
+           onclick="window.open('{{ create_deal_url }}')"/>
+    {% endif %}
+
+    {% if open_deal_url %}
+    <input type="button" value="{% trans 'Open the deal in BX24' %}"
+           name="_anotherbutton" onclick="window.open('{{ open_deal_url }}')"/>
+    {% endif %}
+
+
+</div>
+{{ block.super }}
+{% endblock %}
