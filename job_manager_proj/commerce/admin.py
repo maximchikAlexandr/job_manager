@@ -114,18 +114,17 @@ class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
             encoded_path = quote(agreement.agreement_file)
             url = f"https://disk.yandex.ru/edit/disk{encoded_path}?sk={settings.YANDEX_SK}"
             extra_context["change_agreement_file_url"] = url
+            if agreement.act_file:
+                encoded_path = quote(agreement.act_file)
+                url = f"https://disk.yandex.ru/edit/disk{encoded_path}?sk={settings.YANDEX_SK}"
+                extra_context["change_act_file_url"] = url
+            else:
+                extra_context["create_act_file_url"] = reverse(
+                    "admin:admin_create_act", args=(object_id,)
+                )
         else:
             extra_context["create_agreement_file_url"] = reverse(
                 "admin:admin_create_agreement", args=(object_id,)
-            )
-
-        if agreement.act_file:
-            encoded_path = quote(agreement.act_file)
-            url = f"https://disk.yandex.ru/edit/disk{encoded_path}?sk={settings.YANDEX_SK}"
-            extra_context["change_act_file_url"] = url
-        else:
-            extra_context["create_act_file_url"] = reverse(
-                "admin:admin_create_act", args=(object_id,)
             )
 
         return super().change_view(request, object_id, form_url, extra_context)
@@ -148,11 +147,11 @@ class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
 
     def create_agreement_file_view(self, request, object_id):
         create_agreement_task.delay(object_id)
-        return HttpResponse()
+        return redirect(f"https://disk.yandex.ru/client/disk/agreements")
 
     def create_act_file_view(self, request, object_id):
         create_act_task.delay(object_id)
-        return HttpResponse()
+        return redirect(f"https://disk.yandex.ru/client/disk/acts")
 
     def company(self, obj):
         try:
