@@ -19,6 +19,7 @@ from commerce.resources import (
     CommercialProposalResource,
     ServiceAgreementResource,
 )
+from commerce.services import check_deal_stage
 from commerce.tasks import create_act_task, create_agreement_task, create_crm_deal_task
 from shared_classes import AbstractModelAdmin
 
@@ -155,7 +156,7 @@ class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
             extra_context["create_agreement_file_url"] = reverse(
                 "admin:admin_create_agreement", args=(object_id,)
             )
-
+        check_deal_stage()
         return super().change_view(request, object_id, form_url, extra_context)
 
     def get_urls(self):

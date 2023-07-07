@@ -31,9 +31,8 @@ YANDEX_SK = env("YANDEX_SK")
 
 BX24_HOSTNAME=env("BX24_HOSTNAME")
 BX24_TOKEN_ADD=env("BX24_TOKEN_ADD")
-BX24_TOKEN_GET=env("BX24_TOKEN_GET")
 BX24_TOKEN_UPDATE=env("BX24_TOKEN_UPDATE")
-
+BX24_TOKEN_LIST=env("BX24_TOKEN_LIST")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 

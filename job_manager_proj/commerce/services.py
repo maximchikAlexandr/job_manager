@@ -4,6 +4,7 @@ import os
 import requests
 
 from django.conf import settings
+from django.db.models import Q
 from docxtpl import DocxTemplate
 import yadisk
 
@@ -96,8 +97,10 @@ def _create_document_from_template(
 
         setattr(agreement, field_name, remote_file_path)
         agreement.save()
-        os.remove(word_template_path)
-        os.remove(local_file_path)
+        if os.path.exists(word_template_path):
+            os.remove(word_template_path)
+        if os.path.exists(local_file_path):
+            os.remove(local_file_path)
 
 
 def create_service_agreement_file(object_id):
@@ -119,65 +122,101 @@ def create_act_file(object_id):
 
 
 class CRM:
-
-    def __init__(self, hostname, token_for_add, token_for_get):
+    def __init__(self, hostname, token_for_add, token_for_list):
         self.__hostname = hostname
         self.__token_for_add = token_for_add
-        self.__token_for_get = token_for_get
+        self.__token_for_list = token_for_list
 
     def add_deal(self, title: str, total_cost: decimal.Decimal) -> int:
         headers = {"Content-Type": "application/json"}
         body = {
-            "fields":
-                {
-                    "TITLE": title,
-                    "STAGE_ID": "NEW",
-                    "OPENED": "Y",
-                    "CURRENCY_ID": "BYN",
-                    "OPPORTUNITY": total_cost
-                },
-            "params": {"REGISTER_SONET_EVENT": "Y"}
+            "fields": {
+                "TITLE": title,
+                "STAGE_ID": "NEW",
+                "OPENED": "Y",
+                "CURRENCY_ID": "BYN",
+                "OPPORTUNITY": total_cost,
+            },
+            "params": {"REGISTER_SONET_EVENT": "Y"},
         }
-        url = f"https://{self.__hostname}/rest/1/{self.__token_for_add}/crm.deal.add.json"
+        url = (
+            f"https://{self.__hostname}/rest/1/{self.__token_for_add}/crm.deal.add.json"
+        )
         response = requests.post(url, json=body, headers=headers)
         if response.status_code == 200:
-            return response.json()['result']
+            return response.json()["result"]
 
     def update_deal(self, id_crm_deal: int, total_cost: decimal.Decimal) -> int:
         headers = {"Content-Type": "application/json"}
         body = {
             "id": id_crm_deal,
             "fields": {"OPPORTUNITY": total_cost},
-            "params": {"REGISTER_SONET_EVENT": "Y"}
+            "params": {"REGISTER_SONET_EVENT": "Y"},
         }
         url = f"https://{self.__hostname}/rest/1/{self.__token_for_add}/crm.deal.update.json"
         response = requests.post(url, json=body, headers=headers)
         if response.status_code == 200:
-            return response.json()['result']
+            return response.json()["result"]
 
-    def get_deal(self, deal_id: int) -> dict:
-        url = f"https://{self.__hostname}/rest/1/{self.__token_for_get}/crm.deal.get.json"
-        response = requests.get(url, params={'id': deal_id})
+    def filter_deals_by_stage_id(self, stages):
+        headers = {"Content-Type": "application/json"}
+        body = {
+            "order": {"STAGE_ID": "ASC"},
+            "filter": {"=STAGE_ID": stages},
+            "select": ["ID", "STAGE_ID"],
+        }
+        url = f"https://{self.__hostname}/rest/1/{self.__token_for_list}/crm.deal.list.json"
+        response = requests.post(url, json=body, headers=headers)
         if response.status_code == 200:
-            return response.json()['result']
+            return response.json()["result"]
 
 
 def _get_crm():
-    return CRM(hostname=settings.BX24_HOSTNAME,
-               token_for_add=settings.BX24_TOKEN_ADD,
-               token_for_get=settings.BX24_TOKEN_GET)
+    return CRM(
+        hostname=settings.BX24_HOSTNAME,
+        token_for_add=settings.BX24_TOKEN_ADD,
+        token_for_list=settings.BX24_TOKEN_LIST,
+    )
 
 
 def create_crm_deal(cp_id: int):
     from commerce.models import CommercialProposal
+
     proposal = CommercialProposal.objects.get(pk=cp_id)
     crm = _get_crm()
-    id_crm_deal = crm.add_deal(title=proposal.company.name,
-                               total_cost=float(proposal.total_cost))
+    id_crm_deal = crm.add_deal(
+        title=proposal.company.name, total_cost=float(proposal.total_cost)
+    )
     proposal.crm_deal_id = id_crm_deal
     proposal.save()
 
 
-def update_cost_in_crm_deal(id_crm_deal: int,total_cost: decimal.Decimal):
-    _get_crm().update_deal(id_crm_deal=id_crm_deal,
-                           total_cost=float(total_cost))
+def update_cost_in_crm_deal(id_crm_deal: int, total_cost: decimal.Decimal):
+    _get_crm().update_deal(id_crm_deal=id_crm_deal, total_cost=float(total_cost))
+
+
+def check_deal_stage():
+    from commerce.models import CommercialProposal
+
+    stages = ["PREPARATION", "EXECUTING"]
+    deals = _get_crm().filter_deals_by_stage_id(stages)
+
+    # create_service_agreement_file
+    preparation_deals = [deal["ID"] for deal in deals if deal["STAGE_ID"] == "PREPARATION"]
+    proposals = CommercialProposal.objects.filter(
+        Q(crm_deal_id__in=preparation_deals) & Q(service_agreement__agreement_file=None)
+    )
+    for proposal in proposals:
+        if proposal.service_agreement.id:
+            create_service_agreement_file(proposal.service_agreement.id)
+
+    # service_agreement.is_signed = True
+    executing_deals= [
+        deal["ID"] for deal in deals if deal["STAGE_ID"] == "EXECUTING"
+    ]
+    proposals = CommercialProposal.objects.filter(
+        Q(crm_deal_id__in=executing_deals) & Q(service_agreement__is_signed=False)
+    )
+    for proposal in proposals:
+        proposal.service_agreement.is_signed = True
+        proposal.service_agreement.save()
