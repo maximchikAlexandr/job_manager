@@ -143,6 +143,18 @@ class CRM:
         if response.status_code == 200:
             return response.json()['result']
 
+    def update_deal(self, id_crm_deal: int, total_cost: decimal.Decimal) -> int:
+        headers = {"Content-Type": "application/json"}
+        body = {
+            "id": id_crm_deal,
+            "fields": {"OPPORTUNITY": total_cost},
+            "params": {"REGISTER_SONET_EVENT": "Y"}
+        }
+        url = f"https://{self.__hostname}/rest/1/{self.__token_for_add}/crm.deal.update.json"
+        response = requests.post(url, json=body, headers=headers)
+        if response.status_code == 200:
+            return response.json()['result']
+
     def get_deal(self, deal_id: int) -> dict:
         url = f"https://{self.__hostname}/rest/1/{self.__token_for_get}/crm.deal.get.json"
         response = requests.get(url, params={'id': deal_id})
@@ -150,13 +162,22 @@ class CRM:
             return response.json()['result']
 
 
+def _get_crm():
+    return CRM(hostname=settings.BX24_HOSTNAME,
+               token_for_add=settings.BX24_TOKEN_ADD,
+               token_for_get=settings.BX24_TOKEN_GET)
+
+
 def create_crm_deal(cp_id: int):
     from commerce.models import CommercialProposal
     proposal = CommercialProposal.objects.get(pk=cp_id)
-    crm = CRM(hostname=settings.BX24_HOSTNAME,
-              token_for_add=settings.BX24_TOKEN_ADD,
-              token_for_get=settings.BX24_TOKEN_GET)
+    crm = _get_crm()
     id_crm_deal = crm.add_deal(title=proposal.company.name,
-                 total_cost=float(proposal.total_cost))
+                               total_cost=float(proposal.total_cost))
     proposal.crm_deal_id = id_crm_deal
     proposal.save()
+
+
+def update_cost_in_crm_deal(id_crm_deal: int,total_cost: decimal.Decimal):
+    _get_crm().update_deal(id_crm_deal=id_crm_deal,
+                           total_cost=float(total_cost))
