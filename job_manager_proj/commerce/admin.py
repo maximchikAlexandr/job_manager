@@ -156,7 +156,6 @@ class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
             extra_context["create_agreement_file_url"] = reverse(
                 "admin:admin_create_agreement", args=(object_id,)
             )
-        check_deal_stage()
         return super().change_view(request, object_id, form_url, extra_context)
 
     def get_urls(self):
@@ -177,11 +176,11 @@ class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
 
     def create_agreement_file_view(self, request, object_id):
         create_agreement_task.delay(object_id)
-        return redirect(f"https://disk.yandex.ru/client/disk/agreements")
+        return redirect("https://disk.yandex.ru/client/disk/agreements")
 
     def create_act_file_view(self, request, object_id):
         create_act_task.delay(object_id)
-        return redirect(f"https://disk.yandex.ru/client/disk/acts")
+        return redirect("https://disk.yandex.ru/client/disk/acts")
 
     def company(self, obj):
         try:

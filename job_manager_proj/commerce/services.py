@@ -142,9 +142,10 @@ class CRM:
         url = (
             f"https://{self.__hostname}/rest/1/{self.__token_for_add}/crm.deal.add.json"
         )
-        response = requests.post(url, json=body, headers=headers)
+        response = requests.post(url, json=body, headers=headers, timeout=10)
         if response.status_code == 200:
             return response.json()["result"]
+        return {}
 
     def update_deal(self, id_crm_deal: int, total_cost: decimal.Decimal) -> int:
         headers = {"Content-Type": "application/json"}
@@ -154,9 +155,10 @@ class CRM:
             "params": {"REGISTER_SONET_EVENT": "Y"},
         }
         url = f"https://{self.__hostname}/rest/1/{self.__token_for_add}/crm.deal.update.json"
-        response = requests.post(url, json=body, headers=headers)
+        response = requests.post(url, json=body, headers=headers, timeout=10)
         if response.status_code == 200:
             return response.json()["result"]
+        return {}
 
     def filter_deals_by_stage_id(self, stages):
         headers = {"Content-Type": "application/json"}
@@ -166,10 +168,10 @@ class CRM:
             "select": ["ID", "STAGE_ID"],
         }
         url = f"https://{self.__hostname}/rest/1/{self.__token_for_list}/crm.deal.list.json"
-        response = requests.post(url, json=body, headers=headers)
+        response = requests.post(url, json=body, headers=headers, timeout=10)
         if response.status_code == 200:
             return response.json()["result"]
-
+        return {}
 
 def _get_crm():
     return CRM(
