@@ -1,6 +1,7 @@
 import decimal
 import math
 import os
+import requests
 
 from django.conf import settings
 from docxtpl import DocxTemplate
@@ -15,9 +16,9 @@ def calc_total_cost(obj):
         for trip in planned_business_trips:
             mileage += trip.one_way_distance_on_company_transport
             travel_expenses += (
-                trip.day_count * trip.staff_count * 9
-                + trip.lodging_cost
-                + trip.public_transportation_fare
+                    trip.day_count * trip.staff_count * 9
+                    + trip.lodging_cost
+                    + trip.public_transportation_fare
             )
 
     salary = math.ceil(obj.workload * obj.hourly_rate)
@@ -32,17 +33,17 @@ def calc_total_cost(obj):
         decimal.Decimal(mileage) * decimal.Decimal("0.5630625")
     )
     cost_price = (
-        salary
-        + income_taxes
-        + social_security_contributions
-        + overhead_expenses
-        + depreciation_expenses
-        + transportation_expenses
-        + accident_insurance
-        + travel_expenses
+            salary
+            + income_taxes
+            + social_security_contributions
+            + overhead_expenses
+            + depreciation_expenses
+            + transportation_expenses
+            + accident_insurance
+            + travel_expenses
     )
     price_excluding_vat = (
-        cost_price * decimal.Decimal((100 + obj.profit) / 100) + obj.outsourcing_costs
+            cost_price * decimal.Decimal((100 + obj.profit) / 100) + obj.outsourcing_costs
     )
     vat = decimal.Decimal("0.2") * price_excluding_vat
     selling_price_including_vat = decimal.Decimal(price_excluding_vat + vat)
@@ -67,7 +68,7 @@ def _get_context_by_agreement(agreement):
 
 
 def _create_document_from_template(
-    *, object_id, template_name, output_folder, field_name
+        *, object_id, template_name, output_folder, field_name
 ):
     from commerce.models import ServiceAgreement
 
@@ -115,3 +116,47 @@ def create_act_file(object_id):
         output_folder="acts",
         field_name="act_file",
     )
+
+
+class CRM:
+
+    def __init__(self, hostname, token_for_add, token_for_get):
+        self.__hostname = hostname
+        self.__token_for_add = token_for_add
+        self.__token_for_get = token_for_get
+
+    def add_deal(self, title: str, total_cost: decimal.Decimal) -> int:
+        headers = {"Content-Type": "application/json"}
+        body = {
+            "fields":
+                {
+                    "TITLE": title,
+                    "STAGE_ID": "NEW",
+                    "OPENED": "Y",
+                    "CURRENCY_ID": "BYN",
+                    "OPPORTUNITY": total_cost
+                },
+            "params": {"REGISTER_SONET_EVENT": "Y"}
+        }
+        url = f"https://{self.__hostname}/rest/1/{self.__token_for_add}/crm.deal.add.json"
+        response = requests.post(url, json=body, headers=headers)
+        if response.status_code == 200:
+            return response.json()['result']
+
+    def get_deal(self, deal_id: int) -> dict:
+        url = f"https://{self.__hostname}/rest/1/{self.__token_for_get}/crm.deal.get.json"
+        response = requests.get(url, params={'id': deal_id})
+        if response.status_code == 200:
+            return response.json()['result']
+
+
+def create_crm_deal(cp_id: int):
+    from commerce.models import CommercialProposal
+    proposal = CommercialProposal.objects.get(pk=cp_id)
+    crm = CRM(hostname=settings.BX24_HOSTNAME,
+              token_for_add=settings.BX24_TOKEN_ADD,
+              token_for_get=settings.BX24_TOKEN_GET)
+    id_crm_deal = crm.add_deal(title=proposal.company.name,
+                 total_cost=float(proposal.total_cost))
+    proposal.crm_deal_id = id_crm_deal
+    proposal.save()

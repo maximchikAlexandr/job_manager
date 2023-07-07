@@ -3,7 +3,7 @@ from urllib.parse import quote
 from django.conf import settings
 from django.contrib.admin import TabularInline, register
 from django.core.handlers.wsgi import WSGIRequest
-from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.urls import path, reverse
 from import_export.admin import ImportExportMixin
 
@@ -19,7 +19,7 @@ from commerce.resources import (
     CommercialProposalResource,
     ServiceAgreementResource,
 )
-from commerce.tasks import create_act_task, create_agreement_task
+from commerce.tasks import create_act_task, create_agreement_task, create_crm_deal_task
 from shared_classes import AbstractModelAdmin
 
 
@@ -84,6 +84,35 @@ class CommercialProposalAdmin(ImportExportMixin, AbstractModelAdmin):
                     f"{calc.type_of_jobs.service_descriptions}\n\n"
                 )
             super().save_model(request, obj, form, change)
+
+    def change_view(self, request, object_id, form_url="", extra_context=None):
+        extra_context = extra_context or {}
+        proposal = CommercialProposal.objects.get(pk=object_id)
+
+        if proposal.crm_deal_id:
+            url = f"https://{settings.BX24_HOSTNAME}/crm/deal/details/{proposal.crm_deal_id}/"
+            extra_context["open_deal_url"] = url
+        else:
+            extra_context["create_deal_url"] = reverse(
+                "admin:admin_create_crm_deal", args=(object_id,)
+            )
+
+        return super().change_view(request, object_id, form_url, extra_context)
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                "<path:object_id>/create_crm_deal/",
+                self.admin_site.admin_view(self.create_crm_deal_view),
+                name="admin_create_crm_deal",
+            ),
+        ]
+        return custom_urls + urls
+
+    def create_crm_deal_view(self, request, object_id):
+        create_crm_deal_task.delay(object_id)
+        return redirect(f"https://{settings.BX24_HOSTNAME}/crm/deal/kanban/category/0/")
 
 
 class CommercialProposalInline(TabularInline):
