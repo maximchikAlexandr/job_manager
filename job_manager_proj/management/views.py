@@ -1,4 +1,4 @@
-from rest_framework import permissions
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -19,6 +19,7 @@ from management.serializers import (
 class DepartmentInMonthJobAPIView(ListAPIView):
     queryset = Department.objects.filter(employees__jobs__isnull=False).distinct()
     serializer_class = DepartmentSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class YearInMonthJobListAPIView(APIView):
@@ -34,6 +35,8 @@ class YearInMonthJobListAPIView(APIView):
 
 
 class MonthJobListAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def post(self, request):
         year = request.data["year"]
         id_departament = request.data["id_departament"]
@@ -46,6 +49,7 @@ class MonthJobListAPIView(APIView):
 
 # Report "Salary"
 class DepartmentSalaryJobAPIView(ListAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Department.objects.filter(
         Q(employees__jobs__isnull=False) & Q(employees__jobs__status="produced")
     ).distinct()
@@ -53,6 +57,7 @@ class DepartmentSalaryJobAPIView(ListAPIView):
 
 
 class YearInSalaryListAPIView(APIView):
+    permissions_classes = (IsAuthenticated,)
     def post(self, request):
         id_departament = request.data["id_departament"]
         queryset = (
@@ -67,6 +72,7 @@ class YearInSalaryListAPIView(APIView):
 
 
 class MonthInSalaryListAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
     def post(self, request):
         year = request.data["year"]
         id_departament = request.data["id_departament"]
@@ -84,6 +90,7 @@ class MonthInSalaryListAPIView(APIView):
 
 
 class SalaryListAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
     def post(self, request):
         number_month = request.data["number_month"]
         year = request.data["year"]
