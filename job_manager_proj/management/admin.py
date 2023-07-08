@@ -3,7 +3,6 @@ from django.contrib.admin import (
     register,
     TabularInline,
 )
-from django.db.models import Sum
 
 from commerce.models import BudgetCalculation
 from management.forms import ServiceAgreementProxyForm, MonthProxyForm
@@ -12,7 +11,9 @@ from management.models import (
     ServiceAgreementProxy,
     MonthProxy,
 )
+from management.services import get_planned_workload_by_month, get_normative_workload_by_month
 from shared_classes import ReadOnlyModelMixin
+
 
 class MonthJobTabularInline(TabularInline):
     model = MonthJob
