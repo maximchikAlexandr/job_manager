@@ -6,13 +6,13 @@ from commerce.tasks import update_cost_in_crm_deal_task
 
 
 class PlannedBusinessTrip(models.Model):
-    day_count = models.IntegerField(null=False, default=1)
-    staff_count = models.IntegerField(null=False, default=2)
+    day_count = models.PositiveIntegerField(null=False, default=1)
+    staff_count = models.PositiveIntegerField(null=False, default=2)
     lodging_cost = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     public_transportation_fare = models.DecimalField(
         max_digits=14, decimal_places=2, default=0
     )
-    one_way_distance_on_company_transport = models.IntegerField(null=True, default=250)
+    one_way_distance_on_company_transport = models.PositiveIntegerField(null=True, default=250)
     locality = models.CharField(max_length=50)
     budget_calculation = models.ForeignKey(
         "BudgetCalculation",
@@ -26,10 +26,10 @@ class PlannedBusinessTrip(models.Model):
 
 
 class BudgetCalculation(models.Model):
-    workload = models.IntegerField(null=True, default=168)
+    workload = models.PositiveIntegerField(null=True, default=168)
     hourly_rate = models.DecimalField(max_digits=14, decimal_places=2, default=5.8)
     outsourcing_costs = models.DecimalField(max_digits=14, decimal_places=2, default=0)
-    profit = models.IntegerField(null=True, default=25)
+    profit = models.PositiveIntegerField(null=True, default=25)
     total_cost = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     type_of_jobs = models.ForeignKey(
         TypeOfJobs,
@@ -63,7 +63,7 @@ class BudgetCalculation(models.Model):
 
 class CommercialProposal(models.Model):
     service_descriptions = models.TextField(null=False, blank=True)
-    service_delivery_period = models.IntegerField(null=False, default=60)
+    service_delivery_period = models.PositiveIntegerField(null=False, default=60)
     total_cost = models.DecimalField(
         max_digits=14, decimal_places=2, null=True, blank=True
     )
@@ -81,7 +81,7 @@ class CommercialProposal(models.Model):
         blank=True,
     )
 
-    crm_deal_id = models.IntegerField(null=True, blank=True)
+    crm_deal_id = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.company} - {self.total_cost} р. - {self.service_delivery_period} дн."
