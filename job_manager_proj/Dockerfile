@@ -25,4 +25,3 @@ RUN chown -R job_manager:job_manager /app && chmod 755 /app
 COPY --chown=job_manager . .
 RUN poetry config virtualenvs.create false && poetry config installer.max-workers 10 \
 && poetry install --no-root
-RUN python manage.py collectstatic --no-input
