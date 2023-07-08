@@ -31,6 +31,9 @@ and fill it with the following environment variables:
 DEBUG=True
 SECRET_KEY="the_key_used_for_encryption"
 PRODUCTION_HOST=some_prod_host
+DJANGO_SUPERUSER_PASSWORD="your_password"
+DJANGO_SUPERUSER_EMAIL="your_email"
+DJANGO_SUPERUSER_USERNAME="your_username"
 
 # database parameters
 POSTGRES_DB="database_name" 
@@ -41,8 +44,8 @@ DB_PORT="port_of_your_database_in_container"
 DB_OUT_PORT="outer_port_of_your_database"
 
 # Celery parameters
-CELERY_HOST=127.0.0.1
-CELERY_PORT=63791
+CELERY_HOST=redis
+CELERY_PORT=6379
 
 # Yandex disk
 YANDEX_TOKEN="yandex_token_for_your_application"
@@ -90,3 +93,9 @@ The webhooks are needed for the following methods:
 API documentation of Bitrix24:
 
 https://dev.1c-bitrix.ru/rest_help/
+
+## API Documentation
+
+Swagger is utilized for API documentation. If the application is deployed on the local machine, the documentation can be accessed through the following link:
+
+http://localhost:8001/doc/
