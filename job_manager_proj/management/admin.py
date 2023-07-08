@@ -12,7 +12,7 @@ from management.models import (
     MonthProxy,
 )
 from management.services import get_planned_workload_by_month, get_normative_workload_by_month
-from shared_classes import ReadOnlyModelMixin
+from shared_mixins import ReadOnlyModelMixin
 
 
 class MonthJobTabularInline(TabularInline):

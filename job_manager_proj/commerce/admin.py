@@ -1,7 +1,7 @@
 from urllib.parse import quote
 
 from django.conf import settings
-from django.contrib.admin import TabularInline, register
+from django.contrib.admin import ModelAdmin, TabularInline, register
 from django.core.handlers.wsgi import WSGIRequest
 from django.shortcuts import redirect
 from django.urls import path, reverse
@@ -19,9 +19,8 @@ from commerce.resources import (
     CommercialProposalResource,
     ServiceAgreementResource,
 )
-from commerce.services import check_deal_stage
 from commerce.tasks import create_act_task, create_agreement_task, create_crm_deal_task
-from shared_classes import AbstractModelAdmin
+from shared_mixins import LoggedModelMixin
 
 
 class PlannedBusinessTripInline(TabularInline):
@@ -30,7 +29,7 @@ class PlannedBusinessTripInline(TabularInline):
 
 
 @register(BudgetCalculation)
-class BudgetCalculationAdmin(ImportExportMixin, AbstractModelAdmin):
+class BudgetCalculationAdmin(ImportExportMixin, LoggedModelMixin, ModelAdmin):
     resource_class = BudgetCalculationResource
     list_display = ("company", "type_of_jobs", "total_cost", "created", "edited")
     readonly_fields = ("total_cost",)
@@ -53,7 +52,7 @@ class BudgetCalculationInline(TabularInline):
 
 
 @register(CommercialProposal)
-class CommercialProposalAdmin(ImportExportMixin, AbstractModelAdmin):
+class CommercialProposalAdmin(ImportExportMixin, LoggedModelMixin, ModelAdmin):
     resource_class = CommercialProposalResource
     inlines = (BudgetCalculationInline,)
     list_display = ("company", "type_of_jobs", "total_cost", "created", "edited")
@@ -125,7 +124,7 @@ class CommercialProposalInline(TabularInline):
 
 
 @register(ServiceAgreement)
-class ServiceAgreementJobAdmin(ImportExportMixin, AbstractModelAdmin):
+class ServiceAgreementJobAdmin(ImportExportMixin, LoggedModelMixin, ModelAdmin):
     resource_class = ServiceAgreementResource
     inlines = (CommercialProposalInline,)
     list_display = ("number", "company", "amount", "created", "edited")

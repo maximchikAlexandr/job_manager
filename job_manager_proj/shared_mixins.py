@@ -4,7 +4,7 @@ from django.contrib.admin import (
 )
 
 
-class AbstractModelAdmin(ModelAdmin):
+class LoggedModelMixin:
     def get_logs_by(self, obj):
         return models.LogEntry.objects.filter(
             object_id=obj.pk, content_type__model=self.opts.model_name
