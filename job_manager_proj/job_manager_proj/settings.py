@@ -28,6 +28,12 @@ CELERY_IMPORTS = [
 ]
 YANDEX_TOKEN = env("YANDEX_TOKEN")
 YANDEX_SK = env("YANDEX_SK")
+
+BX24_HOSTNAME = env("BX24_HOSTNAME")
+BX24_TOKEN_ADD = env("BX24_TOKEN_ADD")
+BX24_TOKEN_UPDATE = env("BX24_TOKEN_UPDATE")
+BX24_TOKEN_LIST = env("BX24_TOKEN_LIST")
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -49,8 +55,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
-    'import_export',
+    "import_export",
     "django_celery_beat",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "djoser",
 
     "catalog.apps.CatalogConfig",
     "commerce.apps.CommerceConfig",
@@ -72,9 +81,7 @@ ROOT_URLCONF = "job_manager_proj.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            BASE_DIR / "templates",
-        ],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -144,15 +151,27 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGGING = {
     "version": 1,
-    "handlers": {
-        "console": {"class": "logging.StreamHandler"}
-    },
-    "loggers": {
-        "django.db.backends": {
-            "handlers": ["console"],
-            "level": "DEBUG"
-        }
-    }
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "loggers": {"django.db.backends": {"handlers": ["console"], "level": "DEBUG"}},
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'api_key': {
+            'type': 'apiKey',
+            'description': 'Personal API Key authorization',
+            'name': 'Authorization',
+            'in': 'header',
+        }
+    }
+}
