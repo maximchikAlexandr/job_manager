@@ -28,10 +28,8 @@ services:
     container_name: job_manager_app
     privileged: true
     command: >
-      sh -c 'if [ ! -f /app/.installed ]; then ./manage.py collectstatic --noinput && ./manage.py 
-      createsuperuser --noinput && touch /app/.installed && mkdir /app/temp; fi && python manage.py 
-      runserver 0.0.0
-      .0:8000'
+      sh -c './manage.py migrate && if [ ! -f /app/.installed ]; then ./manage.py collectstatic --noinput && ./manage.py 
+      createsuperuser --noinput && touch /app/.installed && mkdir /app/temp; fi && ./manage.py runserver 0.0.0.0:8000'
     volumes:
       - .:/app
     ports:
@@ -73,7 +71,5 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - redis
-      - celery_worker
-      - postgres_db
-      - web
+      postgres_db:
+        condition: service_healthy
