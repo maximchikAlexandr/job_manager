@@ -12,7 +12,7 @@ from management.models import (
     MonthProxy,
 )
 from management.services import get_planned_workload_by_month, get_normative_workload_by_month
-from shared_classes import ReadOnlyModelMixin
+from shared_mixins import ReadOnlyAdminModelMixin
 
 
 class MonthJobTabularInline(TabularInline):
@@ -21,7 +21,7 @@ class MonthJobTabularInline(TabularInline):
 
 
 @register(ServiceAgreementProxy)
-class ServiceAgreementProxyAdmin(ReadOnlyModelMixin, ModelAdmin):
+class ServiceAgreementProxyAdmin(ReadOnlyAdminModelMixin, ModelAdmin):
     inlines = (MonthJobTabularInline,)
     form = ServiceAgreementProxyForm
     list_per_page = 30
@@ -58,7 +58,7 @@ class ServiceAgreementProxyAdmin(ReadOnlyModelMixin, ModelAdmin):
 
 
 @register(MonthProxy)
-class MonthProxyAdmin(ReadOnlyModelMixin, ModelAdmin):
+class MonthProxyAdmin(ReadOnlyAdminModelMixin, ModelAdmin):
     form = MonthProxyForm
     inlines = (MonthJobTabularInline,)
     list_display = ("month", "planned_workload", "normative_workload")
