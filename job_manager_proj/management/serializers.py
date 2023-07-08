@@ -10,7 +10,7 @@ class DepartmentSerializer(serializers.ModelSerializer):
         fields = ["id", 'name']
 
 
-class YearInMonthJobSerializer(serializers.ModelSerializer):
+class YearSerializer(serializers.ModelSerializer):
     year = serializers.SerializerMethodField()
 
     def get_year(self, data):
