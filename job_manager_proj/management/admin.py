@@ -24,7 +24,7 @@ class ServiceAgreementProxyAdmin(ReadOnlyModelMixin, ModelAdmin):
     inlines = (MonthJobTabularInline,)
     form = ServiceAgreementProxyForm
     list_per_page = 30
-    readonly_fields = ("service_descriptions", "amount", )
+    readonly_fields = ("service_descriptions", "amount",)
     ordering = ("-date_of_signing",)
     exclude = (
         "agreement_file",
@@ -62,6 +62,7 @@ class MonthProxyAdmin(ReadOnlyModelMixin, ModelAdmin):
     inlines = (MonthJobTabularInline,)
     list_display = ("month", "planned_workload", "normative_workload")
     readonly_fields = (
+        "planned_workload",
         "count_of_working_days",
         "number_of_employees",
     )
@@ -76,9 +77,7 @@ class MonthProxyAdmin(ReadOnlyModelMixin, ModelAdmin):
         return str(obj)
 
     def planned_workload(self, obj):
-        return MonthJob.objects.filter(month=obj).aggregate(Sum("man_hours"))[
-            "man_hours__sum"
-        ]
+        return get_planned_workload_by_month(month=obj) or 0
 
     def normative_workload(self, obj):
-        return obj.count_of_working_days * 8 * obj.number_of_employees
+        return get_normative_workload_by_month(month=obj) or 0
