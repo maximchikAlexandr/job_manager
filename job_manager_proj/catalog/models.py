@@ -57,7 +57,7 @@ class Company(models.Model):
 class Month(models.Model):
     start_date = models.DateField(null=False)
     end_date = models.DateField(null=False)
-    count_of_working_days = models.IntegerField(null=False)
+    count_of_working_days = models.PositiveIntegerField(null=False)
     number_of_employees = models.FloatField(null=False)
     year = models.PositiveIntegerField(null=True, editable=False)
 
@@ -68,7 +68,11 @@ class Month(models.Model):
         self.year = self.start_date.year
         super().save(*args, **kwargs)
 
-
+    class Meta:
+        constraints = [
+            models.CheckConstraint(check=models.Q(count_of_working_days__lte=31),
+                                   name='month_count_of_working_days_check'),
+        ]
 
 class Employee(models.Model):
     name = models.CharField(max_length=20)
