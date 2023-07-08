@@ -22,3 +22,7 @@ def get_planned_workload_by_month(month: Month) -> int:
     return MonthJob.objects.filter(month=month).aggregate(Sum("man_hours"))[
         "man_hours__sum"
     ]
+
+
+def get_normative_workload_by_month(month: Month) -> int:
+    return month.count_of_working_days * 8 * month.number_of_employees
