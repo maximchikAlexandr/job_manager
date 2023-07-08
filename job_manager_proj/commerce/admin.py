@@ -20,7 +20,7 @@ from commerce.resources import (
     ServiceAgreementResource,
 )
 from commerce.tasks import create_act_task, create_agreement_task, create_crm_deal_task
-from shared_mixins import LoggedModelMixin
+from shared_mixins import LoggedAdminModelMixin
 
 
 class PlannedBusinessTripInline(TabularInline):
@@ -29,7 +29,7 @@ class PlannedBusinessTripInline(TabularInline):
 
 
 @register(BudgetCalculation)
-class BudgetCalculationAdmin(ImportExportMixin, LoggedModelMixin, ModelAdmin):
+class BudgetCalculationAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdmin):
     resource_class = BudgetCalculationResource
     list_display = ("company", "type_of_jobs", "total_cost", "created", "edited")
     readonly_fields = ("total_cost",)
@@ -52,7 +52,7 @@ class BudgetCalculationInline(TabularInline):
 
 
 @register(CommercialProposal)
-class CommercialProposalAdmin(ImportExportMixin, LoggedModelMixin, ModelAdmin):
+class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdmin):
     resource_class = CommercialProposalResource
     inlines = (BudgetCalculationInline,)
     list_display = ("company", "type_of_jobs", "total_cost", "created", "edited")
@@ -124,7 +124,7 @@ class CommercialProposalInline(TabularInline):
 
 
 @register(ServiceAgreement)
-class ServiceAgreementJobAdmin(ImportExportMixin, LoggedModelMixin, ModelAdmin):
+class ServiceAgreementJobAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdmin):
     resource_class = ServiceAgreementResource
     inlines = (CommercialProposalInline,)
     list_display = ("number", "company", "amount", "created", "edited")

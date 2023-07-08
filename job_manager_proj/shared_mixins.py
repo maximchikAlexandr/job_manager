@@ -1,10 +1,6 @@
-from django.contrib.admin import (
-    ModelAdmin,
-    models,
-)
+from django.contrib.admin import models
 
-
-class LoggedModelMixin:
+class LoggedAdminModelMixin:
     def get_logs_by(self, obj):
         return models.LogEntry.objects.filter(
             object_id=obj.pk, content_type__model=self.opts.model_name
@@ -31,7 +27,7 @@ class LoggedModelMixin:
         return "unknown"
 
 
-class ReadOnlyModelMixin:
+class ReadOnlyAdminModelMixin:
     def has_add_permission(self, request):
         return False
 
