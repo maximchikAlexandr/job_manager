@@ -2,6 +2,8 @@ from catalog.models import Company, Month, TypeOfJobs
 from commerce.services import calc_total_cost
 from django.db import models
 
+from commerce.tasks import update_cost_in_crm_deal_task
+
 
 class PlannedBusinessTrip(models.Model):
     day_count = models.IntegerField(null=False, default=1)
@@ -91,6 +93,8 @@ class CommercialProposal(models.Model):
                 total_cost += calculation.total_cost
             if self.total_cost != total_cost:
                 self.total_cost = total_cost
+                if self.crm_deal_id:
+                    update_cost_in_crm_deal_task.delay(self.crm_deal_id, total_cost)
         super().save(*args, **kwargs)
         if self.service_agreement:
             self.service_agreement.save()
