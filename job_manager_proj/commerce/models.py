@@ -107,7 +107,7 @@ class ServiceAgreement(models.Model):
         (COMPLETED, "completed"),
         (NOT_COMPLETED, "not completed"),
     )
-    service_descriptions = models.TextField(null=False)
+    service_descriptions = models.TextField(null=True, blank=True)
     number = models.CharField(max_length=30)
     amount = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)
     date_of_signing = models.DateField()
