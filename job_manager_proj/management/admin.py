@@ -1,6 +1,7 @@
 from django.contrib.admin import (
     ModelAdmin,
     register,
+    site,
     TabularInline,
 )
 
@@ -82,3 +83,7 @@ class MonthProxyAdmin(ReadOnlyAdminModelMixin, ModelAdmin):
 
     def normative_workload(self, obj):
         return get_normative_workload_by_month(month=obj) or 0
+
+
+site.site_title = "JobManager"
+site.site_header = "JobManager"
