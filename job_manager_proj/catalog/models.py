@@ -40,6 +40,15 @@ class RegisteredAddress(AbstractAddress):
     pass
 
 
+class Signatory(models.Model):
+    name = models.CharField(max_length=20)
+    surname = models.CharField(max_length=20)
+    patronymic = models.CharField(max_length=20)
+    basis_for_signing = models.CharField(max_length=150)
+    position = models.CharField(max_length=64)
+    company = models.ForeignKey("Company", on_delete=models.CASCADE,
+                                  related_name="signatories", default=None)
+
 class Company(models.Model):
     name = models.CharField(max_length=150)
     unp = models.IntegerField(null=False)
