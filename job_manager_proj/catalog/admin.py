@@ -10,10 +10,10 @@ from catalog.models import (
     HeadOfDepartment,
     Month,
     RegisteredAddress,
+    Signatory,
     TypeOfJobs,
 )
 from catalog.resources import CompanyResource, EmployeeResource, MonthResource
-
 
 
 @register(TypeOfJobs)
@@ -41,8 +41,28 @@ class AddressTabularInline(TabularInline):
         return field
 
 
+class SignatoryTabularInline(TabularInline):
+    model = Signatory
+    extra = 1
+
+
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        field = super().formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == "name":
+            field.widget.attrs["style"] = "width: 150px;"
+        elif db_field.name == "surname":
+            field.widget.attrs["style"] = "width: 150px;"
+        elif db_field.name == "patronymic":
+            field.widget.attrs["style"] = "width: 150px;"
+        elif db_field.name == "basis_for_signing":
+            field.widget.attrs["style"] = "width: 250px;"
+        elif db_field.name == "position":
+            field.widget.attrs["style"] = "width: 150px;"
+        return field
+
 class RegisteredAddressInline(AddressTabularInline):
     model = RegisteredAddress
+
 
 
 class BankBranchAddressInline(AddressTabularInline):
@@ -53,7 +73,7 @@ class BankBranchAddressInline(AddressTabularInline):
 class CompanyAdmin(ImportExportMixin, ModelAdmin):
     resource_class = CompanyResource
     form = CompanyAdminForm
-    inlines = [RegisteredAddressInline, BankBranchAddressInline]
+    inlines = [SignatoryTabularInline, RegisteredAddressInline, BankBranchAddressInline]
     list_display = ("name",)
     list_per_page = 20
     ordering = ("name",)
