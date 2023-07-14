@@ -120,6 +120,7 @@ class Department(models.Model):
         null=True,
         blank=True,
     )
+    types_of_jobs = models.ManyToManyField(TypeOfJobs, related_name="departments")
 
     def __str__(self):
         return self.name
