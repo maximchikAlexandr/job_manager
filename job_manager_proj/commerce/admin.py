@@ -19,6 +19,7 @@ from commerce.resources import (
     CommercialProposalResource,
     ServiceAgreementResource,
 )
+from commerce.services import create_service_agreement_file, create_act_file
 from commerce.tasks import create_act_task, create_agreement_task, create_crm_deal_task
 from shared_mixins import LoggedAdminModelMixin
 
@@ -195,10 +196,12 @@ class ServiceAgreementJobAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAd
 
     def create_agreement_file_view(self, request, object_id):
         create_agreement_task.delay(object_id)
+        # create_service_agreement_file(object_id)
         return redirect("https://disk.yandex.ru/client/disk/agreements")
 
     def create_act_file_view(self, request, object_id):
         create_act_task.delay(object_id)
+        # create_act_file(object_id)
         return redirect("https://disk.yandex.ru/client/disk/acts")
 
     def company(self, obj):

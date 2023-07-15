@@ -58,6 +58,7 @@ def calc_total_cost(obj):
 
 def _get_context_by_agreement(agreement):
     company = agreement.commercial_proposals.first().company
+    signatory = company.signatories.filter(is_active=True).first()
     context = {
         "SERVICE_DESCRIPTIONS": agreement.service_descriptions,
         "NUMBER": agreement.number,
@@ -66,15 +67,23 @@ def _get_context_by_agreement(agreement):
         "DATE_OF_SIGNING": agreement.date_of_signing,
         "CLIENT_NAME": company.name,
         "CLIENT_UNP": company.unp,
+        "CLIENT_ADDRESS": str(company.registeredaddress),
         "CLIENT_IBAN": company.IBAN,
         "CLIENT_BANK_NAME": company.bank_name,
         "CLIENT_BIC": company.BIC,
+        "CLIENT_BANK_ADDRESS": str(company.bankbranchaddress),
+        "SIGNATORY_NAME": signatory.name,
+        "SIGNATORY_SURNAME": signatory.surname,
+        "SIGNATORY_PATRONYMIC": signatory.patronymic,
+        "SIGNATORY_BASIS_FOR_SIGNING": signatory.basis_for_signing,
+        "SIGNATORY_POSITION": signatory.position,
+        "SIGNATORY_SHORT_NAME" : signatory.get_short_name(),
     }
     return context
 
 
 def _create_document_from_template(
-    *, object_id, template_name, output_folder, field_name
+    *, object_id, template_name, output_folder, field_name, context_source
 ):
     from commerce.models import ServiceAgreement
 
@@ -84,7 +93,7 @@ def _create_document_from_template(
 
     doc = DocxTemplate(word_template_path)
     agreement = ServiceAgreement.objects.get(pk=object_id)
-    context = _get_context_by_agreement(agreement)
+    context = context_source(agreement)
     doc.render(context)
 
     file_name = f"{context['NUMBER']}.{context['CLIENT_NAME']}.docx"
@@ -114,6 +123,7 @@ def create_service_agreement_file(object_id):
         template_name="template_service_agreement.docx",
         output_folder="agreements",
         field_name="agreement_file",
+        context_source=_get_context_by_agreement,
     )
 
 
@@ -123,6 +133,7 @@ def create_act_file(object_id):
         template_name="template_act.docx",
         output_folder="acts",
         field_name="act_file",
+        context_source=_get_context_by_agreement,
     )
 
 
