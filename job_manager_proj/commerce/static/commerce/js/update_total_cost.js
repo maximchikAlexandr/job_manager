@@ -47,8 +47,25 @@ function updateTotalCost() {
     var vat = 0.2 * price_excluding_vat;
     var selling_price_including_vat = price_excluding_vat + vat;
 
+
+    var salaryElement = document.querySelector('.form-row.field-salary .flex-container' +
+        ' .readonly');
+    var travel_expensesElement = document.querySelector('.form-row.field-travel_expenses' +
+        ' .flex-container .readonly');
+    var transportation_expensesElement = document.querySelector('.form-row.field-transportation_expenses' +
+        ' .flex-container .readonly');
+    var cost_priceElement = document.querySelector('.form-row.field-cost_price .flex-container' +
+        ' .readonly');
+    var price_excluding_vatElement = document.querySelector('.form-row.field-price_excluding_vat' +
+        ' .flex-container .readonly');
     var totalCostElement = document.querySelector('.form-row.field-total_cost .flex-container' +
         ' .readonly');
 
+
+    salaryElement.textContent = salary.toFixed(2);
+    travel_expensesElement.textContent = travel_expenses.toFixed(2);
+    transportation_expensesElement.textContent = transportation_expenses.toFixed(2);
+    cost_priceElement.textContent = cost_price.toFixed(2);
+    price_excluding_vatElement.textContent = price_excluding_vat.toFixed(2);
     totalCostElement.textContent = selling_price_including_vat.toFixed(2);
 }

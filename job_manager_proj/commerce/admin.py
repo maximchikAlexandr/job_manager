@@ -32,11 +32,30 @@ class PlannedBusinessTripInline(TabularInline):
 class BudgetCalculationAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdmin):
     resource_class = BudgetCalculationResource
     list_display = ("company", "type_of_jobs", "total_cost", "created", "edited")
-    readonly_fields = ("total_cost",)
+    readonly_fields = (
+        "salary",
+        "travel_expenses",
+        "transportation_expenses",
+        "cost_price",
+        "price_excluding_vat",
+        "total_cost",
+    )
+    exclude = (
+        "income_taxes",
+        "social_security_contributions",
+        "depreciation_expenses",
+        "accident_insurance",
+        "overhead_expenses",
+        "vat",
+    )
     inlines = (PlannedBusinessTripInline,)
     save_on_top = True
     list_per_page = 15
     search_fields = ("type_of_jobs__name",)
+
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        form.save()
 
     def company(self, obj):
         try:
@@ -69,11 +88,11 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
         return "\n".join(types)
 
     def save_model(
-        self,
-        request: WSGIRequest,
-        obj: CommercialProposal,
-        form: "CommercialProposalForm",
-        change: bool,
+            self,
+            request: WSGIRequest,
+            obj: CommercialProposal,
+            form: "CommercialProposalForm",
+            change: bool,
     ):
         super().save_model(request, obj, form, change)
 
