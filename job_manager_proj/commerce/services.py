@@ -1,3 +1,4 @@
+from datetime import datetime
 from decimal import Decimal
 import math
 import os
@@ -56,44 +57,16 @@ def calc_total_cost(obj):
     return calc_res
 
 
-def _get_context_by_agreement(agreement):
-    company = agreement.commercial_proposals.first().company
-    signatory = company.signatories.filter(is_active=True).first()
-    context = {
-        "SERVICE_DESCRIPTIONS": agreement.service_descriptions,
-        "NUMBER": agreement.number,
-        "AMOUNT": agreement.amount,
-        "VOT": round(agreement.amount * Decimal(0.2), 2),
-        "DATE_OF_SIGNING": agreement.date_of_signing,
-        "CLIENT_NAME": company.name,
-        "CLIENT_UNP": company.unp,
-        "CLIENT_ADDRESS": str(company.registeredaddress),
-        "CLIENT_IBAN": company.IBAN,
-        "CLIENT_BANK_NAME": company.bank_name,
-        "CLIENT_BIC": company.BIC,
-        "CLIENT_BANK_ADDRESS": str(company.bankbranchaddress),
-        "SIGNATORY_NAME": signatory.name,
-        "SIGNATORY_SURNAME": signatory.surname,
-        "SIGNATORY_PATRONYMIC": signatory.patronymic,
-        "SIGNATORY_BASIS_FOR_SIGNING": signatory.basis_for_signing,
-        "SIGNATORY_POSITION": signatory.position,
-        "SIGNATORY_SHORT_NAME" : signatory.get_short_name(),
-    }
-    return context
-
-
 def _create_document_from_template(
-    *, object_id, template_name, output_folder, field_name, context_source
+    *, object_id, template_name, output_folder, field_name, context_source, model
 ):
-    from commerce.models import ServiceAgreement
-
     ydisk = yadisk.YaDisk(token=settings.YANDEX_TOKEN)
     word_template_path = f"{settings.BASE_DIR}/temp/{template_name}"
     ydisk.download(f"/templates/{template_name}", word_template_path)
 
     doc = DocxTemplate(word_template_path)
-    agreement = ServiceAgreement.objects.get(pk=object_id)
-    context = context_source(agreement)
+    model_instance = model.objects.get(pk=object_id)
+    context = context_source(model_instance)
     doc.render(context)
 
     file_name = f"{context['NUMBER']}.{context['CLIENT_NAME']}.docx"
@@ -109,31 +82,95 @@ def _create_document_from_template(
         remote_file_path = resource_link_obj.FIELDS["path"]
         remote_file_path = remote_file_path.replace("disk:/", "/disk/")
 
-        setattr(agreement, field_name, remote_file_path)
-        agreement.save()
+        setattr(model_instance, field_name, remote_file_path)
+        model_instance.save()
         if os.path.exists(word_template_path):
             os.remove(word_template_path)
         if os.path.exists(local_file_path):
             os.remove(local_file_path)
 
 
+def _get_context_by_agreement(agreement):
+    company = agreement.commercial_proposals.first().company
+    signatory = company.signatories.filter(is_active=True).first()
+    context = {
+        "SERVICE_DESCRIPTIONS": agreement.service_descriptions,
+        "NUMBER": agreement.number,
+        "AMOUNT": agreement.amount,
+        "VOT": round(agreement.amount * Decimal(0.2), 2),
+        "DATE_OF_SIGNING": agreement.date_of_signing.strftime("%d.%m.%Y"),
+        "CLIENT_NAME": company.name,
+        "CLIENT_UNP": company.unp,
+        "CLIENT_ADDRESS": str(company.registeredaddress),
+        "CLIENT_IBAN": company.IBAN,
+        "CLIENT_BANK_NAME": company.bank_name,
+        "CLIENT_BIC": company.BIC,
+        "CLIENT_BANK_ADDRESS": str(company.bankbranchaddress),
+        "SIGNATORY_NAME": signatory.name,
+        "SIGNATORY_SURNAME": signatory.surname,
+        "SIGNATORY_PATRONYMIC": signatory.patronymic,
+        "SIGNATORY_BASIS_FOR_SIGNING": signatory.basis_for_signing,
+        "SIGNATORY_POSITION": signatory.position,
+        "SIGNATORY_SHORT_NAME": signatory.get_short_name(),
+    }
+    return context
+
+
+def _get_context_by_proposal(proposal):
+    budget_calc = proposal.budget_calculations.first()
+    context = {
+        "CUR_DATE": datetime.today().strftime("%d.%m.%Y"),
+        "CLIENT_NAME": proposal.company.name,
+        "SERVICE_DESCRIPTIONS": proposal.service_descriptions,
+        "SERVICE_PRICE_EXCLUDING_VAT": budget_calc.price_excluding_vat,
+        "SERVICE_VAT": budget_calc.vat,
+        "SERVICE_TOTAL_COST": budget_calc.total_cost,
+        "SERVICE_DELIVERY_PERIOD": proposal.service_delivery_period,
+        "ADVANCE_PAYMENT_PERCENTAGE": proposal.advance_payment_percentage,
+        "REMAINING_PAYMENT_PERCENTAGE": 100 - proposal.advance_payment_percentage,
+        "ADVANCE_PAYMENT_DEADLINE": proposal.advance_payment_deadline,
+        "PAYMENT_DEFERRAL": proposal.payment_deferral,
+        "NUMBER": f"{datetime.today().strftime('%Y-%m')}-1",
+    }
+    return context
+
+
 def create_service_agreement_file(object_id):
+    from commerce.models import ServiceAgreement
+
     _create_document_from_template(
         object_id=object_id,
         template_name="template_service_agreement.docx",
         output_folder="agreements",
         field_name="agreement_file",
         context_source=_get_context_by_agreement,
+        model=ServiceAgreement,
     )
 
 
 def create_act_file(object_id):
+    from commerce.models import ServiceAgreement
+
     _create_document_from_template(
         object_id=object_id,
         template_name="template_act.docx",
         output_folder="acts",
         field_name="act_file",
         context_source=_get_context_by_agreement,
+        model=ServiceAgreement,
+    )
+
+
+def create_proposal_file(object_id):
+    from commerce.models import CommercialProposal
+
+    _create_document_from_template(
+        object_id=object_id,
+        template_name="template_commercial_proposal.docx",
+        output_folder="commercial_proposals",
+        field_name="proposal_file",
+        context_source=_get_context_by_proposal,
+        model=CommercialProposal,
     )
 
 

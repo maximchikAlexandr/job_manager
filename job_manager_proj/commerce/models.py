@@ -30,6 +30,7 @@ class BudgetCalculation(models.Model):
     hourly_rate = models.DecimalField(max_digits=14, decimal_places=2, default=5.8)
     outsourcing_costs = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     profit = models.PositiveIntegerField(null=True, default=25)
+    # calculated fields
     salary = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     income_taxes = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     social_security_contributions = models.DecimalField(max_digits=14, decimal_places=2, default=0)
@@ -42,6 +43,7 @@ class BudgetCalculation(models.Model):
     price_excluding_vat = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     vat = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     total_cost = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+
     type_of_jobs = models.ForeignKey(
         TypeOfJobs,
         on_delete=models.CASCADE,
@@ -83,6 +85,7 @@ class CommercialProposal(models.Model):
     advance_payment_deadline = models.PositiveIntegerField(null=False, default=15)
     payment_deferral = models.PositiveIntegerField(null=False, default=30)
     crm_deal_id = models.PositiveIntegerField(null=True, blank=True)
+    proposal_file = models.CharField(max_length=256, null=True, blank=True)
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE,

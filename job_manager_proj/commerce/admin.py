@@ -19,8 +19,17 @@ from commerce.resources import (
     CommercialProposalResource,
     ServiceAgreementResource,
 )
-from commerce.services import create_service_agreement_file, create_act_file
-from commerce.tasks import create_act_task, create_agreement_task, create_crm_deal_task
+from commerce.services import (
+    create_act_file,
+    create_proposal_file,
+    create_service_agreement_file,
+)
+from commerce.tasks import (
+    create_act_task,
+    create_agreement_task,
+    create_crm_deal_task,
+    create_proposal_task,
+)
 from shared_mixins import LoggedAdminModelMixin
 
 
@@ -69,6 +78,19 @@ class BudgetCalculationInline(TabularInline):
     model = BudgetCalculation
     extra = 0
     readonly_fields = ("total_cost",)
+    exclude = (
+        "salary",
+        "income_taxes",
+        "social_security_contributions",
+        "overhead_expenses",
+        "depreciation_expenses",
+        "accident_insurance",
+        "travel_expenses",
+        "transportation_expenses",
+        "cost_price",
+        "price_excluding_vat",
+        "vat",
+    )
 
 
 @register(CommercialProposal)
@@ -81,7 +103,7 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
     save_on_top = True
     list_per_page = 15
     search_fields = ("company__name",)
-    exclude = ("crm_deal_id",)
+    exclude = ("crm_deal_id", "proposal_file")
 
     def type_of_jobs(self, obj):
         queryset = obj.budget_calculations.all()
@@ -89,11 +111,11 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
         return "\n".join(types)
 
     def save_model(
-            self,
-            request: WSGIRequest,
-            obj: CommercialProposal,
-            form: "CommercialProposalForm",
-            change: bool,
+        self,
+        request: WSGIRequest,
+        obj: CommercialProposal,
+        form: "CommercialProposalForm",
+        change: bool,
     ):
         super().save_model(request, obj, form, change)
 
@@ -117,6 +139,14 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
                 "admin:admin_create_crm_deal", args=(object_id,)
             )
 
+        if proposal.proposal_file:
+            encoded_path = quote(proposal.proposal_file)
+            url = f"https://disk.yandex.ru/edit/disk{encoded_path}?sk={settings.YANDEX_SK}"
+            extra_context["open_proposal_url"] = url
+        else:
+            extra_context["create_create_proposal_url"] = reverse(
+                "admin:admin_create_proposal_file", args=(object_id,)
+            )
         return super().change_view(request, object_id, form_url, extra_context)
 
     def get_urls(self):
@@ -127,12 +157,22 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
                 self.admin_site.admin_view(self.create_crm_deal_view),
                 name="admin_create_crm_deal",
             ),
+            path(
+                "<path:object_id>/create_proposal_file/",
+                self.admin_site.admin_view(self.create_proposal_file_view),
+                name="admin_create_proposal_file",
+            ),
         ]
         return custom_urls + urls
 
     def create_crm_deal_view(self, request, object_id):
         create_crm_deal_task.delay(object_id)
         return redirect(f"https://{settings.BX24_HOSTNAME}/crm/deal/kanban/category/0/")
+
+    def create_proposal_file_view(self, request, object_id):
+        # create_proposal_file(object_id)
+        create_proposal_task.delay(object_id)
+        return redirect("https://disk.yandex.ru/client/disk/commercial_proposals")
 
 
 class CommercialProposalInline(TabularInline):
