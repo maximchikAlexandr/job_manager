@@ -91,10 +91,16 @@ def _create_document_from_template(
 
 
 def _get_context_by_agreement(agreement):
-    company = agreement.commercial_proposals.first().company
+    proposal = agreement.commercial_proposals.first()
+    company = proposal.company
     signatory = company.signatories.filter(is_active=True).first()
     context = {
         "SERVICE_DESCRIPTIONS": agreement.service_descriptions,
+        "SERVICE_DELIVERY_PERIOD": proposal.service_delivery_period,
+        "ADVANCE_PAYMENT_PERCENTAGE": proposal.advance_payment_percentage,
+        "REMAINING_PAYMENT_PERCENTAGE": 100 - proposal.advance_payment_percentage,
+        "ADVANCE_PAYMENT_DEADLINE": proposal.advance_payment_deadline,
+        "PAYMENT_DEFERRAL": proposal.payment_deferral,
         "NUMBER": agreement.number,
         "AMOUNT": agreement.amount,
         "VOT": round(agreement.amount * Decimal(0.2), 2),
@@ -165,7 +171,7 @@ def create_service_agreement_file(object_id):
 
     _create_document_from_template(
         object_id=object_id,
-        template_name="template_service_agreement.docx",
+        template_name="template_agreement.docx",
         output_folder="agreements",
         field_name="agreement_file",
         context_source=_get_context_by_agreement,

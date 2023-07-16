@@ -214,7 +214,7 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
 class CommercialProposalInline(TabularInline):
     model = CommercialProposal
     extra = 0
-
+    exclude = ("proposal_file", )
     def has_change_permission(self, request, obj=None):
         return False
 
