@@ -25,8 +25,16 @@ class AbstractAddress(models.Model):
     )
 
     def __str__(self):
-        return f"{self.postal_code}, {self.locality}, {self.street}, д. {self.house_number}-" \
-               f" {self.office_number}"
+        addr_fields = (
+            self.postal_code,
+            self.region,
+            self.district,
+            self.locality,
+            self.street,
+            f"д.{self.house_number}",
+            self.office_number,
+        )
+        return ", ".join(field for field in addr_fields if field)
 
     class Meta:
         abstract = True
@@ -38,6 +46,29 @@ class BankBranchAddress(AbstractAddress):
 
 class RegisteredAddress(AbstractAddress):
     pass
+
+
+class Signatory(models.Model):
+    name = models.CharField(max_length=20)
+    surname = models.CharField(max_length=20)
+    patronymic = models.CharField(max_length=20)
+    basis_for_signing = models.CharField(max_length=150)
+    position = models.CharField(max_length=64)
+    is_active = models.BooleanField(default=False)
+    company = models.ForeignKey(
+        "Company", on_delete=models.CASCADE, related_name="signatories", default=None
+    )
+
+    def __str__(self):
+        return f"{self.position} - {self.name[0]}.{self.patronymic[0]}. {self.surname}"
+
+    def get_short_name(self):
+        return f"{self.name[0]}.{self.patronymic[0]}. {self.surname}"
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            Signatory.objects.exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
 
 
 class Company(models.Model):
@@ -70,9 +101,12 @@ class Month(models.Model):
 
     class Meta:
         constraints = [
-            models.CheckConstraint(check=models.Q(count_of_working_days__lte=31),
-                                   name='month_count_of_working_days_check'),
+            models.CheckConstraint(
+                check=models.Q(count_of_working_days__lte=31),
+                name="month_count_of_working_days_check",
+            ),
         ]
+
 
 class Employee(models.Model):
     name = models.CharField(max_length=20)
@@ -91,6 +125,7 @@ class Employee(models.Model):
     def __str__(self):
         return f"{self.name[0]}.{self.patronymic[0]}. {self.surname}"
 
+
 class HeadOfDepartment(models.Model):
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, related_name="heads"
@@ -102,6 +137,7 @@ class HeadOfDepartment(models.Model):
     class Meta:
         verbose_name_plural = "Heads of departments"
 
+
 class Department(models.Model):
     name = models.CharField(max_length=50)
     head = models.ForeignKey(
@@ -111,6 +147,7 @@ class Department(models.Model):
         null=True,
         blank=True,
     )
+    types_of_jobs = models.ManyToManyField(TypeOfJobs, related_name="departments")
 
     def __str__(self):
         return self.name

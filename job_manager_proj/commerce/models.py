@@ -1,7 +1,7 @@
-from catalog.models import Company, Month, TypeOfJobs
-from commerce.services import calc_total_cost
 from django.db import models
 
+from catalog.models import Company, Month, TypeOfJobs
+from commerce.services import calc_total_cost
 from commerce.tasks import update_cost_in_crm_deal_task
 
 
@@ -29,8 +29,23 @@ class BudgetCalculation(models.Model):
     workload = models.PositiveIntegerField(null=True, default=168)
     hourly_rate = models.DecimalField(max_digits=14, decimal_places=2, default=5.8)
     outsourcing_costs = models.DecimalField(max_digits=14, decimal_places=2, default=0)
-    profit = models.PositiveIntegerField(null=True, default=25)
+    profit_percentage = models.PositiveIntegerField(null=True, default=25)
+    # calculated fields
+    salary = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    income_taxes = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    social_security_contributions = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    overhead_expenses = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    depreciation_expenses = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    accident_insurance = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    travel_expenses = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    transportation_expenses = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    cost_price = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    profit = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    price_excluding_vat = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    vat = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     total_cost = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+
+    calculation_file = models.CharField(max_length=256, null=True, blank=True)
     type_of_jobs = models.ForeignKey(
         TypeOfJobs,
         on_delete=models.CASCADE,
@@ -52,9 +67,10 @@ class BudgetCalculation(models.Model):
         if not self.pk:
             super().save(*args, **kwargs)
 
-        new_total_cost = calc_total_cost(self)
-        if self.total_cost != new_total_cost:
-            self.total_cost = new_total_cost
+        calc_res = calc_total_cost(self)
+        if self.total_cost != calc_res["total_cost"]:
+            for field_name, field_val in calc_res.items():
+                setattr(self, field_name, field_val)
         super().save(*args, **kwargs)
 
         if self.commercial_proposal:
@@ -67,6 +83,11 @@ class CommercialProposal(models.Model):
     total_cost = models.DecimalField(
         max_digits=14, decimal_places=2, null=True, blank=True
     )
+    advance_payment_percentage = models.PositiveIntegerField(null=False, default=50)
+    advance_payment_deadline = models.PositiveIntegerField(null=False, default=15)
+    payment_deferral = models.PositiveIntegerField(null=False, default=30)
+    crm_deal_id = models.PositiveIntegerField(null=True, blank=True)
+    proposal_file = models.CharField(max_length=256, null=True, blank=True)
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE,
@@ -80,8 +101,6 @@ class CommercialProposal(models.Model):
         null=True,
         blank=True,
     )
-
-    crm_deal_id = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.company} - {self.total_cost} р. - {self.service_delivery_period} дн."
@@ -101,35 +120,15 @@ class CommercialProposal(models.Model):
 
 
 class ServiceAgreement(models.Model):
-    COMPLETED = "completed"
-    NOT_COMPLETED = "not completed"
-    STATUSES = (
-        (COMPLETED, "completed"),
-        (NOT_COMPLETED, "not completed"),
-    )
     service_descriptions = models.TextField(null=True, blank=True)
     number = models.CharField(max_length=30)
     amount = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)
     date_of_signing = models.DateField()
     is_signed = models.BooleanField(default=False, null=False)
     task_id = models.IntegerField(null=True, blank=True)
-    act_status = models.CharField(max_length=20, choices=STATUSES, default=NOT_COMPLETED)
-    month_signing_the_act = models.ForeignKey(
-        Month,
-        on_delete=models.CASCADE,
-        related_name="signing_acts",
-        null=True,
-        blank=True,
-    )
-    month_of_accounting_act_in_salary = models.ForeignKey(
-        Month,
-        on_delete=models.CASCADE,
-        related_name="acts_in_salary",
-        null=True,
-        blank=True,
-    )
     agreement_file = models.CharField(max_length=256, null=True, blank=True)
     act_file = models.CharField(max_length=256, null=True, blank=True)
+
     def __str__(self):
         return f"№{self.number} - {self.amount} р."
 
