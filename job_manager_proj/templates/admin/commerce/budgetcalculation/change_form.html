@@ -1,0 +1,21 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block submit_buttons_bottom %}
+
+<div class="submit-row">
+
+    {% if create_calculation_file_url %}
+    <input type="button" value="{% trans 'Create the calculation file' %}"
+           name="_continue"
+           onclick="window.open('{{ create_calculation_file_url }}')"/>
+    {% endif %}
+
+    {% if change_calculation_file_url %}
+    <input type="button" value="{% trans 'Change the calculation file' %}"
+           name="_anotherbutton" onclick="window.open('{{ change_calculation_file_url }}')"/>
+    {% endif %}
+
+</div>
+{{ block.super }}
+{% endblock %}

@@ -23,12 +23,14 @@ from commerce.services import (
     create_act_file,
     create_proposal_file,
     create_service_agreement_file,
+    create_calculation_file,
 )
 from commerce.tasks import (
     create_act_task,
     create_agreement_task,
     create_crm_deal_task,
     create_proposal_task,
+    create_calculation_task,
 )
 from shared_mixins import LoggedAdminModelMixin
 
@@ -58,6 +60,7 @@ class BudgetCalculationAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdmi
         "accident_insurance",
         "overhead_expenses",
         "vat",
+        "calculation_file",
     )
     inlines = (PlannedBusinessTripInline,)
     save_on_top = True
@@ -67,6 +70,36 @@ class BudgetCalculationAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdmi
     def save_related(self, request, form, formsets, change):
         super().save_related(request, form, formsets, change)
         form.save()
+
+    def change_view(self, request, object_id, form_url="", extra_context=None):
+        extra_context = extra_context or {}
+        budget_calculation = BudgetCalculation.objects.get(pk=object_id)
+
+        if budget_calculation.calculation_file:
+            encoded_path = quote(budget_calculation.calculation_file)
+            url = f"https://disk.yandex.ru/edit/disk{encoded_path}?sk={settings.YANDEX_SK}"
+            extra_context["change_calculation_file_url"] = url
+        else:
+            extra_context["create_calculation_file_url"] = reverse(
+                "admin:admin_create_calculation_file", args=(object_id,)
+            )
+        return super().change_view(request, object_id, form_url, extra_context)
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                "<path:object_id>/create_calculation_file/",
+                self.admin_site.admin_view(self.create_calculation_file_view),
+                name="admin_create_calculation_file",
+            ),
+        ]
+        return custom_urls + urls
+
+    def create_calculation_file_view(self, request, object_id):
+        # create_calculation_file(object_id)
+        create_calculation_task.delay(object_id)
+        return redirect("https://disk.yandex.ru/client/disk/budget_calculations")
 
     def company(self, obj):
         try:
@@ -91,7 +124,7 @@ class BudgetCalculationInline(TabularInline):
         "cost_price",
         "price_excluding_vat",
         "vat",
-        "profit"
+        "profit",
         "calculation_file",
     )
 
@@ -107,11 +140,6 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
     list_per_page = 15
     search_fields = ("company__name",)
     exclude = ("crm_deal_id", "proposal_file")
-
-    def type_of_jobs(self, obj):
-        queryset = obj.budget_calculations.all()
-        types = set(str(calc.type_of_jobs) for calc in queryset)
-        return "\n".join(types)
 
     def save_model(
         self,
@@ -176,6 +204,11 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
         # create_proposal_file(object_id)
         create_proposal_task.delay(object_id)
         return redirect("https://disk.yandex.ru/client/disk/commercial_proposals")
+
+    def type_of_jobs(self, obj):
+        queryset = obj.budget_calculations.all()
+        types = set(str(calc.type_of_jobs) for calc in queryset)
+        return "\n".join(types)
 
 
 class CommercialProposalInline(TabularInline):

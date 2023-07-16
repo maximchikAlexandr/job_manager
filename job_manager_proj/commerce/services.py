@@ -135,6 +135,31 @@ def _get_context_by_proposal(proposal):
     return context
 
 
+def _get_context_by_calculation(calculation):
+    context = {
+        "CLIENT_NAME": calculation.commercial_proposal.company.name,
+        "SERVICE_DESCRIPTIONS": calculation.commercial_proposal.service_descriptions,
+        "SERVICE_WORKLOAD": calculation.workload,
+        "SERVICE_HOURLY_RATE": calculation.hourly_rate,
+        "SERVICE_SALARY": calculation.salary,
+        "SERVICE_SOCIAL_SECURITY_CONTRIBUTIONS": calculation.social_security_contributions
+        + calculation.income_taxes,
+        "SERVICE_OVERHEAD_EXPENSES": calculation.overhead_expenses,
+        "SERVICE_DEPRECIATION_EXPENSES": calculation.depreciation_expenses,
+        "SERVICE_TRANSPORTATION_EXPENSES": calculation.transportation_expenses,
+        "SERVICE_ACCIDENT_INSURANCE": calculation.accident_insurance,
+        "SERVICE_TRAVEL_EXPENSES": calculation.travel_expenses,
+        "SERVICE_COST_PRICE": calculation.cost_price,
+        "SERVICE_PROFIT": calculation.profit,
+        "SERVICE_OUTSOURCING_COSTS": calculation.outsourcing_costs,
+        "SERVICE_PRICE_EXCLUDING_VAT": calculation.price_excluding_vat,
+        "SERVICE_VAT": calculation.vat,
+        "SERVICE_TOTAL_COST": calculation.total_cost,
+        "NUMBER": datetime.today().strftime("%d-%m-%Y"),
+    }
+    return context
+
+
 def create_service_agreement_file(object_id):
     from commerce.models import ServiceAgreement
 
@@ -171,6 +196,19 @@ def create_proposal_file(object_id):
         field_name="proposal_file",
         context_source=_get_context_by_proposal,
         model=CommercialProposal,
+    )
+
+
+def create_calculation_file(object_id):
+    from commerce.models import BudgetCalculation
+
+    _create_document_from_template(
+        object_id=object_id,
+        template_name="template_budget_calculation.docx",
+        output_folder="budget_calculations",
+        field_name="calculation_file",
+        context_source=_get_context_by_calculation,
+        model=BudgetCalculation,
     )
 
 
