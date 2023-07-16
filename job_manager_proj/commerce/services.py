@@ -1,4 +1,5 @@
-import decimal
+from datetime import datetime
+from decimal import Decimal
 import math
 import os
 import requests
@@ -10,6 +11,7 @@ import yadisk
 
 
 def calc_total_cost(obj):
+    calc_res = {}
     planned_business_trips = obj.planned_business_trips.all()
     mileage = 0
     travel_expenses = 0
@@ -17,69 +19,54 @@ def calc_total_cost(obj):
         for trip in planned_business_trips:
             mileage += trip.one_way_distance_on_company_transport
             travel_expenses += (
-                    trip.day_count * trip.staff_count * 9
-                    + trip.lodging_cost
-                    + trip.public_transportation_fare
+                trip.day_count * trip.staff_count * 9
+                + trip.lodging_cost
+                + trip.public_transportation_fare
             )
 
-    salary = math.ceil(obj.workload * obj.hourly_rate)
-    income_taxes = math.ceil(decimal.Decimal("0.13") * salary)
-    social_security_contributions = math.ceil(decimal.Decimal("0.34") * salary)
-    overhead_expenses = math.ceil(decimal.Decimal("1.6") * salary)
-    depreciation_expenses = math.ceil(decimal.Decimal("0.175") * salary)
-    accident_insurance = math.ceil(decimal.Decimal("0.006") * salary)
-
-    travel_expenses = math.ceil(decimal.Decimal(travel_expenses))
-    transportation_expenses = math.ceil(
-        decimal.Decimal(mileage) * decimal.Decimal("0.5630625")
+    calc_res["salary"] = math.ceil(obj.workload * obj.hourly_rate)
+    calc_res["income_taxes"] = math.ceil(Decimal("0.13") * calc_res["salary"])
+    calc_res["social_security_contributions"] = math.ceil(
+        Decimal("0.34") * calc_res["salary"]
     )
-    cost_price = (
-            salary
-            + income_taxes
-            + social_security_contributions
-            + overhead_expenses
-            + depreciation_expenses
-            + transportation_expenses
-            + accident_insurance
-            + travel_expenses
-    )
-    price_excluding_vat = (
-            cost_price * decimal.Decimal((100 + obj.profit) / 100) + obj.outsourcing_costs
-    )
-    vat = decimal.Decimal("0.2") * price_excluding_vat
-    selling_price_including_vat = decimal.Decimal(price_excluding_vat + vat)
-    return selling_price_including_vat
+    calc_res["overhead_expenses"] = math.ceil(Decimal("1.6") * calc_res["salary"])
+    calc_res["depreciation_expenses"] = math.ceil(Decimal("0.175") * calc_res["salary"])
+    calc_res["accident_insurance"] = math.ceil(Decimal("0.006") * calc_res["salary"])
 
-
-def _get_context_by_agreement(agreement):
-    company = agreement.commercial_proposals.first().company
-    context = {
-        "SERVICE_DESCRIPTIONS": agreement.service_descriptions,
-        "NUMBER": agreement.number,
-        "AMOUNT": agreement.amount,
-        "VOT": round(agreement.amount * decimal.Decimal(0.2), 2),
-        "DATE_OF_SIGNING": agreement.date_of_signing,
-        "CLIENT_NAME": company.name,
-        "CLIENT_UNP": company.unp,
-        "CLIENT_IBAN": company.IBAN,
-        "CLIENT_BANK_NAME": company.bank_name,
-        "CLIENT_BIC": company.BIC,
-    }
-    return context
+    calc_res["travel_expenses"] = math.ceil(Decimal(travel_expenses))
+    calc_res["transportation_expenses"] = math.ceil(
+        Decimal(mileage) * Decimal("0.5630625")
+    )
+    calc_res["cost_price"] = (
+        calc_res["salary"]
+        + calc_res["income_taxes"]
+        + calc_res["social_security_contributions"]
+        + calc_res["overhead_expenses"]
+        + calc_res["depreciation_expenses"]
+        + calc_res["transportation_expenses"]
+        + calc_res["accident_insurance"]
+        + calc_res["travel_expenses"]
+    )
+    calc_res["profit"] = calc_res["cost_price"] * Decimal(obj.profit_percentage / 100)
+    calc_res["price_excluding_vat"] = (
+        calc_res["cost_price"] + calc_res["profit"] + obj.outsourcing_costs
+    )
+    calc_res["price_excluding_vat"] = round(calc_res["price_excluding_vat"], 2)
+    calc_res["vat"] = round(Decimal("0.2") * calc_res["price_excluding_vat"], 2)
+    calc_res["total_cost"] = Decimal(calc_res["price_excluding_vat"] + calc_res["vat"])
+    return calc_res
 
 
 def _create_document_from_template(
-        *, object_id, template_name, output_folder, field_name
+    *, object_id, template_name, output_folder, field_name, context_source, model
 ):
-    from commerce.models import ServiceAgreement
-
     ydisk = yadisk.YaDisk(token=settings.YANDEX_TOKEN)
     word_template_path = f"{settings.BASE_DIR}/temp/{template_name}"
     ydisk.download(f"/templates/{template_name}", word_template_path)
 
     doc = DocxTemplate(word_template_path)
-    agreement = ServiceAgreement.objects.get(pk=object_id)
-    context = _get_context_by_agreement(agreement)
+    model_instance = model.objects.get(pk=object_id)
+    context = context_source(model_instance)
     doc.render(context)
 
     file_name = f"{context['NUMBER']}.{context['CLIENT_NAME']}.docx"
@@ -95,29 +82,139 @@ def _create_document_from_template(
         remote_file_path = resource_link_obj.FIELDS["path"]
         remote_file_path = remote_file_path.replace("disk:/", "/disk/")
 
-        setattr(agreement, field_name, remote_file_path)
-        agreement.save()
+        setattr(model_instance, field_name, remote_file_path)
+        model_instance.save()
         if os.path.exists(word_template_path):
             os.remove(word_template_path)
         if os.path.exists(local_file_path):
             os.remove(local_file_path)
 
 
+def _get_context_by_agreement(agreement):
+    proposal = agreement.commercial_proposals.first()
+    company = proposal.company
+    signatory = company.signatories.filter(is_active=True).first()
+    context = {
+        "SERVICE_DESCRIPTIONS": agreement.service_descriptions,
+        "SERVICE_DELIVERY_PERIOD": proposal.service_delivery_period,
+        "ADVANCE_PAYMENT_PERCENTAGE": proposal.advance_payment_percentage,
+        "REMAINING_PAYMENT_PERCENTAGE": 100 - proposal.advance_payment_percentage,
+        "ADVANCE_PAYMENT_DEADLINE": proposal.advance_payment_deadline,
+        "PAYMENT_DEFERRAL": proposal.payment_deferral,
+        "NUMBER": agreement.number,
+        "AMOUNT": agreement.amount,
+        "VOT": round(agreement.amount * Decimal(0.2), 2),
+        "DATE_OF_SIGNING": agreement.date_of_signing.strftime("%d.%m.%Y"),
+        "CLIENT_NAME": company.name,
+        "CLIENT_UNP": company.unp,
+        "CLIENT_ADDRESS": str(company.registeredaddress),
+        "CLIENT_IBAN": company.IBAN,
+        "CLIENT_BANK_NAME": company.bank_name,
+        "CLIENT_BIC": company.BIC,
+        "CLIENT_BANK_ADDRESS": str(company.bankbranchaddress),
+        "SIGNATORY_NAME": signatory.name,
+        "SIGNATORY_SURNAME": signatory.surname,
+        "SIGNATORY_PATRONYMIC": signatory.patronymic,
+        "SIGNATORY_BASIS_FOR_SIGNING": signatory.basis_for_signing,
+        "SIGNATORY_POSITION": signatory.position,
+        "SIGNATORY_SHORT_NAME": signatory.get_short_name(),
+    }
+    return context
+
+
+def _get_context_by_proposal(proposal):
+    budget_calc = proposal.budget_calculations.first()
+    context = {
+        "CUR_DATE": datetime.today().strftime("%d.%m.%Y"),
+        "CLIENT_NAME": proposal.company.name,
+        "SERVICE_DESCRIPTIONS": proposal.service_descriptions,
+        "SERVICE_PRICE_EXCLUDING_VAT": budget_calc.price_excluding_vat,
+        "SERVICE_VAT": budget_calc.vat,
+        "SERVICE_TOTAL_COST": budget_calc.total_cost,
+        "SERVICE_DELIVERY_PERIOD": proposal.service_delivery_period,
+        "ADVANCE_PAYMENT_PERCENTAGE": proposal.advance_payment_percentage,
+        "REMAINING_PAYMENT_PERCENTAGE": 100 - proposal.advance_payment_percentage,
+        "ADVANCE_PAYMENT_DEADLINE": proposal.advance_payment_deadline,
+        "PAYMENT_DEFERRAL": proposal.payment_deferral,
+        "NUMBER": f"{datetime.today().strftime('%Y-%m')}-1",
+    }
+    return context
+
+
+def _get_context_by_calculation(calculation):
+    context = {
+        "CLIENT_NAME": calculation.commercial_proposal.company.name,
+        "SERVICE_DESCRIPTIONS": calculation.commercial_proposal.service_descriptions,
+        "SERVICE_WORKLOAD": calculation.workload,
+        "SERVICE_HOURLY_RATE": calculation.hourly_rate,
+        "SERVICE_SALARY": calculation.salary,
+        "SERVICE_SOCIAL_SECURITY_CONTRIBUTIONS": calculation.social_security_contributions
+        + calculation.income_taxes,
+        "SERVICE_OVERHEAD_EXPENSES": calculation.overhead_expenses,
+        "SERVICE_DEPRECIATION_EXPENSES": calculation.depreciation_expenses,
+        "SERVICE_TRANSPORTATION_EXPENSES": calculation.transportation_expenses,
+        "SERVICE_ACCIDENT_INSURANCE": calculation.accident_insurance,
+        "SERVICE_TRAVEL_EXPENSES": calculation.travel_expenses,
+        "SERVICE_COST_PRICE": calculation.cost_price,
+        "SERVICE_PROFIT": calculation.profit,
+        "SERVICE_OUTSOURCING_COSTS": calculation.outsourcing_costs,
+        "SERVICE_PRICE_EXCLUDING_VAT": calculation.price_excluding_vat,
+        "SERVICE_VAT": calculation.vat,
+        "SERVICE_TOTAL_COST": calculation.total_cost,
+        "NUMBER": datetime.today().strftime("%d-%m-%Y"),
+    }
+    return context
+
+
 def create_service_agreement_file(object_id):
+    from commerce.models import ServiceAgreement
+
     _create_document_from_template(
         object_id=object_id,
-        template_name="template_service_agreement.docx",
+        template_name="template_agreement.docx",
         output_folder="agreements",
         field_name="agreement_file",
+        context_source=_get_context_by_agreement,
+        model=ServiceAgreement,
     )
 
 
 def create_act_file(object_id):
+    from commerce.models import ServiceAgreement
+
     _create_document_from_template(
         object_id=object_id,
         template_name="template_act.docx",
         output_folder="acts",
         field_name="act_file",
+        context_source=_get_context_by_agreement,
+        model=ServiceAgreement,
+    )
+
+
+def create_proposal_file(object_id):
+    from commerce.models import CommercialProposal
+
+    _create_document_from_template(
+        object_id=object_id,
+        template_name="template_commercial_proposal.docx",
+        output_folder="commercial_proposals",
+        field_name="proposal_file",
+        context_source=_get_context_by_proposal,
+        model=CommercialProposal,
+    )
+
+
+def create_calculation_file(object_id):
+    from commerce.models import BudgetCalculation
+
+    _create_document_from_template(
+        object_id=object_id,
+        template_name="template_budget_calculation.docx",
+        output_folder="budget_calculations",
+        field_name="calculation_file",
+        context_source=_get_context_by_calculation,
+        model=BudgetCalculation,
     )
 
 
@@ -127,7 +224,7 @@ class CRM:
         self.__token_for_add = token_for_add
         self.__token_for_list = token_for_list
 
-    def add_deal(self, title: str, total_cost: decimal.Decimal) -> int:
+    def add_deal(self, title: str, total_cost: Decimal) -> int:
         headers = {"Content-Type": "application/json"}
         body = {
             "fields": {
@@ -147,7 +244,7 @@ class CRM:
             return response.json()["result"]
         return {}
 
-    def update_deal(self, id_crm_deal: int, total_cost: decimal.Decimal) -> int:
+    def update_deal(self, id_crm_deal: int, total_cost: Decimal) -> int:
         headers = {"Content-Type": "application/json"}
         body = {
             "id": id_crm_deal,
@@ -173,6 +270,7 @@ class CRM:
             return response.json()["result"]
         return {}
 
+
 def _get_crm():
     return CRM(
         hostname=settings.BX24_HOSTNAME,
@@ -193,7 +291,7 @@ def create_crm_deal(cp_id: int):
     proposal.save()
 
 
-def update_cost_in_crm_deal(id_crm_deal: int, total_cost: decimal.Decimal):
+def update_cost_in_crm_deal(id_crm_deal: int, total_cost: Decimal):
     _get_crm().update_deal(id_crm_deal=id_crm_deal, total_cost=float(total_cost))
 
 
@@ -204,7 +302,9 @@ def check_deal_stage():
     deals = _get_crm().filter_deals_by_stage_id(stages)
 
     # create_service_agreement_file
-    preparation_deals = [deal["ID"] for deal in deals if deal["STAGE_ID"] == "PREPARATION"]
+    preparation_deals = [
+        deal["ID"] for deal in deals if deal["STAGE_ID"] == "PREPARATION"
+    ]
     proposals = CommercialProposal.objects.filter(
         Q(crm_deal_id__in=preparation_deals) & Q(service_agreement__agreement_file=None)
     )
@@ -213,9 +313,7 @@ def check_deal_stage():
             create_service_agreement_file(proposal.service_agreement.id)
 
     # service_agreement.is_signed = True
-    executing_deals= [
-        deal["ID"] for deal in deals if deal["STAGE_ID"] == "EXECUTING"
-    ]
+    executing_deals = [deal["ID"] for deal in deals if deal["STAGE_ID"] == "EXECUTING"]
     proposals = CommercialProposal.objects.filter(
         Q(crm_deal_id__in=executing_deals) & Q(service_agreement__is_signed=False)
     )

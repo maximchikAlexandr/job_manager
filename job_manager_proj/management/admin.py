@@ -5,6 +5,7 @@ from django.contrib.admin import (
     TabularInline,
 )
 
+from catalog.models import Employee
 from commerce.models import BudgetCalculation
 from management.forms import ServiceAgreementProxyForm, MonthProxyForm
 from management.models import (
@@ -12,21 +13,34 @@ from management.models import (
     ServiceAgreementProxy,
     MonthProxy,
 )
-from management.services import get_planned_workload_by_month, get_normative_workload_by_month
+from management.services import (
+    get_planned_workload_by_month,
+    get_normative_workload_by_month,
+)
 from shared_mixins import ReadOnlyAdminModelMixin
 
 
-class MonthJobTabularInline(TabularInline):
+class AgreementMonthJobTabularInline(TabularInline):
     model = MonthJob
     extra = 0
+
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super().get_formset(request, obj, **kwargs)
+        queryset = Employee.objects.filter(
+            department__types_of_jobs=obj.commercial_proposals.first()
+            .budget_calculations.first()
+            .type_of_jobs
+        )
+        formset.form.base_fields["employee"].queryset = queryset
+        return formset
 
 
 @register(ServiceAgreementProxy)
 class ServiceAgreementProxyAdmin(ReadOnlyAdminModelMixin, ModelAdmin):
-    inlines = (MonthJobTabularInline,)
+    inlines = (AgreementMonthJobTabularInline,)
     form = ServiceAgreementProxyForm
     list_per_page = 30
-    readonly_fields = ("service_descriptions", "amount",)
+    readonly_fields = ("service_descriptions", "amount")
     ordering = ("-date_of_signing",)
     exclude = (
         "agreement_file",
@@ -58,10 +72,16 @@ class ServiceAgreementProxyAdmin(ReadOnlyAdminModelMixin, ModelAdmin):
         return "\n".join(type_of_jobs)
 
 
+class MonthMonthJobTabularInline(TabularInline):
+    model = MonthJob
+    extra = 0
+    readonly_fields = ("employee",)
+
+
 @register(MonthProxy)
 class MonthProxyAdmin(ReadOnlyAdminModelMixin, ModelAdmin):
     form = MonthProxyForm
-    inlines = (MonthJobTabularInline,)
+    inlines = (MonthMonthJobTabularInline,)
     list_display = ("month", "planned_workload", "normative_workload")
     readonly_fields = (
         "planned_workload",

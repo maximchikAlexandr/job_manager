@@ -4,6 +4,19 @@
 {% block submit_buttons_bottom %}
 
 <div class="submit-row">
+    {% if open_proposal_url %}
+    <input type="button" value="{% trans 'Change the CP file' %}"
+           name="_continue"
+           onclick="window.open('{{ open_proposal_url }}')"/>
+    {% endif %}
+
+
+    {% if create_create_proposal_url %}
+    <input type="button" value="{% trans 'Create the CP file' %}"
+           name="_anotherbutton" onclick="window.open('{{ create_create_proposal_url }}')"/>
+    {% endif %}
+
+
     {% if create_deal_url %}
     <input type="button" value="{% trans 'Create the deal in BX24' %}"
            name="_continue"
@@ -14,6 +27,7 @@
     <input type="button" value="{% trans 'Open the deal in BX24' %}"
            name="_anotherbutton" onclick="window.open('{{ open_deal_url }}')"/>
     {% endif %}
+
 
 
 </div>
