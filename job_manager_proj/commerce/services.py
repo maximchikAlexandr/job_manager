@@ -47,9 +47,9 @@ def calc_total_cost(obj):
         + calc_res["accident_insurance"]
         + calc_res["travel_expenses"]
     )
+    calc_res["profit"] = calc_res["cost_price"] * Decimal(obj.profit_percentage / 100)
     calc_res["price_excluding_vat"] = (
-        calc_res["cost_price"] * Decimal((100 + obj.profit) / 100)
-        + obj.outsourcing_costs
+        calc_res["cost_price"] + calc_res["profit"] + obj.outsourcing_costs
     )
     calc_res["price_excluding_vat"] = round(calc_res["price_excluding_vat"], 2)
     calc_res["vat"] = round(Decimal("0.2") * calc_res["price_excluding_vat"], 2)

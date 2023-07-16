@@ -40,6 +40,7 @@ class BudgetCalculation(models.Model):
     travel_expenses = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     transportation_expenses = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     cost_price = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    profit = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     price_excluding_vat = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     vat = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     total_cost = models.DecimalField(max_digits=14, decimal_places=2, default=0)

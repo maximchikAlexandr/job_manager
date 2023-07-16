@@ -47,6 +47,7 @@ class BudgetCalculationAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdmi
         "travel_expenses",
         "transportation_expenses",
         "cost_price",
+        "profit",
         "price_excluding_vat",
         "total_cost",
     )
@@ -90,6 +91,8 @@ class BudgetCalculationInline(TabularInline):
         "cost_price",
         "price_excluding_vat",
         "vat",
+        "profit"
+        "calculation_file",
     )
 
 

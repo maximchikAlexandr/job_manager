@@ -23,7 +23,7 @@ function updateTotalCost() {
     var workload = parseFloat(document.getElementById('id_workload').value);
     var hourlyRate = parseFloat(document.getElementById('id_hourly_rate').value);
     var outsourcing_costs = parseFloat(document.getElementById('id_outsourcing_costs').value);
-    var profit = parseFloat(document.getElementById('id_profit').value);
+    var profit_percentage = parseFloat(document.getElementById('id_profit_percentage').value);
 
 
     var salary = Math.ceil(workload * hourlyRate);
@@ -43,7 +43,8 @@ function updateTotalCost() {
         + accident_insurance
         + travel_expenses
     );
-    var price_excluding_vat = cost_price * ((100 + profit) / 100) + outsourcing_costs;
+    var profit = cost_price * profit_percentage / 100
+    var price_excluding_vat = cost_price + profit + outsourcing_costs;
     var vat = 0.2 * price_excluding_vat;
     var selling_price_including_vat = price_excluding_vat + vat;
 
@@ -56,6 +57,7 @@ function updateTotalCost() {
         ' .flex-container .readonly');
     var cost_priceElement = document.querySelector('.form-row.field-cost_price .flex-container' +
         ' .readonly');
+    var profitElement = document.querySelector('.form-row.field-profit .flex-container .readonly')
     var price_excluding_vatElement = document.querySelector('.form-row.field-price_excluding_vat' +
         ' .flex-container .readonly');
     var totalCostElement = document.querySelector('.form-row.field-total_cost .flex-container' +
@@ -66,6 +68,7 @@ function updateTotalCost() {
     travel_expensesElement.textContent = travel_expenses.toFixed(2);
     transportation_expensesElement.textContent = transportation_expenses.toFixed(2);
     cost_priceElement.textContent = cost_price.toFixed(2);
+    profitElement.textContent = profit.toFixed(2);
     price_excluding_vatElement.textContent = price_excluding_vat.toFixed(2);
     totalCostElement.textContent = selling_price_including_vat.toFixed(2);
 }
