@@ -121,7 +121,7 @@ class CommercialProposal(models.Model):
 
 class ServiceAgreement(models.Model):
     service_descriptions = models.TextField(null=True, blank=True)
-    number = models.CharField(max_length=30)
+    number = models.CharField(max_length=30, unique=True)
     amount = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)
     date_of_signing = models.DateField()
     is_signed = models.BooleanField(default=False, null=False)
