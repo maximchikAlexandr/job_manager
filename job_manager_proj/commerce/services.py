@@ -1,30 +1,44 @@
-from datetime import datetime
-from decimal import Decimal
 import math
 import os
-import requests
+from datetime import datetime
+from decimal import Decimal
 
-from django.conf import settings
-from django.db.models import Q
-from docxtpl import DocxTemplate
+import requests
 import yadisk
+from django.conf import settings
+from django.db.models import F, Q, Sum
+from django.db.models.functions import Ceil
+from docxtpl import DocxTemplate
 
 
 def calc_total_cost(obj):
-    calc_res = {}
-    planned_business_trips = obj.planned_business_trips.all()
-    mileage = 0
-    travel_expenses = 0
-    if planned_business_trips:
-        for trip in planned_business_trips:
-            mileage += trip.one_way_distance_on_company_transport
-            travel_expenses += (
-                trip.day_count * trip.staff_count * 9
-                + trip.lodging_cost
-                + trip.public_transportation_fare
-            )
+    from commerce.models import BudgetCalculation, PlannedBusinessTrip
 
-    calc_res["salary"] = math.ceil(obj.workload * obj.hourly_rate)
+    trips_data = PlannedBusinessTrip.objects.filter(budget_calculation=obj).aggregate(
+        travel_expenses=Ceil(
+            Sum(
+                F("day_count") * F("staff_count") * 9
+                + F("lodging_cost")
+                + F("public_transportation_fare")
+            )
+        ),
+        mileage=Sum(F("one_way_distance_on_company_transport")),
+    )
+
+    calc_input_data = (
+        BudgetCalculation.objects.filter(id=obj.pk)
+        .values(
+            "workload",
+            "hourly_rate",
+            "profit_percentage",
+            "outsourcing_costs",
+        )
+        .first()
+    )
+    calc_res = {}
+    calc_res["salary"] = math.ceil(
+        calc_input_data["workload"] * calc_input_data["hourly_rate"]
+    )
     calc_res["income_taxes"] = math.ceil(Decimal("0.13") * calc_res["salary"])
     calc_res["social_security_contributions"] = math.ceil(
         Decimal("0.34") * calc_res["salary"]
@@ -33,9 +47,9 @@ def calc_total_cost(obj):
     calc_res["depreciation_expenses"] = math.ceil(Decimal("0.175") * calc_res["salary"])
     calc_res["accident_insurance"] = math.ceil(Decimal("0.006") * calc_res["salary"])
 
-    calc_res["travel_expenses"] = math.ceil(Decimal(travel_expenses))
+    calc_res["travel_expenses"] = Decimal(trips_data["travel_expenses"])
     calc_res["transportation_expenses"] = math.ceil(
-        Decimal(mileage) * Decimal("0.5630625")
+        Decimal(trips_data["mileage"]) * Decimal("0.5630625")
     )
     calc_res["cost_price"] = (
         calc_res["salary"]
@@ -47,9 +61,13 @@ def calc_total_cost(obj):
         + calc_res["accident_insurance"]
         + calc_res["travel_expenses"]
     )
-    calc_res["profit"] = calc_res["cost_price"] * Decimal(obj.profit_percentage / 100)
+    calc_res["profit"] = calc_res["cost_price"] * Decimal(
+        calc_input_data["profit_percentage"] / 100
+    )
     calc_res["price_excluding_vat"] = (
-        calc_res["cost_price"] + calc_res["profit"] + obj.outsourcing_costs
+        calc_res["cost_price"]
+        + calc_res["profit"]
+        + calc_input_data["outsourcing_costs"]
     )
     calc_res["price_excluding_vat"] = round(calc_res["price_excluding_vat"], 2)
     calc_res["vat"] = round(Decimal("0.2") * calc_res["price_excluding_vat"], 2)
