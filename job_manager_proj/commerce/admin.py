@@ -67,6 +67,12 @@ class BudgetCalculationAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdmi
     list_per_page = 15
     search_fields = ("type_of_jobs__name",)
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.select_related("commercial_proposal__company", "type_of_jobs").only(
+            "commercial_proposal__company__name", "type_of_jobs__name", "total_cost"
+        )
+
     def save_related(self, request, form, formsets, change):
         super().save_related(request, form, formsets, change)
         form.save()
@@ -141,6 +147,29 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
     search_fields = ("company__name",)
     exclude = ("crm_deal_id", "proposal_file")
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.types_of_jobs_dict = {}
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        self.__get_types_of_jobs_queryset(qs)
+        return qs.select_related("company").only("company__name", "total_cost")
+
+    def __get_types_of_jobs_queryset(self, queryset):
+        budget_calc_queryset = (
+            BudgetCalculation.objects.filter(commercial_proposal__in=queryset)
+            .values("commercial_proposal", "type_of_jobs__name")
+            .distinct("commercial_proposal", "type_of_jobs__name")
+        )
+
+        for it in budget_calc_queryset:
+            self.types_of_jobs_dict[it["commercial_proposal"]] = [
+                item["type_of_jobs__name"]
+                for item in budget_calc_queryset
+                if item["commercial_proposal"] == it["commercial_proposal"]
+            ]
+
     def save_model(
         self,
         request: WSGIRequest,
@@ -151,11 +180,9 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
         super().save_model(request, obj, form, change)
 
         if obj.pk and obj.service_descriptions == "":
-            queryset = obj.budget_calculations.all()
-            for calc in queryset:
-                obj.service_descriptions += (
-                    f"{calc.type_of_jobs.service_descriptions}\n\n"
-                )
+            descriptions = list(obj.budget_calculations.select_related("type_of_jobs").values_list(
+                "type_of_jobs__service_descriptions", flat=True))
+            obj.service_descriptions = "\n\n".join(descriptions)
             super().save_model(request, obj, form, change)
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
@@ -206,15 +233,14 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
         return redirect("https://disk.yandex.ru/client/disk/commercial_proposals")
 
     def type_of_jobs(self, obj):
-        queryset = obj.budget_calculations.all()
-        types = set(str(calc.type_of_jobs) for calc in queryset)
-        return "\n".join(types)
+        return "\n".join(self.types_of_jobs_dict[obj.pk])
 
 
 class CommercialProposalInline(TabularInline):
     model = CommercialProposal
     extra = 0
-    exclude = ("proposal_file", )
+    exclude = ("proposal_file",)
+
     def has_change_permission(self, request, obj=None):
         return False
 
@@ -230,6 +256,29 @@ class ServiceAgreementJobAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAd
     list_per_page = 15
     ordering = ("-date_of_signing",)
     exclude = ("task_id", "agreement_file", "act_file")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.companies_dict = {}
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        self.__get_companies_queryset(qs)
+        return qs.only("number", "amount")
+
+    def __get_companies_queryset(self, queryset):
+        budget_calc_queryset = (
+            CommercialProposal.objects.filter(service_agreement__in=queryset)
+            .values("service_agreement", "company__name")
+            .distinct("service_agreement", "company__name")
+        )
+
+        for it in budget_calc_queryset:
+            self.companies_dict[it["service_agreement"]] = [
+                item["company__name"]
+                for item in budget_calc_queryset
+                if item["service_agreement"] == it["service_agreement"]
+            ]
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
         extra_context = extra_context or {}
@@ -282,7 +331,6 @@ class ServiceAgreementJobAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAd
 
     def company(self, obj):
         try:
-            proposal = obj.commercial_proposals.first()
-            return str(proposal.company)
-        except AttributeError:
+            return self.companies_dict[obj.pk]
+        except (AttributeError, KeyError):
             return "Договор не связан с КП"
