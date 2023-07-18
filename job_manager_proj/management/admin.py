@@ -55,6 +55,10 @@ class ServiceAgreementProxyAdmin(ReadOnlyAdminModelMixin, ModelAdmin):
     )
     list_display = ("company", "type_of_jobs", "number", "amount", "total_workload")
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.only("number", "amount")
+
     def company(self, obj):
         try:
             proposal = obj.commercial_proposals.first()
