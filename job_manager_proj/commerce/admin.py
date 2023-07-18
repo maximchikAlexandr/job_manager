@@ -180,11 +180,9 @@ class CommercialProposalAdmin(ImportExportMixin, LoggedAdminModelMixin, ModelAdm
         super().save_model(request, obj, form, change)
 
         if obj.pk and obj.service_descriptions == "":
-            queryset = obj.budget_calculations.all()
-            for calc in queryset:
-                obj.service_descriptions += (
-                    f"{calc.type_of_jobs.service_descriptions}\n\n"
-                )
+            descriptions = list(obj.budget_calculations.select_related("type_of_jobs").values_list(
+                "type_of_jobs__service_descriptions", flat=True))
+            obj.service_descriptions = "\n\n".join(descriptions)
             super().save_model(request, obj, form, change)
 
     def change_view(self, request, object_id, form_url="", extra_context=None):

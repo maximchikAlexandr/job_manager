@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum, F
 
 from catalog.models import Company, Month, TypeOfJobs
 from commerce.services import calc_total_cost
@@ -64,13 +65,11 @@ class BudgetCalculation(models.Model):
         return f"{self.type_of_jobs} - {self.workload} чч. - {self.total_cost} р."
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            super().save(*args, **kwargs)
-
-        calc_res = calc_total_cost(self)
-        if self.total_cost != calc_res["total_cost"]:
-            for field_name, field_val in calc_res.items():
-                setattr(self, field_name, field_val)
+        if self.pk:
+            calc_res = calc_total_cost(self)
+            if self.total_cost != calc_res["total_cost"]:
+                for field_name, field_val in calc_res.items():
+                    setattr(self, field_name, field_val)
         super().save(*args, **kwargs)
 
         if self.commercial_proposal:
@@ -107,9 +106,9 @@ class CommercialProposal(models.Model):
 
     def save(self, *args, **kwargs):
         if self.pk:
-            total_cost = 0
-            for calculation in self.budget_calculations.all():
-                total_cost += calculation.total_cost
+            total_cost = self.budget_calculations.aggregate(
+                total_cost=Sum(F("total_cost"))
+            ).get("total_cost", 0)
             if self.total_cost != total_cost:
                 self.total_cost = total_cost
                 if self.crm_deal_id:
@@ -134,9 +133,10 @@ class ServiceAgreement(models.Model):
 
     def save(self, *args, **kwargs):
         if self.pk:
-            total_cost = 0
-            for proposal in self.commercial_proposals.all():
-                total_cost += proposal.total_cost
+            total_cost = self.commercial_proposals.aggregate(
+                total_cost=Sum(F("total_cost"))
+            ).get("total_cost", 0)
+
             if self.amount != total_cost:
                 self.amount = total_cost
         super().save(*args, **kwargs)
