@@ -4,3 +4,4 @@ job_manager_proj/.env
 /job_manager_proj/static/
 /job_manager_proj/temp/
 /job_manager_proj/.installed
+/job_manager_log/
