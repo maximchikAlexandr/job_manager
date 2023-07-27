@@ -76,3 +76,18 @@ services:
       - 80:80
     depends_on:
       - web
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis_commander
+    restart: always
+    env_file:
+      - .env
+    environment:
+      REDIS_HOSTS: redis
+      REDIS_HOST: redis
+      REDIS_PORT: redis:6379
+      HTTP_USER: "${REDIS_COM_HTTP_USER}"
+      HTTP_PASSWORD: "${REDIS_COM_HTTP_PASSWORD}"
+    ports:
+      - 8081:8081
