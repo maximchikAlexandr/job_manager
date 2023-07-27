@@ -29,11 +29,12 @@ services:
     privileged: true
     command: >
       sh -c './manage.py migrate && if [ ! -f /app/.installed ]; then ./manage.py collectstatic --noinput && ./manage.py 
-      createsuperuser --noinput && touch /app/.installed && mkdir /app/temp; fi && ./manage.py runserver 0.0.0.0:8000'
+      createsuperuser --noinput && touch /app/.installed && mkdir /app/temp; fi && gunicorn 
+      --bind 0.0.0.0:8000 job_manager_proj.wsgi:application'
     volumes:
       - .:/app
-    ports:
-      - '8001:8000'
+    expose:
+      - 8000
     deploy:
       resources:
         limits:
@@ -49,8 +50,8 @@ services:
   redis:
     image: redis
     container_name: job_manager_broker
-    ports:
-      - '127.0.0.1:63791:6379'
+    expose:
+      - 6379
 
   celery_worker:
     build: .
@@ -63,3 +64,15 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
+
+  nginx:
+    image: nginx:1.24
+    container_name: job_manager_nginx
+    volumes:
+      - ./nginx-conf.d:/etc/nginx/conf.d
+      - ../job_manager_log/nginx:/var/log/nginx
+      - ./static:/var/www/html/static
+    ports:
+      - 80:80
+    depends_on:
+      - web
