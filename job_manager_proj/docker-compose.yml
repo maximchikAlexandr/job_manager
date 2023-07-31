@@ -2,10 +2,9 @@ version: '3.9'
 
 services:
   postgres_db:
-    image: postgres:15
-    container_name: job_manager_db
+    image: postgres:15    container_name: jm_postgres
     volumes:
-      - ../job_manager_db:/var/lib/postgresql/data
+      - "../data/postgresql:/var/lib/postgresql/data"
     env_file:
       - .env
     ports:
@@ -23,9 +22,9 @@ services:
       interval: 10s
       retries: 5
 
-  web:
+  app:
     build: .
-    container_name: job_manager_app
+    container_name: jm_app
     privileged: true
     command: >
       sh -c './manage.py migrate && if [ ! -f /app/.installed ]; then ./manage.py collectstatic --noinput && ./manage.py 
@@ -38,10 +37,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.1'
           memory: 256M
         reservations:
-          cpus: '0.01'
           memory: 128M
     depends_on:
       postgres_db:
@@ -49,13 +46,13 @@ services:
 
   redis:
     image: redis
-    container_name: job_manager_broker
+    container_name: jm_broker
     expose:
       - 6379
 
   celery_worker:
     build: .
-    container_name: job_manager_celery_worker
+    container_name: jm_celery_worker
     command: >
       bash -c "celery -A job_manager_proj worker -l info && celery -A job_manager_proj beat -l \ 
       INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler"
@@ -67,13 +64,13 @@ services:
 
   nginx:
     image: nginx:1.24
-    container_name: job_manager_nginx
+    container_name: jm_nginx
     volumes:
       - ./nginx-conf.d:/etc/nginx/conf.d
-      - ../job_manager_log/nginx:/var/log/nginx
+      - ../log/nginx:/var/log/nginx
       - ./static:/var/www/html/static
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
       - app
 
@@ -105,11 +102,3 @@ services:
       - "../data/grafana:/var/lib/grafana"
     env_file:
       - .env
-    environment:
-      REDIS_HOSTS: redis
-      REDIS_HOST: redis
-      REDIS_PORT: redis:6379
-      HTTP_USER: "${REDIS_COM_HTTP_USER}"
-      HTTP_PASSWORD: "${REDIS_COM_HTTP_PASSWORD}"
-    ports:
-      - 8081:8081
