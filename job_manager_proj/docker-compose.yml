@@ -75,12 +75,34 @@ services:
     ports:
       - 80:80
     depends_on:
-      - web
+      - app
 
-  redis-commander:
-    image: rediscommander/redis-commander:latest
-    container_name: redis_commander
-    restart: always
+  flower:
+    image: mher/flower
+    container_name: jm_flower
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379
+      - FLOWER_PORT=5555
+    ports:
+      - "5555:5555"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: jm_prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "../data/prometheus:/prometheus"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: jm_grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - "../data/grafana:/var/lib/grafana"
     env_file:
       - .env
     environment:
