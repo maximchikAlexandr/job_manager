@@ -2,7 +2,8 @@ version: '3.9'
 
 services:
   postgres_db:
-    image: postgres:15    container_name: jm_postgres
+    image: postgres:15
+    container_name: jm_postgres
     volumes:
       - "../data/postgresql:/var/lib/postgresql/data"
     env_file:
@@ -84,7 +85,7 @@ services:
       - "5555:5555"
 
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:latest
     container_name: jm_prometheus
     ports:
       - "9090:9090"
