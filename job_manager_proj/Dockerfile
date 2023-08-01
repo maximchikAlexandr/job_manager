@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
 MAINTAINER Alex Maximchik 'alex@mail.ru'
 
 SHELL ["/bin/bash", "-c"]
