@@ -1,28 +1,6 @@
 version: '3.9'
 
 services:
-  postgres_db:
-    image: postgres:15
-    container_name: jm_postgres
-    volumes:
-      - "../data/postgresql:/var/lib/postgresql/data"
-    env_file:
-      - .env
-    ports:
-      - "${DB_OUT_PORT}:${DB_PORT}"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 256M
-        reservations:
-          cpus: '0.01'
-          memory: 128M
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}" ]
-      interval: 10s
-      retries: 5
-
   app:
     build: .
     container_name: jm_app
@@ -44,6 +22,28 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
+
+  postgres_db:
+    image: postgres:15
+    container_name: jm_postgres
+    volumes:
+      - "../data/postgresql:/var/lib/postgresql/data"
+    env_file:
+      - .env
+    ports:
+      - "${DB_OUT_PORT}:${DB_PORT}"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 256M
+        reservations:
+          cpus: '0.01'
+          memory: 128M
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}" ]
+      interval: 10s
+      retries: 5
 
   redis:
     image: redis
@@ -75,18 +75,9 @@ services:
     depends_on:
       - app
 
-  flower:
-    image: mher/flower
-    container_name: jm_flower
-    environment:
-      - CELERY_BROKER_URL=redis://redis:6379
-      - FLOWER_PORT=5555
-    ports:
-      - "5555:5555"
-
   prometheus:
     image: prom/prometheus:latest
-    container_name: jm_prometheus
+    container_name: m_prometheus
     ports:
       - "9090:9090"
     volumes:
@@ -95,7 +86,7 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    container_name: jm_grafana
+    container_name: m_grafana
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -103,3 +94,54 @@ services:
       - "../data/grafana:/var/lib/grafana"
     env_file:
       - .env
+
+  flower:
+    image: mher/flower
+    container_name: m_flower
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379
+      - FLOWER_PORT=5555
+    ports:
+      - "5555:5555"
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.10.0
+    container_name: m_nginx_exporter
+    command:
+      - -nginx.scrape-uri
+      - http://nginx:80/stub_status
+    expose:
+      - 9113
+    depends_on:
+      - prometheus
+      - nginx
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: m_node_exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--collector.netclass.ignored-devices=^(veth.*)$$'
+    expose:
+      - 9100
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: m_cadvisor
+    expose:
+      - 8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+      - redis
