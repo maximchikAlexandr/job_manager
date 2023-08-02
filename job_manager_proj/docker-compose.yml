@@ -67,7 +67,7 @@ services:
     image: nginx:1.24
     container_name: jm_nginx
     volumes:
-      - ./nginx-conf.d:/etc/nginx/conf.d
+      - ./config/nginx-conf.d:/etc/nginx/conf.d
       - ../log/nginx:/var/log/nginx
       - ./static:/var/www/html/static
     ports:
@@ -81,7 +81,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
       - "../data/prometheus:/prometheus"
 
   grafana:
@@ -112,9 +112,7 @@ services:
       - http://nginx:80/stub_status
     expose:
       - 9113
-    depends_on:
-      - prometheus
-      - nginx
+    depends_on: [ prometheus, nginx ]
 
   node-exporter:
     image: prom/node-exporter:latest
@@ -145,3 +143,17 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     depends_on:
       - redis
+
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:v0.12.0
+    container_name: m_postgres_exporter
+    ports:
+      - "9187:9187"
+    volumes:
+      - ./config/prometheuscommunity-postgres-exporter/queries.yml:/var/lib/postgresql/queries.yml
+    environment:
+      DATA_SOURCE_NAME: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres_db:${DB_PORT}/${POSTGRES_DB}?sslmode=disable"
+      PG_EXPORTER_EXTEND_QUERY_PATH: "/var/lib/postgresql/queries.yml"
+    depends_on:
+      postgres_db:
+        condition: service_healthy
