@@ -1,3 +1,26 @@
+pg_golden_metrics:
+  query: |
+    SELECT
+    pg_get_userbyid(userid) as user,
+    pg_database.datname,
+    (SUM(pg_stat_statements.total_plan_time + pg_stat_statements.total_exec_time) / 1000.0) /
+    SUM(pg_stat_statements.calls) AS response_time
+    FROM pg_stat_statements
+      JOIN pg_database ON pg_database.oid = pg_stat_statements.dbid
+    GROUP BY userid, datname;
+  metrics:
+    - user:
+        usage: "LABEL"
+        description: "The user who executed the statement"
+    - datname:
+        usage: "LABEL"
+        description: "The database in which the statement was executed"
+    - response_time:
+        usage: "COUNTER"
+        description: "Response time"
+
+
+
 pg_replication:
   query: "SELECT CASE WHEN NOT pg_is_in_recovery() THEN 0 ELSE GREATEST (0, EXTRACT(EPOCH FROM (now() - pg_last_xact_replay_timestamp()))) END AS lag"
   master: true
@@ -146,58 +169,54 @@ pg_statio_user_tables:
         usage: "COUNTER"
         description: "Number of buffer hits in this table's TOAST table indexes (if any)"
 
-#
-# WARNING:
-#   This set of metrics can be very expensive on a busy server as every
-#   unique query executed will create an additional time series
-#
-# pg_stat_statements:
-#   query: |
-#     SELECT
-#       pg_get_userbyid(userid) as user,
-#       pg_database.datname,
-#       pg_stat_statements.queryid,
-#       pg_stat_statements.calls as calls_total,
-#       pg_stat_statements.total_time / 1000.0 as seconds_total,
-#       pg_stat_statements.rows as rows_total,
-#       pg_stat_statements.blk_read_time / 1000.0 as block_read_seconds_total,
-#       pg_stat_statements.blk_write_time / 1000.0 as block_write_seconds_total
-#       FROM pg_stat_statements
-#       JOIN pg_database
-#         ON pg_database.oid = pg_stat_statements.dbid
-#       WHERE
-#         total_time > (
-#           SELECT percentile_cont(0.1)
-#             WITHIN GROUP (ORDER BY total_time)
-#             FROM pg_stat_statements
-#         )
-#       ORDER BY seconds_total DESC
-#       LIMIT 100
-#   metrics:
-#     - user:
-#         usage: "LABEL"
-#         description: "The user who executed the statement"
-#     - datname:
-#         usage: "LABEL"
-#         description: "The database in which the statement was executed"
-#     - queryid:
-#         usage: "LABEL"
-#         description: "Internal hash code, computed from the statement's parse tree"
-#     - calls_total:
-#         usage: "COUNTER"
-#         description: "Number of times executed"
-#     - seconds_total:
-#         usage: "COUNTER"
-#         description: "Total time spent in the statement, in seconds"
-#     - rows_total:
-#         usage: "COUNTER"
-#         description: "Total number of rows retrieved or affected by the statement"
-#     - block_read_seconds_total:
-#         usage: "COUNTER"
-#         description: "Total time the statement spent reading blocks, in seconds"
-#     - block_write_seconds_total:
-#         usage: "COUNTER"
-#         description: "Total time the statement spent writing blocks, in seconds"
+pg_stat_statements:
+  query: |
+    SELECT
+      pg_get_userbyid(userid) as user,
+      pg_database.datname,
+      pg_stat_statements.queryid,
+      pg_stat_statements.calls,
+      (pg_stat_statements.total_plan_time + pg_stat_statements.total_exec_time) / 1000.0 as
+      seconds_total,
+      pg_stat_statements.rows,
+      pg_stat_statements.blk_read_time / 1000.0 as block_read_seconds_total,
+      pg_stat_statements.blk_write_time / 1000.0 as block_write_seconds_total
+      FROM pg_stat_statements
+      JOIN pg_database
+        ON pg_database.oid = pg_stat_statements.dbid
+      WHERE
+        (pg_stat_statements.total_plan_time + pg_stat_statements.total_exec_time) > (
+          SELECT percentile_cont(0.1)
+            WITHIN GROUP (ORDER BY (pg_stat_statements.total_plan_time + pg_stat_statements.total_exec_time))
+            FROM pg_stat_statements
+        )
+      ORDER BY seconds_total
+     LIMIT 100
+  metrics:
+   - user:
+       usage: "LABEL"
+       description: "The user who executed the statement"
+   - datname:
+       usage: "LABEL"
+       description: "The database in which the statement was executed"
+   - queryid:
+       usage: "LABEL"
+       description: "Internal hash code, computed from the statement's parse tree"
+   - calls_total:
+       usage: "COUNTER"
+       description: "Number of times executed"
+   - seconds_total:
+       usage: "COUNTER"
+       description: "Total time spent in the statement, in seconds"
+   - rows_total:
+       usage: "COUNTER"
+       description: "Total number of rows retrieved or affected by the statement"
+   - block_read_seconds_total:
+       usage: "COUNTER"
+       description: "Total time the statement spent reading blocks, in seconds"
+   - block_write_seconds_total:
+       usage: "COUNTER"
+       description: "Total time the statement spent writing blocks, in seconds"
 
 pg_process_idle:
   query: |

@@ -28,6 +28,7 @@ services:
     container_name: jm_postgres
     volumes:
       - "../data/postgresql:/var/lib/postgresql/data"
+      - "./config/postgresql/postgresql.conf:/var/lib/postgresql/data/postgresql.conf"
     env_file:
       - .env
     ports:
@@ -75,11 +76,23 @@ services:
     depends_on:
       - app
 
+  pgadmin:
+    image: dpage/pgadmin4:7.5
+    container_name: jm_pgadmin
+    env_file:
+      - .env
+    expose:
+      - ${PGADMIN_LISTEN_PORT}
+    volumes:
+      - "../data/pgadmin:/var/lib/pgadmin"
+    depends_on:
+      - postgres_db
+
   prometheus:
     image: prom/prometheus:latest
     container_name: m_prometheus
-    ports:
-      - "9090:9090"
+    expose:
+      - 9090
     volumes:
       - "./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
       - "../data/prometheus:/prometheus"
@@ -87,11 +100,13 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: m_grafana
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
+    expose:
+      - 3000
     volumes:
       - "../data/grafana:/var/lib/grafana"
+      - "./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml"
+      - "./config/grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/main.yml"
+      - "./config/grafana/dashboards:/var/lib/grafana/dashboards"
     env_file:
       - .env
 
@@ -110,8 +125,8 @@ services:
     command:
       - -nginx.scrape-uri
       - http://nginx:80/stub_status
-    expose:
-      - 9113
+    ports:
+      - "9113:9113"
     depends_on: [ prometheus, nginx ]
 
   node-exporter:
@@ -128,8 +143,8 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
       - '--collector.netclass.ignored-devices=^(veth.*)$$'
-    expose:
-      - 9100
+    ports:
+      - "9100:9100"
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
@@ -150,7 +165,7 @@ services:
     ports:
       - "9187:9187"
     volumes:
-      - ./config/prometheuscommunity-postgres-exporter/queries.yml:/var/lib/postgresql/queries.yml
+      - "./config/postgres-exporter/queries.yml:/var/lib/postgresql/queries.yml"
     environment:
       DATA_SOURCE_NAME: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres_db:${DB_PORT}/${POSTGRES_DB}?sslmode=disable"
       PG_EXPORTER_EXTEND_QUERY_PATH: "/var/lib/postgresql/queries.yml"
