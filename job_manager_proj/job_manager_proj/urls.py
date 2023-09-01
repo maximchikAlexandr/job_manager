@@ -32,7 +32,10 @@ schema_view = get_schema_view(
         license=openapi.License(name="BSD License"),
     ),
     patterns=[
-        path("api/1/reports/", include(("management.urls", "management"), namespace="management")),
+        path(
+            "api/1/reports/",
+            include(("management.urls", "management"), namespace="management"),
+        ),
     ],
     public=True,
     permission_classes=(permissions.AllowAny,),
@@ -55,11 +58,12 @@ urlpatterns = [
     path("api/1/reports/", include("management.urls")),
     path("api/1/auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.authtoken")),
+    path("", include("django_prometheus.urls")),
     path("", admin.site.urls),
-
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar
+
     urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns

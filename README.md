@@ -43,6 +43,16 @@ DB_HOST="your_database_host"
 DB_PORT="port_of_your_database_in_container"
 DB_OUT_PORT="outer_port_of_your_database"
 
+# Grafana
+GF_SECURITY_ADMIN_USER=admin
+GF_SECURITY_ADMIN_PASSWORD="your_password"
+GF_SERVER_ROOT_URL="your_host"/monitoring/grafana/
+
+# pgadmin4
+PGADMIN_DEFAULT_EMAIL="your_email"
+PGADMIN_DEFAULT_PASSWORD="your_password"
+PGADMIN_LISTEN_PORT=15432
+
 # Celery parameters
 CELERY_HOST=redis
 CELERY_PORT=6379
