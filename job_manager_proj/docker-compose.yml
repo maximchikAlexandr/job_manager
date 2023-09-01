@@ -1,11 +1,34 @@
 version: '3.9'
 
 services:
+  app:
+    build: .
+    container_name: jm_app
+    privileged: true
+    command: >
+      sh -c './manage.py migrate && if [ ! -f /app/.installed ]; then ./manage.py collectstatic --noinput && ./manage.py 
+      createsuperuser --noinput && touch /app/.installed && mkdir /app/temp; fi && gunicorn 
+      --bind 0.0.0.0:8000 job_manager_proj.wsgi:application'
+    volumes:
+      - .:/app
+    expose:
+      - 8000
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+
   postgres_db:
     image: postgres:15
-    container_name: job_manager_db
+    container_name: jm_postgres
     volumes:
-      - ../job_manager_db:/var/lib/postgresql/data
+      - "../data/postgresql:/var/lib/postgresql/data"
+      - "./config/postgresql/postgresql.conf:/var/lib/postgresql/data/postgresql.conf"
     env_file:
       - .env
     ports:
@@ -23,39 +46,15 @@ services:
       interval: 10s
       retries: 5
 
-  web:
-    build: .
-    container_name: job_manager_app
-    privileged: true
-    command: >
-      sh -c './manage.py migrate && if [ ! -f /app/.installed ]; then ./manage.py collectstatic --noinput && ./manage.py 
-      createsuperuser --noinput && touch /app/.installed && mkdir /app/temp; fi && gunicorn 
-      --bind 0.0.0.0:8000 job_manager_proj.wsgi:application'
-    volumes:
-      - .:/app
-    expose:
-      - 8000
-    deploy:
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 256M
-        reservations:
-          cpus: '0.01'
-          memory: 128M
-    depends_on:
-      postgres_db:
-        condition: service_healthy
-
   redis:
     image: redis
-    container_name: job_manager_broker
+    container_name: jm_broker
     expose:
       - 6379
 
   celery_worker:
     build: .
-    container_name: job_manager_celery_worker
+    container_name: jm_celery_worker
     command: >
       bash -c "celery -A job_manager_proj worker -l info && celery -A job_manager_proj beat -l \ 
       INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler"
@@ -67,12 +66,109 @@ services:
 
   nginx:
     image: nginx:1.24
-    container_name: job_manager_nginx
+    container_name: jm_nginx
     volumes:
-      - ./nginx-conf.d:/etc/nginx/conf.d
-      - ../job_manager_log/nginx:/var/log/nginx
+      - ./config/nginx-conf.d:/etc/nginx/conf.d
+      - ../log/nginx:/var/log/nginx
       - ./static:/var/www/html/static
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
-      - web
+      - app
+
+  pgadmin:
+    image: dpage/pgadmin4:7.5
+    container_name: jm_pgadmin
+    env_file:
+      - .env
+    expose:
+      - ${PGADMIN_LISTEN_PORT}
+    volumes:
+      - "../data/pgadmin:/var/lib/pgadmin"
+    depends_on:
+      - postgres_db
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: m_prometheus
+    expose:
+      - 9090
+    volumes:
+      - "./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "../data/prometheus:/prometheus"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: m_grafana
+    expose:
+      - 3000
+    volumes:
+      - "../data/grafana:/var/lib/grafana"
+      - "./config/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml"
+      - "./config/grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/main.yml"
+      - "./config/grafana/dashboards:/var/lib/grafana/dashboards"
+    env_file:
+      - .env
+
+  flower:
+    image: mher/flower
+    container_name: m_flower
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379
+      - FLOWER_PORT=5555
+    ports:
+      - "5555:5555"
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.10.0
+    container_name: m_nginx_exporter
+    command:
+      - -nginx.scrape-uri
+      - http://nginx:80/stub_status
+    ports:
+      - "9113:9113"
+    depends_on: [ prometheus, nginx ]
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: m_node_exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--collector.netclass.ignored-devices=^(veth.*)$$'
+    ports:
+      - "9100:9100"
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: m_cadvisor
+    expose:
+      - 8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+      - redis
+
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:v0.12.0
+    container_name: m_postgres_exporter
+    ports:
+      - "9187:9187"
+    volumes:
+      - "./config/postgres-exporter/queries.yml:/var/lib/postgresql/queries.yml"
+    environment:
+      DATA_SOURCE_NAME: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres_db:${DB_PORT}/${POSTGRES_DB}?sslmode=disable"
+      PG_EXPORTER_EXTEND_QUERY_PATH: "/var/lib/postgresql/queries.yml"
+    depends_on:
+      postgres_db:
+        condition: service_healthy

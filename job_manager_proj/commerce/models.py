@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Sum, F
+from django_prometheus.models import ExportModelOperationsMixin
 
 from catalog.models import Company, Month, TypeOfJobs
 from commerce.services import calc_total_cost
@@ -26,7 +27,7 @@ class PlannedBusinessTrip(models.Model):
         return f"{self.locality} - {self.day_count} дн. {self.staff_count} чел."
 
 
-class BudgetCalculation(models.Model):
+class BudgetCalculation(ExportModelOperationsMixin("BudgetCalculation"), models.Model):
     workload = models.PositiveIntegerField(null=True, default=168)
     hourly_rate = models.DecimalField(max_digits=14, decimal_places=2, default=5.8)
     outsourcing_costs = models.DecimalField(max_digits=14, decimal_places=2, default=0)
@@ -76,7 +77,7 @@ class BudgetCalculation(models.Model):
             self.commercial_proposal.save()
 
 
-class CommercialProposal(models.Model):
+class CommercialProposal(ExportModelOperationsMixin("CommercialProposal"), models.Model):
     service_descriptions = models.TextField(null=False, blank=True)
     service_delivery_period = models.PositiveIntegerField(null=False, default=60)
     total_cost = models.DecimalField(
@@ -118,7 +119,7 @@ class CommercialProposal(models.Model):
             self.service_agreement.save()
 
 
-class ServiceAgreement(models.Model):
+class ServiceAgreement(ExportModelOperationsMixin('ServiceAgreement'), models.Model):
     service_descriptions = models.TextField(null=True, blank=True)
     number = models.CharField(max_length=30, unique=True)
     amount = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)
